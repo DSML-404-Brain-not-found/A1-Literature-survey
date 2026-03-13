@@ -100,7 +100,7 @@ def run_experiment(run_knn_model=False, run_rf_model=False, run_svm_model=False,
         return
         
     print(f"Running models: {list(models_to_run.keys())}...")
-    results_df = evaluate_models(base_path, models_to_run, random_seed=8)
+    results_df = evaluate_models(base_path, models_to_run, random_seed=8,yeast=yeast)
     
     # Export to CSV
     # Name the file based on the models that were run to generate a single file per run
