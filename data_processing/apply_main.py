@@ -14,13 +14,18 @@ import apply_undersampling
 
 
 if __name__ == '__main__':
-    yeast_num = [1,4,6]
-    for i in yeast_num:
-        # main(str(i))
-        apply_smote.main(str(i))
-        apply_smote_enn.main(str(i))
-        apply_borderline_smote.main(str(i))
-        apply_hybrid_sampling.main(str(i))
-        apply_oversampling.main(str(i))
-        apply_undersampling.main(str(i))
+
+    dataset = ["yeast1-5-fold", "yeast3-5-fold", "yeast4-5-fold", "yeast6-5-fold","ecoli-0-1-3-7_vs_2-6-5-fold","glass5-5-fold","phoneme-5-fold","shuttle-c0-vs-c4-5-fold"]
+    
+    for dataset_name in dataset:
+        print(f"Processing dataset: {dataset_name}")
+        base_path = r"D:\A1-Literature-survey\dataset"
+
+        apply_smote.main(base_path, dataset_name)
+        apply_smote_enn.main(base_path, dataset_name)
+        apply_borderline_smote.main(base_path, dataset_name)
+        apply_hybrid_sampling.main(base_path, dataset_name)
+        apply_oversampling.main(base_path, dataset_name)
+        apply_undersampling.main(base_path, dataset_name)
+
     print("Done")

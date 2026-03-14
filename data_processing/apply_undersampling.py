@@ -65,11 +65,11 @@ def undersampling_keel_data(filepath, output_filepath):
             row_str = ", ".join(features) + ", " + label + "\n"
             f.write(row_str)
 
-def main(  yeast_num):
+def main(base_path=r"d:\404-Brain-not-found\dataset", dataset_name="yeast1-5-fold"):
     # 設定指定的資料夾
-    input_dir = r"d:\404-Brain-not-found\dataset\yeast"+yeast_num+"-5-fold"
-    output_dir = r"d:\404-Brain-not-found\dataset\undersampling\yeast"+yeast_num
-    
+    input_dir = os.path.join(base_path, dataset_name)
+    output_dir = os.path.join(base_path, dataset_name + "_undersampling")
+
     if not os.path.exists(output_dir):
         os.makedirs(output_dir)
         

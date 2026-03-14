@@ -65,12 +65,12 @@ def smote_keel_data(filepath, output_filepath):
             row_str = ", ".join(features) + ", " + label + "\n"
             f.write(row_str)
 
-def main(yeast_num):
+def main(base_path=r"d:\404-Brain-not-found\dataset", dataset_name="yeast1-5-fold"):
     # 設定指定的資料夾
     # 因為題目是 yeast1_original_5_fold，這通常在 dataset 資料夾內
-    input_dir = r"d:\404-Brain-not-found\dataset\yeast6-5-fold"
-    output_dir = r"d:\404-Brain-not-found\dataset\smote\yeast6"
-    
+    input_dir = os.path.join(base_path, dataset_name)
+    output_dir = os.path.join(base_path, dataset_name + "_smote")
+
     if not os.path.exists(output_dir):
         os.makedirs(output_dir)
         

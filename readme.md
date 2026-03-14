@@ -2,6 +2,21 @@
 
 這個專案是為了解析 `yeast` 資料集的 `.dat` 格式內容，並使用五折交叉驗證（5-fold cross-validation）來評估多種分類機器學習模型（包含 KNN, Random Forest, 與 SVM）效能的小型整合框架。
 
+## 安裝與環境需求 (Requirements)
+
+本專案建議使用 Python 3.8+ 環境。
+
+### 1. 安裝依賴套件
+在專案根目錄下執行以下指令安裝所需的函式庫：
+```bash
+pip install -r requirements.txt
+```
+
+### 2. 核心依賴說明
+- **numpy**: 數值計算與矩陣運算。
+- **pandas**: 資料過濾與 CSV 結果匯出。
+- **scikit-learn**: 提供機器學習模型（KNN, Random Forest, SVM）與評估指標。
+
 ## 檔案與模組說明
 
 ### 1. `main.py`
