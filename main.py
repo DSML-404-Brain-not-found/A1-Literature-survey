@@ -7,7 +7,7 @@ from experiment import run_experiment
 from evaluator import load_dat_file
 # ── 將 hybrid_methods 資料夾加入 import 路徑 ──────────────────────────────────
 sys.path.insert(0, os.path.join(os.path.dirname(__file__), "hybrid_methods"))
-from hybrid_methods import BaseAdaBoostM2, SMOTEBoost, RUSBoost, RHSBoost, SUBoost, SMOTECSL
+from hybrid_methods import StandardAdaBoost, SMOTEBoost, RUSBoost, RHSBoost, SUBoost, SMOTECSL
 
 import warnings
 warnings.filterwarnings("ignore")
@@ -17,16 +17,16 @@ RANDOM_SEED = 8
 # ----------------------------------------------------------
 # Data-level Methods
 # ----------------------------------------------------------
-if __name__ == "__main__":
-    file_path = r"D:\404-Brain-not-found"
-    csv_name = "result"
-    method = "-"
-    yeast_num = "1"
-    # yeast_num = "4"
-    # yeast_num = "6"
+# if __name__ == "__main__":
+#     file_path = r"D:\404-Brain-not-found"
+#     csv_name = "result"
+#     method = "-"
+#     yeast_num = "1"
+#     # yeast_num = "4"
+#     # yeast_num = "6"
     
-    # 使用以下變數的 True / False 來決定要執行哪些模型
-    run_experiment(run_knn_model=True, run_rf_model=True, run_svm_model=True, file_path=file_path,csv_name=csv_name,method=method,yeast=yeast_num)
+#     # 使用以下變數的 True / False 來決定要執行哪些模型
+#     run_experiment(run_knn_model=True, run_rf_model=True, run_svm_model=True, file_path=file_path,csv_name=csv_name,method=method,yeast=yeast_num)
 
 
 # ----------------------------------------------------------
@@ -145,11 +145,11 @@ if __name__ == "__main__":
 
     # ── 混合方法字典：名稱 → (類別, 參數) ────────────────────────────────
     hybrid_methods = {
-        "BaseAdaBoostM2": (BaseAdaBoostM2, {"n_estimators": 100}),
+        "StandardAdaBoost": (StandardAdaBoost, {"n_estimators": 100}),
         "SMOTEBoost": (SMOTEBoost, {"n_estimators": 100, "k_neighbors": 3}),
-        "RUSBoost":   (RUSBoost,   {"n_estimators": 10}),
-        "RHSBoost":   (RHSBoost,   {"n_estimators": 10, "k_neighbors": 5}),
-        "SUBoost":    (SUBoost,    {"n_estimators": 10}),
+        "RUSBoost":   (RUSBoost,   {"n_estimators": 100}),
+        "RHSBoost":   (RHSBoost,   {"n_estimators": 100, "k_neighbors": 5}),
+        "SUBoost":    (SUBoost,    {"n_estimators": 100}),
         "SMOTECSL":   (SMOTECSL,   {"k_neighbors": 5}),
     }
 
