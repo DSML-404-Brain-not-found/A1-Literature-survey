@@ -15,8 +15,9 @@ import apply_undersampling
 
 if __name__ == '__main__':
 
-    dataset = ["yeast1-5-fold", "yeast3-5-fold", "yeast4-5-fold", "yeast6-5-fold","ecoli-0-1-3-7_vs_2-6-5-fold","glass5-5-fold","phoneme-5-fold","shuttle-c0-vs-c4-5-fold"]
+    # dataset = ["yeast1-5-fold", "yeast3-5-fold", "yeast4-5-fold", "yeast6-5-fold","ecoli-0-1-3-7_vs_2-6-5-fold","glass5-5-fold","phoneme-5-fold","shuttle-c0-vs-c4-5-fold"]
     
+    dataset = ["poker-8-9_vs_6-5-fold"]
     for dataset_name in dataset:
         print(f"Processing dataset: {dataset_name}")
         base_path = r"D:\A1-Literature-survey\dataset"

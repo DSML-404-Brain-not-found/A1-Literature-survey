@@ -39,8 +39,8 @@ if __name__ == "__main__":
 
     def new_main():
         # dataset = ["yeast1-5", "yeast3-5", "yeast4-5", "yeast6-5","ecoli-0-1-3-7_vs_2-6-5","glass5-5","phoneme-5","shuttle-c0-vs-c4-5"]
-        dataset = ["yeast1-5", "yeast3-5", "yeast4-5", "yeast6-5","glass5-5","phoneme-5","shuttle-c0-vs-c4-5"]
-        dataset_folder = ["yeast1-5-fold_", "yeast3-5-fold_", "yeast4-5-fold_", "yeast6-5-fold_","glass5-5-fold_","phoneme-5-fold_","shuttle-c0-vs-c4-5-fold_"]
+        dataset = ["yeast1-5", "yeast3-5", "yeast4-5", "yeast6-5","glass5-5","phoneme-5","shuttle-c0-vs-c4-5","poker-8-9_vs_6-5"]
+        dataset_folder = ["yeast1-5-fold_", "yeast3-5-fold_", "yeast4-5-fold_", "yeast6-5-fold_","glass5-5-fold_","phoneme-5-fold_","shuttle-c0-vs-c4-5-fold_","poker-8-9_vs_6-5-fold_"]
         method_list = ["original", "Borderline-SMOTE", "hybrid_sampling", "oversampling", "SMOTE", "SMOTE+ENN", "undersampling"]
         
         # Mapping from method name to folder suffix
@@ -51,7 +51,7 @@ if __name__ == "__main__":
             "oversampling": "oversampling",
             "SMOTE": "smote",
             "SMOTE+ENN": "smote_enn",
-            "undersampling": "undersampling"
+            "undersampling": "undersampling",
         }
 
         base_path = r'D:\A1-Literature-survey\dataset'
