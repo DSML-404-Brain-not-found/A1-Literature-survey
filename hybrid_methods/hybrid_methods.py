@@ -4,7 +4,7 @@ hybrid_methods.py
 處理不平衡二元分類資料的混合方法（Hybrid Methods）實作。
 共包含 5 種方法，分屬三大架構族：
 
-  AdaBoost.M2 家族（共用 BaseAdaBoostM2 迴圈）
+  StandardAdaBoost 家族（共用 StandardAdaBoost 迴圈）
     1. SMOTEBoost  ── Chawla et al. (2003)
     2. RUSBoost    ── Seiffert et al. (2010)
     3. RHSBoost    ── Gong & Kim (2017)
@@ -19,7 +19,19 @@ hybrid_methods.py
 -----------
 * 訓練弱分類器使用重採樣後的 (X_res, y_res, w_res)。
 * 計算錯誤率、Alpha 以及更新樣本權重，**一律使用原始 (X_t, y_t, w_t)**，
-  確保 AdaBoost.M2 理論正確性（weight isolation）。
+  確保標準 AdaBoost 理論正確性（weight isolation）。
+
+引擎版本說明
+-----------
+在二元分類情境下，AdaBoost.M2 的偽損失與權重矩陣退化為標準
+AdaBoost（AdaBoost.M1 / SAMME）。為確保實驗控制變因絕對嚴謹，
+本實作直接採用 StandardAdaBoost 作為所有 Data-level 方法的底層引擎。
+
+- 弱分類器設定：預設使用 `max_depth=5` 的決策樹（近似 C4.5 演算法）。
+- 學術依據：雖然原始 AdaBoost 理論多採用 `max_depth=1`，但為應付不平衡資料的複雜邊界，
+本實作對齊 Chawla (2003) SMOTEBoost 與 Seiffert (2010) RUSBoost 等文獻之設定採用較深的決策樹。
+- 實驗控制變因：Baseline 與所有重採樣混合方法統一採用此預設分類器，確保實驗效能之差異 100% 
+源自於「資料抽樣策略」，而非底層模型結構之不同。
 """
 
 from __future__ import annotations
@@ -53,18 +65,21 @@ def _normalize(w: np.ndarray) -> np.ndarray:
 
 
 # ============================================================
-# 核心引擎：BaseAdaBoostM2
+# 核心引擎：StandardAdaBoost
 # ============================================================
 
-class BaseAdaBoostM2(BaseEstimator, ClassifierMixin):
+class StandardAdaBoost(BaseEstimator, ClassifierMixin):
     """
-    AdaBoost.M2 / SAMME 基底類別。
+    標準 AdaBoost（SAMME）基底類別。
 
     文獻依據
     --------
-    SMOTEBoost (Chawla et al., 2003) 與 RUSBoost (Seiffert et al., 2010)
-    均宣告基於 AdaBoost.M2。在二元分類情境下，M2 數學上等價於
-    AdaBoost.M1（SAMME），即：
+    Freund, Y., & Schapire, R. E. (1997).
+    "A decision-theoretic generalization of on-line learning and an
+    application to boosting." Journal of Computer and System Sciences,
+    55(1), 119–139.
+
+    在二元分類情境下，SAMME 與 AdaBoost.M1 數學上完全等價：
         α_t = 0.5 * ln((1 - ε_t) / ε_t)
     其中 ε_t 為加權分類錯誤率。
 
@@ -74,11 +89,16 @@ class BaseAdaBoostM2(BaseEstimator, ClassifierMixin):
     重採樣策略（SMOTE、RUS、ROSE 等），而不改動任何 Alpha 計算
     或權重更新邏輯。
 
+    本類別同時作為實驗的 Baseline（無重採樣）模型。
+
+    所有具有隨機性的元件均透過 random_state 統一控制，
+    確保實驗可重現性。
+
     權重防呆機制（weight isolation）
     ---------------------------------
     1. 弱分類器訓練：使用重採樣後的 ``(X_res, y_res, w_res)``。
     2. 錯誤率計算、Alpha 計算、權重更新：**只使用原始 (X_t, y_t, w_t)**。
-    這確保重採樣不會汙染 AdaBoost.M2 的理論收斂性。
+    這確保重採樣不會汙染 AdaBoost 的理論收斂性。
     """
 
     def __init__(
@@ -88,11 +108,11 @@ class BaseAdaBoostM2(BaseEstimator, ClassifierMixin):
         random_state: Optional[int] = None,
     ) -> None:
         self.n_estimators = n_estimators
-        # 預設使用 max_depth=5 的決策樹，近似文獻中使用的 C4.5
+        # 預設使用 max_depth=5 的決策樹（近似 C4.5 演算法），作為所有不平衡學習混合方法的控制變因基準
         self.base_estimator = (
             base_estimator
             if base_estimator is not None
-            else DecisionTreeClassifier(max_depth=5)
+            else DecisionTreeClassifier(max_depth=5, random_state=random_state)
         )
         self.random_state = random_state
 
@@ -116,17 +136,15 @@ class BaseAdaBoostM2(BaseEstimator, ClassifierMixin):
     # 主訓練迴圈
     # ----------------------------------------------------------
 
-    def fit(self, X: np.ndarray, y: np.ndarray) -> "BaseAdaBoostM2":
+    def fit(self, X: np.ndarray, y: np.ndarray) -> "StandardAdaBoost":
         """
-        執行 AdaBoost.M2 主迴圈。
+        執行標準 AdaBoost 主迴圈。
 
         Parameters
         ----------
         X : shape (n_samples, n_features)
         y : shape (n_samples,)，二元標籤（0 / 1）
         """
-        rng = np.random.default_rng(self.random_state)
-
         n_samples = len(y)
         self.classes_ = np.unique(y)
 
@@ -136,7 +154,7 @@ class BaseAdaBoostM2(BaseEstimator, ClassifierMixin):
         self.estimators_: list = []
         self.estimator_weights_: list[float] = []
 
-        # 儲存原始樣本索引，供重採樣追蹤使用
+        # 儲存原始資料副本，供 weight isolation 使用
         X_t, y_t = X.copy(), y.copy()
 
         for t in range(self.n_estimators):
@@ -150,6 +168,14 @@ class BaseAdaBoostM2(BaseEstimator, ClassifierMixin):
             # Step 2：訓練弱分類器（使用重採樣後的資料）
             # -----------------------------------------------
             clf = clone(self.base_estimator)
+            # 確保每輪使用不同但可重現的隨機種子
+            if hasattr(clf, "random_state"):
+                clf.set_params(
+                    random_state=(
+                        None if self.random_state is None
+                        else self.random_state + t
+                    )
+                )
             clf.fit(X_res, y_res, sample_weight=w_res)
 
             # -----------------------------------------------
@@ -175,8 +201,7 @@ class BaseAdaBoostM2(BaseEstimator, ClassifierMixin):
 
             # -----------------------------------------------
             # Step 5：更新原始樣本權重（weight isolation）
-            # w_{t+1,i} ∝ w_{t,i} * exp(-α_t * y_i_margin)
-            # 對二元標籤轉換：正確分類 → exp(-α)，錯誤 → exp(+α)
+            # 正確分類 → exp(-α)，錯誤分類 → exp(+α)
             # -----------------------------------------------
             y_signed = np.where(y_t == y_pred_orig, 1.0, -1.0)
             w_t = w_t * np.exp(-alpha_t * y_signed)
@@ -226,7 +251,7 @@ class BaseAdaBoostM2(BaseEstimator, ClassifierMixin):
 # 方法一：SMOTEBoost
 # ============================================================
 
-class SMOTEBoost(BaseAdaBoostM2):
+class SMOTEBoost(StandardAdaBoost):
     """
     SMOTEBoost：在每輪 AdaBoost 迴圈前以 SMOTE 過採樣少數類。
 
@@ -238,11 +263,11 @@ class SMOTEBoost(BaseAdaBoostM2):
 
     論文對應重點
     -----------
-    * 演算法基於 AdaBoost.M2（論文 Algorithm 1）。
+    * 演算法基於 AdaBoost（論文 Algorithm 1）。
     * 每輪開始時，以 SMOTE 對少數類進行過採樣，生成合成樣本。
     * 合成樣本賦予「均勻初始權重」（論文 Section 3.1），
       與原始樣本的現有權重合併後，重新正規化。
-    * 錯誤率計算與權重更新僅使用原始樣本（BaseAdaBoostM2 保證此點）。
+    * 錯誤率計算與權重更新僅使用原始樣本（StandardAdaBoost 保證此點）。
     """
 
     def __init__(
@@ -270,7 +295,10 @@ class SMOTEBoost(BaseAdaBoostM2):
         並為合成樣本賦予均勻初始權重，最後合併正規化。
         """
         n_orig = len(y)
-        smote = SMOTE(k_neighbors=self.k_neighbors, random_state=self.random_state)
+        smote = SMOTE(
+            k_neighbors=self.k_neighbors,
+            random_state=self.random_state,
+        )
 
         try:
             X_res, y_res = smote.fit_resample(X, y)
@@ -298,7 +326,7 @@ class SMOTEBoost(BaseAdaBoostM2):
 # 方法二：RUSBoost
 # ============================================================
 
-class RUSBoost(BaseAdaBoostM2):
+class RUSBoost(StandardAdaBoost):
     """
     RUSBoost：在每輪 AdaBoost 迴圈前以隨機欠採樣去除多數類樣本。
 
@@ -310,11 +338,11 @@ class RUSBoost(BaseAdaBoostM2):
 
     論文對應重點
     -----------
-    * 演算法同樣基於 AdaBoost.M2（論文 Algorithm 1）。
+    * 演算法同樣基於 AdaBoost（論文 Algorithm 1）。
     * 每輪對多數類隨機欠採樣（RUS），並透過 ``sample_indices_``
       取出對應保留的原始權重（論文 Section II-B 3rd step）。
     * 保留樣本的權重直接繼承原始權重並正規化（不重新初始化）。
-    * 錯誤率 / Alpha / 權重更新仍使用完整原始集（BaseAdaBoostM2 保證）。
+    * 錯誤率 / Alpha / 權重更新仍使用完整原始集（StandardAdaBoost 保證）。
     """
 
     def __init__(
@@ -408,7 +436,7 @@ class RHSBoost(RUSBoost):
         w: np.ndarray,
     ) -> Tuple[np.ndarray, np.ndarray, np.ndarray]:
         """
-        先 RUS 欠採樣（繼承RUSBoost._resample），
+        先 RUS 欠採樣（繼承 RUSBoost._resample），
         再對欠採樣結果執行 SMOTE 過採樣。
         """
         # Step 1：執行 RUS，取得欠採樣後的資料與繼承權重
@@ -417,7 +445,10 @@ class RHSBoost(RUSBoost):
         n_rus = len(y_rus)
 
         # Step 2：對欠採樣後的資料嘗試 SMOTE 過採樣
-        smote = SMOTE(k_neighbors=self.k_neighbors, random_state=self.random_state)
+        smote = SMOTE(
+            k_neighbors=self.k_neighbors,
+            random_state=self.random_state,
+        )
         try:
             X_res, y_res = smote.fit_resample(X_rus, y_rus)
         except ValueError:
@@ -441,7 +472,7 @@ class RHSBoost(RUSBoost):
 
 
 # ============================================================
-# 方法四：SUBoost（獨立實作，不繼承 BaseAdaBoostM2）
+# 方法四：SUBoost（獨立實作，不繼承 StandardAdaBoost）
 # ============================================================
 
 class SUBoost(BaseEstimator, ClassifierMixin):
@@ -457,7 +488,7 @@ class SUBoost(BaseEstimator, ClassifierMixin):
     論文對應重點
     -----------
     此方法在演算法層次修改了標準 AdaBoost 的 Alpha 計算，
-    因此**必須獨立撰寫 fit 迴圈**，不能繼承 BaseAdaBoostM2。
+    因此**必須獨立撰寫 fit 迴圈**，不能繼承 StandardAdaBoost。
 
     1. 拆分錯誤率：
        - ε_min：少數類的加權分類錯誤率
@@ -472,9 +503,17 @@ class SUBoost(BaseEstimator, ClassifierMixin):
        - 多數類樣本：w *= exp(-α_maj * margin)
 
     4. 選擇性欠採樣（每輪結尾）：
-       依當前樣本權重分佈，以 np.random.choice 從原始樣本中
+       依當前樣本權重分佈，以 rng.choice 從原始樣本中
        重採樣，讓高權重（難分類）樣本更容易被選上，實現
        「自動剃除容易分類的多數類」。
+
+    與原始文獻對齊說明
+    ------------------
+    * 演算法框架：完全對齊文獻的 Algorithm 1。
+    * 基分類器：文獻使用 C4.5（未修剪或淺層修剪），為對齊其實際複雜度，
+      此處與 StandardAdaBoost 及所有其他重採樣混合方法保持一致，
+      統一使用 sklearn.tree.DecisionTreeClassifier(max_depth=5) 作為逼近。
+      同樣保留 random_state 以確保實驗控制變因可重現。
     """
 
     def __init__(
@@ -488,7 +527,7 @@ class SUBoost(BaseEstimator, ClassifierMixin):
         self.base_estimator = (
             base_estimator
             if base_estimator is not None
-            else DecisionTreeClassifier(max_depth=5)
+            else DecisionTreeClassifier(max_depth=5, random_state=random_state)
         )
         # 每輪選擇性欠採樣保留的樣本數；None 表示保留原始樣本數的一半
         self.subsample_size = subsample_size
@@ -498,7 +537,8 @@ class SUBoost(BaseEstimator, ClassifierMixin):
         """
         執行 SUBoost 主訓練迴圈。
         """
-        rng = np.random.default_rng(self.random_state)
+        # 使用 np.random.RandomState 確保可重現性，避免污染全域隨機狀態
+        rng = np.random.RandomState(self.random_state)
 
         n_samples = len(y)
         self.classes_ = np.unique(y)
@@ -531,6 +571,13 @@ class SUBoost(BaseEstimator, ClassifierMixin):
             # Step 1：訓練弱分類器（使用當前訓練集）
             # -----------------------------------------------
             clf = clone(self.base_estimator)
+            if hasattr(clf, "random_state"):
+                clf.set_params(
+                    random_state=(
+                        None if self.random_state is None
+                        else self.random_state + t
+                    )
+                )
             clf.fit(X_curr, y_curr, sample_weight=w_curr)
 
             y_pred = clf.predict(X_curr)
@@ -622,7 +669,6 @@ class SUBoost(BaseEstimator, ClassifierMixin):
             self.estimators_, self.alphas_min_, self.alphas_maj_
         ):
             y_pred = clf.predict(X)
-            # 以 majority 的 alpha 作為「保守」分類權重
             # 少數類(1)預測使用 alpha_min，多數類(0)預測使用 alpha_maj
             alpha = np.where(y_pred == 1, a_min, a_maj)
             scores += alpha * np.where(y_pred == 1, 1.0, -1.0)
@@ -683,7 +729,11 @@ class SMOTECSL(BaseEstimator, ClassifierMixin):
         self.base_estimator = (
             base_estimator
             if base_estimator is not None
-            else SVC(probability=True, class_weight="balanced")
+            else SVC(
+                probability=True,
+                class_weight="balanced",
+                random_state=random_state,
+            )
         )
         self.k_neighbors = k_neighbors
         self.random_state = random_state
@@ -700,7 +750,10 @@ class SMOTECSL(BaseEstimator, ClassifierMixin):
         self.classes_ = np.unique(y)
 
         # Step 1：SMOTE 過採樣
-        smote = SMOTE(k_neighbors=self.k_neighbors, random_state=self.random_state)
+        smote = SMOTE(
+            k_neighbors=self.k_neighbors,
+            random_state=self.random_state,
+        )
         X_res, y_res = smote.fit_resample(X, y)
 
         # Step 2：clone 並訓練基分類器（cost-sensitive）
