@@ -47,7 +47,7 @@ def smote_keel_data(filepath, output_filepath):
     y = df.iloc[:, -1]
     
     # 初始化 SMOTE
-    smote = SMOTE(random_state=42)
+    smote = SMOTE(random_state=8)
     
     # 執行過採樣
     X_res, y_res = smote.fit_resample(X, y)
@@ -65,7 +65,7 @@ def smote_keel_data(filepath, output_filepath):
             row_str = ", ".join(features) + ", " + label + "\n"
             f.write(row_str)
 
-def main():
+def main(yeast_num):
     # 設定指定的資料夾
     # 因為題目是 yeast1_original_5_fold，這通常在 dataset 資料夾內
     input_dir = r"d:\404-Brain-not-found\dataset\yeast6-5-fold"
@@ -98,5 +98,5 @@ def main():
                 print(f"  -> 複製測試檔案時發生錯誤 {filename}: {str(e)}")
 
 if __name__ == '__main__':
-    main()
+    main("6")
     print("Done")

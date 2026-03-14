@@ -47,7 +47,7 @@ def borderline_smote_keel_data(filepath, output_filepath):
     y = df.iloc[:, -1]
     
     # 初始化 BorderlineSMOTE
-    bsmote = BorderlineSMOTE(random_state=42)
+    bsmote = BorderlineSMOTE(random_state=8)
     
     # 執行過採樣
     X_res, y_res = bsmote.fit_resample(X, y)

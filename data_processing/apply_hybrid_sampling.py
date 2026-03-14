@@ -49,8 +49,8 @@ def hybrid_sampling_keel_data(filepath, output_filepath):
     
     # Oversampling before undersampling (先過採樣，再降採樣)
     # 註解: 這裡您可以調整 sampling_strategy 參數來控制具體的採樣比例
-    ros = RandomOverSampler(random_state=42)
-    rus = RandomUnderSampler(random_state=42)
+    ros = RandomOverSampler(random_state=8)
+    rus = RandomUnderSampler(random_state=8)
     
     # 執行混合採樣
     X_res, y_res = ros.fit_resample(X, y)

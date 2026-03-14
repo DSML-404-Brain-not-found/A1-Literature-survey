@@ -84,7 +84,7 @@ def evaluate_models(base_path, models_to_run, random_seed=8,yeast="1"):
         
     return pd.DataFrame(final_averages)
 
-def run_experiment(run_knn_model=False, run_rf_model=False, run_svm_model=False, file_path = r'D:\404-Brain-not-found', csv_name="result", method="-",yeast="1"):
+def run_experiment(run_knn_model=False, run_rf_model=False, run_svm_model=False, file_path = r'D:\404-Brain-not-found', csv_name="result",csv_path = r'D:\404-Brain-not-found', method="-",yeast="1"):
     base_path = file_path
     models_to_run = {}
     
@@ -104,9 +104,9 @@ def run_experiment(run_knn_model=False, run_rf_model=False, run_svm_model=False,
     
     # Export to CSV
     # Name the file based on the models that were run to generate a single file per run
-    model_names_str = "_".join(models_to_run.keys())
+    # model_names_str = "_".join(models_to_run.keys())
     output_csv = csv_name + ".csv"
-    output_path = os.path.join(base_path, output_csv)
+    output_path = os.path.join(csv_path, output_csv)
     
     # Insert method column at the first position
     results_df.insert(0, 'Method', method)

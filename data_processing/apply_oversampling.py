@@ -47,7 +47,7 @@ def oversampling_keel_data(filepath, output_filepath):
     y = df.iloc[:, -1]
     
     # 初始化 RandomOverSampler
-    ros = RandomOverSampler(random_state=42)
+    ros = RandomOverSampler(random_state=8)
     
     # 執行過採樣
     X_res, y_res = ros.fit_resample(X, y)

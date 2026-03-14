@@ -47,7 +47,7 @@ def smote_enn_keel_data(filepath, output_filepath):
     y = df.iloc[:, -1]
     
     # 初始化 SMOTEENN
-    smote_enn = SMOTEENN(random_state=42)
+    smote_enn = SMOTEENN(random_state=8)
     
     # 執行混合採樣
     X_res, y_res = smote_enn.fit_resample(X, y)

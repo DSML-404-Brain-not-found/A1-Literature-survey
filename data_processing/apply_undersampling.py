@@ -47,7 +47,7 @@ def undersampling_keel_data(filepath, output_filepath):
     y = df.iloc[:, -1]
     
     # 初始化 RandomUnderSampler
-    rus = RandomUnderSampler(random_state=42)
+    rus = RandomUnderSampler(random_state=8)
     
     # 執行降採樣
     X_res, y_res = rus.fit_resample(X, y)
