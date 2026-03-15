@@ -43,6 +43,7 @@ from typing import Optional, Tuple
 from sklearn.base import BaseEstimator, ClassifierMixin, clone
 from sklearn.tree import DecisionTreeClassifier
 from sklearn.svm import SVC
+from sklearn.utils.class_weight import compute_class_weight
 from imblearn.over_sampling import SMOTE
 from imblearn.under_sampling import RandomUnderSampler
 
@@ -396,6 +397,8 @@ class RHSBoost(RUSBoost):
     RHSBoost：RUS + ROSE 結合的混合採樣 Boosting 方法。
     本實作以 SMOTE 模擬論文中的 ROSE（兩者均為基於核密度的合成過採樣）。
 
+    為避免開源套件預設之 `auto` 參數導致混合採樣失效，本實作顯式地（Explicitly）分離了欠採樣與過採樣比例。預設先以 RUS (`rus_strategy=0.5`) 保留適度比例的多數類資訊，再以 SMOTE (`smote_strategy='auto'`) 補足少數類，確保決策邊界能真正融合兩者優勢。
+
     文獻依據
     --------
     Gong, J., & Kim, H. (2017).
@@ -417,16 +420,18 @@ class RHSBoost(RUSBoost):
         self,
         n_estimators: int = 100,
         base_estimator: Optional[BaseEstimator] = None,
-        sampling_strategy: float | str = "auto",
+        rus_strategy: float = 0.5,
+        smote_strategy: float | str = "auto",
         k_neighbors: int = 5,
         random_state: Optional[int] = None,
     ) -> None:
         super().__init__(
             n_estimators=n_estimators,
             base_estimator=base_estimator,
-            sampling_strategy=sampling_strategy,
+            sampling_strategy=rus_strategy,
             random_state=random_state,
         )
+        self.smote_strategy = smote_strategy
         self.k_neighbors = k_neighbors
 
     def _resample(
@@ -446,6 +451,7 @@ class RHSBoost(RUSBoost):
 
         # Step 2：對欠採樣後的資料嘗試 SMOTE 過採樣
         smote = SMOTE(
+            sampling_strategy=self.smote_strategy,
             k_neighbors=self.k_neighbors,
             random_state=self.random_state,
         )
@@ -709,14 +715,9 @@ class SMOTECSL(BaseEstimator, ClassifierMixin):
 
     論文對應重點
     -----------
-    * 方法為單次 Pipeline，不含 Boosting 迴圈（論文 Section 3.2）。
-    * 步驟：
-        1. 在訓練集上執行 SMOTE 使類別平衡。
-        2. 使用 cost-sensitive 分類器（論文中為 SVM with class weights）
-           在平衡後的資料上訓練。
-    * 預設基分類器設定為 ``SVC(probability=True, class_weight='balanced')``，
-      對應論文「SVM + Cost-sensitive」的設定；
-      ``class_weight='balanced'`` 在訓練時自動依類別頻率反比設定代價。
+    為避免 SMOTE 平衡資料後導致 CSL 失效，本實作在重採樣前先依據「原始資料分佈」
+    計算出真實的 class_weight，並強制注入分類器中。此舉不僅保留了 SMOTE 的
+    特徵擴充優勢，更嚴格恪守了 CSL 基於真實先驗機率進行代價懲罰的數學定義。
     """
 
     def __init__(
@@ -749,15 +750,25 @@ class SMOTECSL(BaseEstimator, ClassifierMixin):
         """
         self.classes_ = np.unique(y)
 
-        # Step 1：SMOTE 過採樣
+        # 在執行 SMOTE 之前，先針對原始的 y 計算出真實的 class_weight
+        original_weights = compute_class_weight(
+            class_weight="balanced",
+            classes=self.classes_,
+            y=y
+        )
+        weight_dict = dict(zip(self.classes_, original_weights))
+
+        # Step 1：SMOTE 過採樣（還原標準設定，補至 1:1）
         smote = SMOTE(
+            sampling_strategy="auto",
             k_neighbors=self.k_neighbors,
             random_state=self.random_state,
         )
         X_res, y_res = smote.fit_resample(X, y)
 
-        # Step 2：clone 並訓練基分類器（cost-sensitive）
+        # Step 2：clone 並強制將原始的真實代價矩陣注入分類器中
         self.estimator_ = clone(self.base_estimator)
+        self.estimator_.set_params(class_weight=weight_dict)
         self.estimator_.fit(X_res, y_res)
 
         return self

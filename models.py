@@ -1,5 +1,6 @@
 import numpy as np
 import pandas as pd
+import json
 from sklearn.ensemble import RandomForestClassifier
 from sklearn.svm import SVC
 from sklearn.neighbors import KNeighborsClassifier
@@ -14,7 +15,11 @@ def evaluate_model(model, X_train, y_train, X_test, y_test):
     
     # Probabilities are needed for AUC, fall back to decision_function or dummy if unavailable
     if hasattr(model, "predict_proba"):
-        y_prob = model.predict_proba(X_test)[:, 1]
+        try:
+            # 防呆機制：確保取得正類的預測機率
+            y_prob = model.predict_proba(X_test)[:, 1]
+        except Exception:
+            y_prob = y_pred
     else:
         y_prob = y_pred
 
@@ -37,7 +42,10 @@ def evaluate_model(model, X_train, y_train, X_test, y_test):
     sensitivity = tp / (tp + fn) if (tp + fn) > 0 else 0.0
     g_mean = np.sqrt(sensitivity * specificity)
 
-    return acc, prec, rec, f1, roc_auc, pr_auc, g_mean, bacc
+    y_true_str = json.dumps(y_test.tolist())
+    y_score_str = json.dumps(y_prob.tolist())
+
+    return acc, prec, rec, f1, roc_auc, pr_auc, g_mean, bacc, y_true_str, y_score_str
 
 def run_rf(X_train, y_train, X_test, y_test, random_seed=8):
     model = RandomForestClassifier(random_state=random_seed)

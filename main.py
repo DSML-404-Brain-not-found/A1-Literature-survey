@@ -1,5 +1,6 @@
 import os
 import sys
+import json
 import numpy as np
 import pandas as pd
 from models import evaluate_model
@@ -17,16 +18,16 @@ RANDOM_SEED = 8
 # ----------------------------------------------------------
 # Data-level Methods
 # ----------------------------------------------------------
-if __name__ == "__main__":
-    file_path = r"D:\404-Brain-not-found"
-    csv_name = "result"
-    method = "-"
-    yeast_num = "1"
-    # yeast_num = "4"
-    # yeast_num = "6"
+# if __name__ == "__main__":
+#     file_path = r"D:\404-Brain-not-found"
+#     csv_name = "result"
+#     method = "-"
+#     yeast_num = "1"
+#     # yeast_num = "4"
+#     # yeast_num = "6"
     
-    # 使用以下變數的 True / False 來決定要執行哪些模型
-    run_experiment(run_knn_model=True, run_rf_model=True, run_svm_model=True, file_path=file_path,csv_name=csv_name,method=method,yeast=yeast_num)
+#     # 使用以下變數的 True / False 來決定要執行哪些模型
+#     run_experiment(run_knn_model=True, run_rf_model=True, run_svm_model=True, file_path=file_path,csv_name=csv_name,method=method,yeast=yeast_num)
 
 
 # ----------------------------------------------------------
@@ -82,6 +83,9 @@ def run_hybrid_methods_pipeline(
 
         all_results = {k: [] for k in metric_keys}
         fold_rows = []  # 記錄每個 fold 的原始指標列
+        
+        y_true_all = []
+        y_score_all = []
 
         for fold in range(1, 6):
             tra_file = os.path.join(fold_dir, f"{base_name}-5-{fold}tra.dat")
@@ -96,12 +100,18 @@ def run_hybrid_methods_pipeline(
 
             model = model_class(random_state=random_state, **kwargs)
             metrics = evaluate_model(model, X_train, y_train, X_test, y_test)
-            # metrics = (acc, prec, rec, f1, roc_auc, pr_auc, g_mean, bacc)
+            # metrics = (acc, prec, rec, f1, roc_auc, pr_auc, g_mean, bacc, y_true_str, y_score_str)
 
             row = {"Fold": fold}
             for k, v in zip(metric_keys, metrics):
                 row[k] = v
                 all_results[k].append(v)
+            
+            # 從 metrics 擷取最新增加的兩個元素並將 JSON 反序列化回來合併
+            if len(metrics) >= 10:
+                y_true_all.extend(json.loads(metrics[8]))
+                y_score_all.extend(json.loads(metrics[9]))
+
             fold_rows.append(row)
             print(f"    Fold {fold} 完成")
 
@@ -126,6 +136,8 @@ def run_hybrid_methods_pipeline(
             "Dataset": base_name,
         }
         row_entry.update(avg_metrics)
+        row_entry['y_true'] = y_true_all      # 不再轉成 JSON 字串，保持 List 結構
+        row_entry['y_score'] = y_score_all
         collected_rows.append(row_entry)
 
     return collected_rows
@@ -137,10 +149,14 @@ if __name__ == "__main__":
 
     # ── 要評估的資料集清單 ─────────────────────────────────────────────────
     base_names = [
-        "yeast1",
+		"yeast1",
         "yeast3",
         "yeast4",
         "yeast6",
+        # "phoneme", 
+        # "shuttle-c0-vs-c4", 
+        # "glass5", 
+        # "poker-8-9_vs_6"
     ]
 
     # ── 混合方法字典：名稱 → (類別, 參數) ────────────────────────────────
@@ -179,6 +195,8 @@ if __name__ == "__main__":
     }
 
     output_rows = []
+    curve_rows = []  # 用來儲存供繪製 ROC 曲線的展平資料
+
     for row in all_rows:
         method = row.get("Method", "-")
         model  = row.get("Model",  "-")
@@ -203,15 +221,39 @@ if __name__ == "__main__":
             out[dst_key] = row.get(src_key, np.nan)
         output_rows.append(out)
 
+        # 展開 y_true, y_score，每筆預測獨立存成一個 Row
+        y_trues = row.get("y_true", [])
+        y_scores = row.get("y_score", [])
+        for yt, ys in zip(y_trues, y_scores):
+            curve_rows.append({
+                "Method":        method,
+                "Model":         model,
+                "Methods+Model": methods_model,
+                "Dataset":       dataset,
+                "y_true":        yt,
+                "y_score":       ys
+            })
+
     final_df = pd.DataFrame(output_rows, columns=[
         "Method", "Model", "Methods+Model", "Dataset",
         "Accuracy", "Precision", "Recall", "F1-score",
-        "ROC-AUC", "PR-AUC", "G-Mean", "BAcc",
+        "ROC-AUC", "PR-AUC", "G-Mean", "BAcc"
+    ])
+
+    curve_df = pd.DataFrame(curve_rows, columns=[
+        "Method", "Model", "Methods+Model", "Dataset",
+        "y_true", "y_score"
     ])
 
     # ── 輸出統一結果 CSV ──────────────────────────────────────────────────
     output_dir = os.path.join(os.path.dirname(os.path.abspath(__file__)), "hybrid_method_result")
     os.makedirs(output_dir, exist_ok=True)
-    csv_path = os.path.join(output_dir, "hybrid_results.csv")
+    
+    csv_path = os.path.join(output_dir, "hybrid_results_metrics.csv")
     final_df.to_csv(csv_path, index=False, float_format="%.6f")
-    print(f"\n所有方法的結果已統一儲存至：{csv_path}")
+    
+    curve_path = os.path.join(output_dir, "hybrid_results_curves.csv")
+    curve_df.to_csv(curve_path, index=False, float_format="%.6f")
+    
+    print(f"\n[主報表] 效能指標結果已統一儲存至：{csv_path}")
+    print(f"[繪圖用] ROC預測機率結果已統一儲存至：{curve_path}")
