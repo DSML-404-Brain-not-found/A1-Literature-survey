@@ -207,6 +207,13 @@ Within this framework, we conduct a systematic evaluation of representative meth
 \section{Method}
 \label{sec:method}
 
+\begin{figure}[htbp]
+  \centering
+  \includegraphics[width=\columnwidth]{sheet/架構圖.png}
+  \caption{The framework of the proposed method.}
+  \label{fig:framework}
+\end{figure}
+
 \subsection{Data-level Methods}
 At the data pre-processing stage, techniques for addressing class imbalance can be broadly categorized into two types: non-synthetic and synthetic methods. Non-synthetic methods adjust the class distribution using existing data, leaving the underlying information unaltered. Conversely, synthetic methods mitigate the imbalance by generating new data samples using existing features.
 
@@ -1118,21 +1125,18 @@ This review systematically examines data-level, algorithm-level, and hybrid leve
 \begin{table}[htbp]
     \centering
     % 稍微增加行距，讓多行文字的表格看起來不那麼擁擠
-    \renewcommand{\arraystretch}{1.3} 
+    \renewcommand{\arraystretch}{1.2} 
     
-    % 設定三個欄位：姓名(寬 3.5cm)、工作內容(寬 8cm)、貢獻度(置中 c)
-    \begin{tabular}{|p{3.5cm}|p{8cm}|c|}
-        \hline
-        \textbf{Name} & \textbf{Work description} & \textbf{Contribution} \\
-        \hline
-        Chi-Wei, Peng \newline 114423004 & Introduction \newline Experiment: data set, evaluation metrics \newline Consolidate files & 25\% \\
-        \hline
-        Ting-Chun, Lin \newline 114423009 & Method: data level \newline Experiment: data level, overall result & 25\% \\
-        \hline
-        Chiu-Hsiang, Lin \newline 114423049 & Method: algorithm level \newline Experiment: algorithm level \newline Conclusion & 25\% \\
-        \hline
-        Chia-Chen, Lee \newline 114423050 & 1. Method: hybrid level \newline 2. Experiment: hybrid level & 25\% \\
-        \hline
+    % 使用 booktabs 風格，移除垂直線
+    \begin{tabular}{p{3cm} p{8.5cm} c}
+        \toprule
+        \textbf{Name} & \textbf{Work Description} & \textbf{Contribution} \\
+        \midrule
+        Chi-Wei, Peng & Introduction, Experiment (Datasets, Evaluation), Consolidation & 25\% \\
+        Ting-Chun, Lin & Methodology (Data Level), Experiment (Results) & 25\% \\
+        Chiu-Hsiang, Lin & Methodology (Algorithm Level), Experiment (Algorithm), Conclusion & 25\% \\
+        Chia-Chen, Lee & Methodology (Hybrid Level), Experiment (Hybrid) & 25\% \\
+        \bottomrule
     \end{tabular}
     
     \caption{Team Contribution and Work Distribution}
