@@ -77,11 +77,7 @@
 \newlabel{fig:yeast1_gmean}{{1}{7}{G-Mean between different techniques for Yeast1 dataset}{figure.caption.43}{}}
 \@writefile{lof}{\contentsline {figure}{\numberline {2}{\ignorespaces G-Mean between different techniques for Yeast3 dataset}}{7}{figure.caption.44}\protected@file@percent }
 \newlabel{fig:yeast3_gmean}{{2}{7}{G-Mean between different techniques for Yeast3 dataset}{figure.caption.44}{}}
-\@writefile{toc}{\contentsline {subsection}{\numberline {4.2}Algorithm Level}{7}{subsection.4.2}\protected@file@percent }
-\@writefile{toc}{\contentsline {subsection}{\numberline {4.3}Hybrid Method}{7}{subsection.4.3}\protected@file@percent }
-\@writefile{toc}{\contentsline {section}{\numberline {5}Experimental Results Summary}{7}{section.5}\protected@file@percent }
-\@writefile{toc}{\contentsline {section}{\numberline {6}Detailed Experimental Analysis}{7}{section.6}\protected@file@percent }
-\newlabel{sec:experimental_analysis}{{6}{7}{Detailed Experimental Analysis}{section.6}{}}
+\@writefile{toc}{\contentsline {subsubsection}{\numberline {4.1.1}Baseline vs. ROS}{7}{subsubsection.4.1.1}\protected@file@percent }
 \@writefile{lot}{\contentsline {table}{\numberline {2}{\ignorespaces Summary table}}{8}{table.caption.39}\protected@file@percent }
 \newlabel{tab:full_summary}{{2}{8}{Summary table}{table.caption.39}{}}
 \@writefile{lot}{\contentsline {table}{\numberline {3}{\ignorespaces Classification outcomes (G-Mean) for kNN algorithm}}{9}{table.caption.40}\protected@file@percent }
@@ -92,41 +88,63 @@
 \newlabel{tab:svm_gmean}{{5}{9}{Classification outcomes (G-Mean) for SVM algorithm}{table.caption.42}{}}
 \@writefile{lof}{\contentsline {figure}{\numberline {3}{\ignorespaces G-Mean between different techniques for Yeast4 dataset}}{9}{figure.caption.45}\protected@file@percent }
 \newlabel{fig:yeast4_gmean}{{3}{9}{G-Mean between different techniques for Yeast4 dataset}{figure.caption.45}{}}
-\@writefile{toc}{\contentsline {subsection}{\numberline {6.1}Data Level Methods}{9}{subsection.6.1}\protected@file@percent }
+\@writefile{toc}{\contentsline {subsubsection}{\numberline {4.1.2}ROS vs. SMOTE}{9}{subsubsection.4.1.2}\protected@file@percent }
 \@writefile{lof}{\contentsline {figure}{\numberline {4}{\ignorespaces G-Mean between different techniques for Yeast6 dataset}}{9}{figure.caption.46}\protected@file@percent }
 \newlabel{fig:yeast6_gmean}{{4}{9}{G-Mean between different techniques for Yeast6 dataset}{figure.caption.46}{}}
-\@writefile{toc}{\contentsline {subsection}{\numberline {6.2}Algorithm Level Methods}{9}{subsection.6.2}\protected@file@percent }
-\@writefile{toc}{\contentsline {subsubsection}{\numberline {6.2.1}Visual Analysis of Algorithm-Level Methods}{9}{subsubsection.6.2.1}\protected@file@percent }
-\@writefile{lot}{\contentsline {table}{\numberline {6}{\ignorespaces Summary of Experimental Results (Data-Level Methods)}}{10}{table.caption.47}\protected@file@percent }
-\newlabel{tab:datalevel_summary}{{6}{10}{Summary of Experimental Results (Data-Level Methods)}{table.caption.47}{}}
-\@writefile{toc}{\contentsline {subsection}{\numberline {6.3}Hybrid Methods}{10}{subsection.6.3}\protected@file@percent }
-\@writefile{toc}{\contentsline {subsubsection}{\numberline {6.3.1}Visual Analysis of Hybrid Methods}{10}{subsubsection.6.3.1}\protected@file@percent }
-\@writefile{toc}{\contentsline {subsubsection}{\numberline {6.3.2}Impact of SMOTE Variants in Hybrid Frameworks}{10}{subsubsection.6.3.2}\protected@file@percent }
-\@writefile{toc}{\contentsline {subsubsection}{\numberline {6.3.3}ROC Curve Analysis for Hybrid Frameworks}{10}{subsubsection.6.3.3}\protected@file@percent }
+\@writefile{toc}{\contentsline {subsubsection}{\numberline {4.1.3}SMOTE vs. SMOTE-ENN}{10}{subsubsection.4.1.3}\protected@file@percent }
+\@writefile{toc}{\contentsline {subsubsection}{\numberline {4.1.4}Different classifiers}{10}{subsubsection.4.1.4}\protected@file@percent }
+\@writefile{toc}{\contentsline {paragraph}{(i) SVM}{10}{section*.47}\protected@file@percent }
+\@writefile{toc}{\contentsline {paragraph}{(ii) KNN}{10}{section*.48}\protected@file@percent }
+\@writefile{toc}{\contentsline {paragraph}{(iii)Random Forest}{10}{section*.49}\protected@file@percent }
+\@writefile{toc}{\contentsline {subsection}{\numberline {4.2}Algorithm Level}{10}{subsection.4.2}\protected@file@percent }
+\@writefile{toc}{\contentsline {subsubsection}{\numberline {4.2.1}Random Forest Group}{10}{subsubsection.4.2.1}\protected@file@percent }
+\@writefile{lof}{\contentsline {figure}{\numberline {5}{\ignorespaces Comparison of Recall Performance between Base-line RF and Cost-Sensitive RF Across Datasets}}{10}{figure.caption.50}\protected@file@percent }
+\newlabel{fig:rf_recall_compare}{{5}{10}{Comparison of Recall Performance between Base-line RF and Cost-Sensitive RF Across Datasets}{figure.caption.50}{}}
+\@writefile{toc}{\contentsline {subsubsection}{\numberline {4.2.2}XGBoost Group}{10}{subsubsection.4.2.2}\protected@file@percent }
+\@writefile{toc}{\contentsline {subsubsection}{\numberline {4.2.3}AdaBoost Group}{10}{subsubsection.4.2.3}\protected@file@percent }
+\@writefile{lof}{\contentsline {figure}{\numberline {6}{\ignorespaces Radar Chart comparing the average performance of Baseline XGBoost and Cost-Sensitive XGBoost across all datasets}}{11}{figure.caption.51}\protected@file@percent }
+\newlabel{fig:xgboost_average_radar}{{6}{11}{Radar Chart comparing the average performance of Baseline XGBoost and Cost-Sensitive XGBoost across all datasets}{figure.caption.51}{}}
+\@writefile{lof}{\contentsline {figure}{\numberline {7}{\ignorespaces The extreme precision-recall trade-off in AdaBoost after applying the cost-sensitive mechanism}}{11}{figure.caption.52}\protected@file@percent }
+\newlabel{fig:adaboost_tradeoff}{{7}{11}{The extreme precision-recall trade-off in AdaBoost after applying the cost-sensitive mechanism}{figure.caption.52}{}}
+\@writefile{toc}{\contentsline {subsection}{\numberline {4.3}Hybrid Method}{11}{subsection.4.3}\protected@file@percent }
+\@writefile{toc}{\contentsline {section}{\numberline {5}Experimental Results Summary}{11}{section.5}\protected@file@percent }
+\@writefile{toc}{\contentsline {subsubsection}{\numberline {5.0.1}Experiment 1: Data-level methods under a Boosting framework}{11}{subsubsection.5.0.1}\protected@file@percent }
+\@writefile{toc}{\contentsline {paragraph}{(i) Most Stable Method Across IR Ranges: SMOTEBoost}{11}{section*.53}\protected@file@percent }
+\@writefile{toc}{\contentsline {paragraph}{(ii) Performance Limitation under High IR: RUSBoost}{12}{section*.54}\protected@file@percent }
+\@writefile{toc}{\contentsline {subsubsection}{\numberline {5.0.2}Experiment 2: Algorithm-level strategies combined with SMOTE}{12}{subsubsection.5.0.2}\protected@file@percent }
+\@writefile{toc}{\contentsline {paragraph}{(i) Integration Effect of SMOTEBoost}{12}{section*.55}\protected@file@percent }
+\@writefile{toc}{\contentsline {subsection}{\numberline {5.1}Overall Result}{12}{subsection.5.1}\protected@file@percent }
+\@writefile{toc}{\contentsline {section}{\numberline {6}Conclusion}{12}{section.6}\protected@file@percent }
+\@writefile{toc}{\contentsline {section}{\numberline {7}Reference}{12}{section.7}\protected@file@percent }
+\@writefile{toc}{\contentsline {section}{\numberline {8}Appendix}{12}{section.8}\protected@file@percent }
+\@writefile{toc}{\contentsline {section}{\numberline {9}WORK DIVISION}{12}{section.9}\protected@file@percent }
+\@writefile{toc}{\contentsline {section}{\numberline {10}Detailed Experimental Analysis}{12}{section.10}\protected@file@percent }
+\newlabel{sec:experimental_analysis}{{10}{12}{Detailed Experimental Analysis}{section.10}{}}
+\@writefile{toc}{\contentsline {subsection}{\numberline {10.1}Data Level Methods}{12}{subsection.10.1}\protected@file@percent }
+\@writefile{toc}{\contentsline {subsection}{\numberline {10.2}Hybrid Methods}{12}{subsection.10.2}\protected@file@percent }
+\@writefile{toc}{\contentsline {subsubsection}{\numberline {10.2.1}Visual Analysis of Hybrid Methods}{12}{subsubsection.10.2.1}\protected@file@percent }
+\@writefile{toc}{\contentsline {subsubsection}{\numberline {10.2.2}Impact of SMOTE Variants in Hybrid Frameworks}{12}{subsubsection.10.2.2}\protected@file@percent }
 \bibstyle{ACM-Reference-Format}
 \bibdata{sample-base}
 \newlabel{tocindent-1}{0pt}
 \newlabel{tocindent0}{0pt}
-\newlabel{tocindent1}{4.185pt}
-\newlabel{tocindent2}{10.34999pt}
-\newlabel{tocindent3}{18.198pt}
+\newlabel{tocindent1}{8.37pt}
+\newlabel{tocindent2}{14.53499pt}
+\newlabel{tocindent3}{22.194pt}
 \newlabel{tocindent4}{18.198pt}
 \newlabel{tocindent5}{0pt}
-\@writefile{lot}{\contentsline {table}{\numberline {7}{\ignorespaces The complete experiment result of hybrid methods.}}{11}{table.caption.51}\protected@file@percent }
-\newlabel{tab:hybrid_summary}{{7}{11}{The complete experiment result of hybrid methods}{table.caption.51}{}}
-\@writefile{lof}{\contentsline {figure}{\numberline {5}{\ignorespaces Comparison of Recall Performance between Baseline RF and Cost-Sensitive RF Across Datasets }}{11}{figure.caption.48}\protected@file@percent }
-\newlabel{fig:algorithm_recall}{{5}{11}{Comparison of Recall Performance between Baseline RF and Cost-Sensitive RF Across Datasets }{figure.caption.48}{}}
-\@writefile{lof}{\contentsline {figure}{\numberline {6}{\ignorespaces The extreme precision-recall trade-off in AdaBoost after applying the cost-sensitive mechanism. }}{11}{figure.caption.49}\protected@file@percent }
-\newlabel{fig:adaboost_tradeoff}{{6}{11}{The extreme precision-recall trade-off in AdaBoost after applying the cost-sensitive mechanism. }{figure.caption.49}{}}
-\@writefile{lof}{\contentsline {figure}{\numberline {9}{\ignorespaces Experiment 2 F1-score Comparison Across Datasets.}}{12}{figure.caption.53}\protected@file@percent }
-\newlabel{fig:smote_variants}{{9}{12}{Experiment 2 F1-score Comparison Across Datasets}{figure.caption.53}{}}
-\@writefile{lof}{\contentsline {figure}{\numberline {7}{\ignorespaces Radar Chart comparing the average performance of Baseline XGBoost and Cost-Sensitive XGBoost across all datasets.}}{12}{figure.caption.50}\protected@file@percent }
-\newlabel{fig:xgboost_radar}{{7}{12}{Radar Chart comparing the average performance of Baseline XGBoost and Cost-Sensitive XGBoost across all datasets}{figure.caption.50}{}}
-\@writefile{lof}{\contentsline {figure}{\numberline {8}{\ignorespaces Experiment 1 F1-score Comparison Across Datasets.}}{12}{figure.caption.52}\protected@file@percent }
-\newlabel{fig:hybrid_boosting}{{8}{12}{Experiment 1 F1-score Comparison Across Datasets}{figure.caption.52}{}}
-\@writefile{toc}{\contentsline {subsection}{\numberline {6.4}Summary Statement}{12}{subsection.6.4}\protected@file@percent }
-\@writefile{toc}{\contentsline {section}{References}{12}{section*.56}\protected@file@percent }
-\@writefile{lof}{\contentsline {figure}{\numberline {10}{\ignorespaces ROC Curves Comparison for Each Dataset.}}{13}{figure.caption.54}\protected@file@percent }
-\newlabel{fig:roc_curves}{{10}{13}{ROC Curves Comparison for Each Dataset}{figure.caption.54}{}}
-\newlabel{TotPages}{{13}{13}{}{page.13}{}}
-\gdef \@abspage@last{13}
+\@writefile{lot}{\contentsline {table}{\numberline {6}{\ignorespaces Summary of Experimental Results (Data-Level Methods)}}{13}{table.caption.56}\protected@file@percent }
+\newlabel{tab:datalevel_summary}{{6}{13}{Summary of Experimental Results (Data-Level Methods)}{table.caption.56}{}}
+\@writefile{lof}{\contentsline {figure}{\numberline {8}{\ignorespaces Comparison of Recall Performance between Baseline RF and Cost-Sensitive RF Across Datasets }}{13}{figure.caption.57}\protected@file@percent }
+\newlabel{fig:algorithm_recall}{{8}{13}{Comparison of Recall Performance between Baseline RF and Cost-Sensitive RF Across Datasets }{figure.caption.57}{}}
+\@writefile{toc}{\contentsline {subsubsection}{\numberline {10.2.3}ROC Curve Analysis for Hybrid Frameworks}{13}{subsubsection.10.2.3}\protected@file@percent }
+\@writefile{lot}{\contentsline {table}{\numberline {7}{\ignorespaces The complete experiment result of hybrid methods.}}{14}{table.caption.58}\protected@file@percent }
+\newlabel{tab:hybrid_summary}{{7}{14}{The complete experiment result of hybrid methods}{table.caption.58}{}}
+\@writefile{lof}{\contentsline {figure}{\numberline {9}{\ignorespaces Experiment 1 F1-score Comparison Across Datasets.}}{14}{figure.caption.59}\protected@file@percent }
+\newlabel{fig:experiment1_f1}{{9}{14}{Experiment 1 F1-score Comparison Across Datasets}{figure.caption.59}{}}
+\@writefile{toc}{\contentsline {subsection}{\numberline {10.3}Summary Statement}{14}{subsection.10.3}\protected@file@percent }
+\@writefile{toc}{\contentsline {section}{References}{14}{section*.63}\protected@file@percent }
+\@writefile{lof}{\contentsline {figure}{\numberline {11}{\ignorespaces ROC Curves Comparison for Each Dataset.}}{16}{figure.caption.61}\protected@file@percent }
+\newlabel{fig:roc_curves}{{11}{16}{ROC Curves Comparison for Each Dataset}{figure.caption.61}{}}
+\newlabel{TotPages}{{17}{17}{}{page.17}{}}
+\gdef \@abspage@last{17}

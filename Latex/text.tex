@@ -70,6 +70,12 @@
 \settopmatter{printacmref=false, authorsperrow=4} % 移除 ACM Reference Format 並強制每排 4 位作者
 \setcopyright{none}           % 移除版權宣告與分隔線
 \renewcommand\footnotetextcopyrightpermission[1]{} % 強制隱藏底部許可文字
+\acmConference[]{}{}{}
+\acmBooktitle{}
+\acmDOI{}
+\acmISBN{}
+\acmPrice{}
+\settopmatter{printccs=false, printacmref=false}
 
 
 %%
@@ -828,29 +834,207 @@ To facilitate an in-depth analysis utilizing the G-Mean as the core evaluation m
 \end{figure}
 
 \subsubsection{Baseline vs. ROS}
+When processing imbalanced data, baseline models exhibit a pronounced ``majority class bias.'' Driven by the objective to maximize overall accuracy, their decision boundaries systematically skew toward the majority class. This phenomenon is distinctly evident in the G-Mean metric: in the highly imbalanced yeast4 and extremely imbalanced yeast6 datasets, the G-Mean of the SVM classifier plummets to 0. This indicates a complete failure of the SVM to recognize the minority class. Similarly, the Random Forest classifier achieves a meager G-Mean of only 0.3206 on the yeast4 dataset. 
+
+By applying ROS to forcefully balance the class distribution, classifiers are compelled to capture the features of the minority class. This yields substantial performance gains across different algorithms: in the yeast4 dataset, the G-Mean of kNN surges from 0.3451 to 0.7068, Random Forest improves from 0.3206 to 0.3781, and the previously failing SVM skyrockets from 0 to 0.7965. These results empirically confirm that ROS effectively disrupts the models' reliance on the majority class. 
 
 \subsubsection{ROS vs. SMOTE}
+Although ROS improves the G-Mean, its mechanism of merely duplicating existing minority instances makes the model highly susceptible to ``memorization''—an overfitting state where the model fails to extract generalizable features. 
+
+In contrast, SMOTE generates novel instances via interpolation, establishing more resilient decision boundaries and effectively mitigating the overfitting dilemma inherent in exact duplication. Examining the individual classifier metrics, SMOTE consistently outperforms ROS across the board. In the yeast4 dataset, SMOTE significantly boosts the G-Mean of Random Forest to 0.6667 (compared to ROS's 0.3781) and KNN to 0.7571 (compared to ROS's 0.7068), while SVM also sees a slight increase to 0.7980. Similarly, in the yeast6 dataset, SMOTE elevates the Random Forest G-Mean from 0.6752 to 0.7705. This demonstrates that SMOTE's synthetic generation strategy successfully enables various algorithms to learn more robust classification boundaries.
 
 
 \subsubsection{SMOTE vs. SMOTE-ENN}
+SMOTE-ENN integrates oversampling with the ENN algorithm to aggressively clean decision boundaries, pushing the classifiers' sensitivity to the minority class to its absolute peak. While this rigorous cleaning strategy may entail a sacrifice in precision, SMOTE-ENN emerges as the optimal data-level solution when evaluated strictly by G-Mean—a metric that holistically reflects the balance between binary classes. 
+
+In the vast majority of scenarios, SMOTE-ENN yields the highest G-Mean scores for all three classifiers. In the highly imbalanced yeast4 dataset, post-SMOTE-ENN processing drives the G-Mean of all classifiers above 0.72: KNN reaches 0.8071, Random Forest hits 0.7208, and SVM achieves 0.8029 (all outperforming standard SMOTE). Furthermore, in the extremely imbalanced yeast6 dataset, SMOTE-ENN endows the classifiers with exceptional minority-class detection capabilities: the G-Mean for KNN peaks at 0.8624, Random Forest at 0.8056, and SVM reaches an impressive 0.8724. 
 
 \subsubsection{Different classifiers}
+
+\paragraph{(i) SVM}
+SVM is highly susceptible to class imbalance, suffering complete failure on raw, highly imbalanced data (yeast4, yeast6). Yet, when integrated with data-level balancing techniques, it often achieves the highest G-Mean, demonstrating superior boundary-formation capabilities on balanced feature spaces. 
+
+\paragraph{(ii) KNN}
+KNN exhibits the strongest baseline survival capability, retaining the highest minority-class sensitivity even on extremely imbalanced raw data. When optimized with SMOTE-ENN, it delivers top-tier performance regardless of the severity of the imbalance. 
+
+\paragraph{(iii)Random Forest}
+While highly robust in mildly imbalanced scenarios (yeast1), RF is particularly vulnerable to the overfitting induced by naive Random Oversampling in highly skewed datasets. Its success heavily relies on generative techniques like SMOTE to introduce novel features into its ensemble structure. 
 
 
 
 \subsection{Algorithm Level}
 
+\subsubsection{Random Forest Group}
+The experimental results indicate that its improvement in predicting the minority class is extremely limited. Observing the data in Figure 6, the average recall of the Weighted Random Forest across the four datasets increased only marginally from the standard version's 0.424 to 0.432, while the average G-Mean even slightly decreased from 0.600 to 0.595. Notably, in the yeast4 dataset, the recall of the Weighted Random Forest actually dropped from 0.136 to 0.116, accompanied by a decline in the overall F1-Score. 
+
+\begin{figure}[h]
+  \centering
+  \begin{tikzpicture}
+    \begin{axis}[
+        ybar,
+        height=5.5cm,
+        width=0.48\textwidth,
+        bar width=8pt,
+        ylabel={Recall},
+        symbolic x coords={yeast1,yeast3,yeast4,yeast6},
+        xtick=data,
+        ymin=0, ymax=1.0,
+        legend style={at={(0.5,-0.25)}, anchor=north, legend columns=-1, font=\tiny, draw=none},
+        ymajorgrids=true,
+        grid style={dashed,gray!30},
+        title={Recall Performance (RF vs. Weighted RF)},
+        title style={font=\footnotesize},
+        label style={font=\tiny},
+        tick label style={font=\tiny},
+      ]
+      \addplot+ [fill=RoyalBlue] coordinates {(yeast1,0.4803) (yeast3,0.6805) (yeast4,0.1364) (yeast6,0.4000)};
+      \addplot+ [fill=ScholarRed] coordinates {(yeast1,0.4825) (yeast3,0.6992) (yeast4,0.1164) (yeast6,0.4286)};
+      \legend{Baseline RF, Cost-Sensitive RF}
+    \end{axis}
+  \end{tikzpicture}
+  \caption{Comparison of Recall Performance between Base-line RF and Cost-Sensitive RF Across Datasets}
+  \label{fig:rf_recall_compare}
+\end{figure}
+
+Due to the parallel majority voting mechanism of the Bagging framework, even if the penalty weight for the minority class is increased during tree construction, the decision trees tend to merely isolate them in extremely deep leaf nodes. During the final majority voting integration, these weak minority class predictions are still diluted by the overwhelmingly large majority class, leading to the failure of the cost-sensitive mechanism. 
+
+Furthermore, although the imbalance ratio of yeast4 is lower than that of yeast6, its performance is significantly worse, highlighting that ``Data Complexity'' is a more decisive factor than the mere imbalance ratio. It is inferred that yeast4 suffers from more severe class overlap and small disjuncts problems. To purify these disjuncts, decision trees are highly prone to overfitting, and these scattered correct predictions are easily overridden by the majority class during the voting phase. This further explains why the model's performance severely degrades when facing highly complex data. 
+
+\subsubsection{XGBoost Group}
+Cost-Sensitive XGBoost demonstrated the most outstanding ``balanced adaptability'' in this experiment, successfully achieving an optimal dynamic balance between Precision and Recall (Figure 7). The data shows that after introducing the cost-sensitive mechanism, the average recall of XGBoost significantly increased from 0.499 to 0.588, while maintaining a highly competitive F1-Score (averaging 0.568, the highest among all algorithm-level experiments). Taking the highly difficult yeast4 as an example, the recall of the standard XGBoost was only 0.276, but it climbed significantly to 0.395 after adding the cost-sensitive mechanism, and the G-Mean also vastly improved from 0.502 to 0.607. 
+
+\begin{figure}[h]
+    \centering
+    \begin{tikzpicture}[scale=3.5]
+        \foreach \r in {0.2, 0.4, 0.6, 0.8} {
+            \draw[gray!30, loosely dashed] (0,0) circle (\r);
+            \node[gray!60, anchor=south west, inner sep=1pt, font=\tiny] at (45:\r) {\r};
+        }
+        \foreach \angle/\label in {90/Recall, 0/Precision, 270/F1-Score, 180/G-Mean} {
+            \draw[gray!70, ->] (0,0) -- (\angle:0.9);
+            \node[font=\tiny, text=black!90, font=\bfseries] at (\angle:1.0) {\label};
+        }
+        \coordinate (B_Recall)    at (90:0.499);
+        \coordinate (B_Precision) at (0:0.586);
+        \coordinate (B_F1)        at (270:0.529);
+        \coordinate (B_GMean)     at (180:0.672);
+        \coordinate (C_Recall)    at (90:0.588);
+        \coordinate (C_Precision) at (0:0.562);
+        \coordinate (C_F1)        at (270:0.568);
+        \coordinate (C_GMean)     at (180:0.729);
+        \draw[thick, blue!80, fill=blue!20, fill opacity=0.4] (B_Recall) -- (B_Precision) -- (B_F1) -- (B_GMean) -- cycle;
+        \draw[thick, red!80, fill=red!20, fill opacity=0.4] (C_Recall) -- (C_Precision) -- (C_F1) -- (C_GMean) -- cycle;
+        \node[font=\tiny, blue!80, align=left, anchor=west] at (0.3,-0.8) {Baseline XGBoost};
+        \node[font=\tiny, red!80, align=left, anchor=west] at (0.3,-0.9) {Cost-Sensitive XGBoost};
+    \end{tikzpicture}
+    \caption{Radar Chart comparing the average performance of Baseline XGBoost and Cost-Sensitive XGBoost across all datasets}
+    \label{fig:xgboost_average_radar}
+\end{figure}
+
+This result reflects the structural advantage of XGBoost in handling class imbalance through gradient compensation under the Boosting framework. The scale\_pos\_weight parameter directly acts on the first-order gradient calculation of the loss function, proportionally amplifying the correction signal for the minority class in each iteration. Meanwhile, XGBoost's regularization design helps suppress over-compensation, allowing the model to improve the recall of the minority class while maintaining the overall Precision level. 
+
+\subsubsection{AdaBoost Group}
+
+Cost-Sensitive AdaBoost presented highly polarized performance characteristics, demonstrating a severe trade-off effect of ``exchanging precision for extreme recall.'' The experimental results (Figure 8) show that after introducing the cost-sensitive mechanism, the average recall of AdaBoost experienced explosive growth, soaring from 0.469 to an overall highest of 0.789; the average BAcc also jumped from 0.716 to 0.812. However, the cost of this excellent identification rate was the severe destruction of Precision, with its average value plummeting by half from 0.617 to 0.334. In the extremely imbalanced yeast6 dataset, although its recall reached 0.800, the Precision was reduced to a mere 0.161.
+
+\begin{figure}[h]
+    \centering
+    \begin{tikzpicture}
+        \begin{axis}[
+            width=0.48\textwidth,
+            height=6cm,
+            ymin=0.2, ymax=0.9,
+            ytick={0.2, 0.4, 0.6, 0.8},
+            ylabel={Score},
+            symbolic x coords={Baseline AdaBoost, Cost-Sensitive AdaBoost},
+            xtick=data,
+            enlarge x limits=0.4,
+            ymajorgrids=true,
+            grid style=dashed,
+            legend style={at={(0.5,-0.25)}, anchor=north, legend columns=2, draw=none, font=\tiny},
+            nodes near coords,
+            every node near coord/.append style={font=\tiny\bfseries},
+            tick label style={font=\tiny},
+        ]
+        \addplot[color=blue!80, mark=*, very thick] coordinates {(Baseline AdaBoost, 0.469) (Cost-Sensitive AdaBoost, 0.789)};
+        \addlegendentry{Recall}
+        \addplot[color=red!80, mark=square*, very thick] coordinates {(Baseline AdaBoost, 0.617) (Cost-Sensitive AdaBoost, 0.334)};
+        \addlegendentry{Precision}
+        \end{axis}
+    \end{tikzpicture}
+    \caption{The extreme precision-recall trade-off in AdaBoost after applying the cost-sensitive mechanism}
+    \label{fig:adaboost_tradeoff}
+\end{figure}
+
+This phenomenon stems from the interaction between the implementation method of this study and the iterative mechanism of AdaBoost. By setting the class\_weight of the underlying weak learner (Decision Stump) to balanced, this experiment assigned a higher impurity penalty weight to minority class nodes during the growth of each decision tree; concurrently, AdaBoost's iterative logic continuously compounds the weights of misclassified samples in every round. The superimposition of these two factors causes the weights of minority class samples near the decision boundary to be continuously and cumulatively amplified during the iteration process. This forces the model to drastically expand the decision boundary of the minority class, ultimately leading to a large number of majority class samples being misclassified as the minority class, causing Precision to collapse significantly. 
+
+Summarizing the above experimental results, it is evident that the effectiveness of the cost-sensitive mechanism heavily relies on the underlying algorithm framework. The Bagging framework exhibits resistance to weight adjustment, making it difficult to effectively reverse the imbalance disadvantage; whereas the Boosting framework is extremely sensitive to the cost matrix. Among them, XGBoost achieved the best overall balance (optimal F1-Score performance) thanks to its gradient optimization and regularization design. Conversely, AdaBoost, due to the continuous compounding of weights, transformed into an extreme filter for capturing the minority class (strongest Recall performance). This confirms that in imbalanced classification tasks, researchers must determine the most appropriate framework and level strategy based on the tolerance for ``False Negatives'' and ``False Positives'' in practical scenarios. 
+
+
+
+
+
 \subsection{Hybrid Method}
+
+To systematically evaluate the effectiveness of different hybrid learning strategies, two core experiments were conducted in this section.  
+
+Experiment 1 investigates the influence of different data-level sampling techniques within a boosting framework, while Experiment 2 explores algorithm-level mechanisms when SMOTE is adopted as the core sampling strategy. The complete experiment result with applying several base classifiers is demonstrated as Table 6. 
 
 \section{Experimental Results Summary}
 
 This section provides a comprehensive summary of the experimental results across all evaluated methods and datasets.
 
+\subsubsection{Experiment 1: Data-level methods under a Boosting framework}
+
+Within an identical boosting framework, different resampling strategies can significantly influence the learning process and decision boundaries of classifiers. The experimental results indicate that although hybrid methods generally demonstrate strong performance, their effectiveness largely depends on the adopted resampling strategy. As illustrated in Figure 9, the performance differences among methods remain relatively small under low-to-moderate imbalance ratios. However, as the imbalance ratio increases, the performance gap between different data-level methods becomes more pronounced.  
+
+\paragraph{(i) Most Stable Method Across IR Ranges: SMOTEBoost}
+
+SMOTEBoost maintains relatively stable F1-score performance across most datasets. In the most extremely imbalanced dataset in this study, yeast6 (IR = 41.4), most competing methods produced F1-scores below 0.5 (Figure 9), whereas SMOTEBoost achieved an F1-score of 0.5539 and an ROC-AUC of 0.9147 (Table 6). 
+
+Further insights can be obtained from the ROC curves presented in Figure 10 ROC curves comparison for each dataset, which illustrate the discriminative ability of different methods across representative datasets. Compared with other approaches, SMOTEBoost consistently achieves ROC curves that are closer to the upper-left corner of the plot, indicating a better trade-off between true positive rate and false positive rate. This advantage is particularly noticeable in highly imbalanced datasets, where several competing methods exhibit steeper performance degradation. The ROC curves therefore further support the observation that integrating minority sample generation with boosting-based iterative learning can significantly improve classification robustness under severe class imbalance. 
+
+\paragraph{(ii) Performance Limitation under High IR: RUSBoost}
+
+In contrast, RUSBoost exhibits a substantial decline in performance under extreme imbalance conditions. As reported in , Table 6 in the yeast6 dataset the precision of RUSBoost drops to 0.0856, resulting in an F1-score of 0.1548. This degradation can also be observed in the F1-score comparison shown in Figure 9. 
+
+This result suggests that RUS removes a large portion of majority-class samples in order to achieve class balance, which leads to the loss of potentially useful information during model training. 
+
+\subsubsection{Experiment 2: Algorithm-level strategies combined with SMOTE}
+
+After confirming the effectiveness of SMOTE in expanding minority-class samples, Experiment 2 further investigates which algorithm-level methods can best complement SMOTE.  
+
+The results indicate that applying SMOTE as a standalone preprocessing step can improve recall, but in some datasets precision decreases, limiting improvements in overall F1-score (Figure 11).  
+
+\paragraph{(i) Integration Effect of SMOTEBoost}
+
+As illustrated in Figure 11, SMOTEBoost achieves higher F1-scores in most datasets, and Table 6 shows that its ROC-AUC values also remain relatively high. By integrating SMOTE into the boosting iterations, the model can iteratively focus on the most difficult minority instances.  
+
+Figure 12 presents the G-Mean values across datasets in the form of a heatmap. The results indicate that SMOTEBoost maintains relatively stable G-Mean values across datasets, suggesting a better balance between minority and majority classification performance. 
+
+Taken together, the results from the two experiments provide a consistent observation regarding the limitations of Accuracy in imbalanced classification tasks. As the imbalance ratio increases, Accuracy remains consistently high (approximately 0.96–0.98) even when the model’s ability to correctly identify minority-class instances deteriorates substantially (Table 6). In contrast, the metrics adopted in this study—F1-score, ROC-AUC, and G-Mean—clearly capture the decline in minority-class performance. This contrast highlights the importance of adopting more informative evaluation metrics when analyzing models under severe class imbalance. 
+
+\subsection{Overall Result}
+
+Based on the experimental results above, we can draw the following conclusions: 
+
+\begin{itemize}
+    \item Algorithm Selection based on Imbalance Ratio (IR) 
+          For datasets with low IR, relatively straightforward techniques such as data-level SMOTE or algorithm-level Cost-Sensitive XGBoost are sufficient to achieve a good classification balance. However, for high to extreme IR tasks, models require robust Hybrid methods like SMOTEBoost to simultaneously generate minority features and boost learning. Furthermore, if the task strictly prioritizes the minority class recall, SMOTE-ENN is highly recommended due to its boundary cleaning capability, while Random under-sampling methods (e.g., RUSBoost) should be avoided as they discard too much valuable information. 
+    \item The Pitfall of Accuracy
+           Accuracy is an unsuitable evaluation metric for highly imbalanced datasets. As the Imbalance Ratio (IR) increases, a classifier can achieve superficially high Accuracy simply by predicting the majority class for all instances. To reflect the true predictive performance on the minority class, discriminatory metrics such as F1-Score, ROC-AUC, and G-Mean must be adopted instead. 
+    \item Limitations 
+          Although the four datasets employed in this study span a spectrum from mild to severe class imbalance, their relatively small sample sizes and low feature dimensionality may not fully encapsulate the complexities of real-world applications. To enhance the generalizability of these findings, future research should incorporate large-scale, high-dimensional datasets from diverse domains. 
+\end{itemize}
+
+\section{Conclusion}
 
 
+\section{Reference}
 
+\section{Appendix}
 
-
+\section{WORK DIVISION}
 
 
 
@@ -941,13 +1125,9 @@ Data-level methods focus on reslicing the training set to achieve a more balance
 
 
 
-\subsection{Algorithm Level Methods}
-Algorithm-level methods, such as Cost-Sensitive learning combined with ensemble classifiers (Random Forest, XGBoost, AdaBoost), show higher robustness across varying imbalance ratios by directly internalizing the cost of misclassifying minority instances.
 
-\subsubsection{Visual Analysis of Algorithm-Level Methods}
-In this subcategory, we examine the performance shifts in ensemble methods when cost-sensitive mechanisms are applied.
 
-Figure~\ref{fig:algorithm_recall} presents a comparison of Recall scores between standard Random Forest and Weighted (Cost-Sensitive) Random Forest across the Yeast datasets.
+
 
 \begin{figure}[h]
   \centering
@@ -977,76 +1157,9 @@ Figure~\ref{fig:algorithm_recall} presents a comparison of Recall scores between
   \label{fig:algorithm_recall}
 \end{figure}
 
-Furthermore, Table~\ref{tab:comprehensive_summary} and Figure~\ref{fig:adaboost_tradeoff} highlight the "death cross" effect in AdaBoost. After applying cost-sensitive weights, Recall improves significantly, but at a severe cost to Precision.
 
-\begin{figure}[h]
-    \centering
-    \begin{tikzpicture}
-        \begin{axis}[
-            width=0.48\textwidth,
-            height=6cm,
-            ymin=0.2, ymax=0.9,
-            ytick={0.2, 0.4, 0.6, 0.8},
-            ylabel={\textbf{Score}},
-            symbolic x coords={Baseline AdaBoost, Cost-Sensitive AdaBoost},
-            xtick=data,
-            enlarge x limits=0.35,
-            ymajorgrids=true,
-            grid style=dashed,
-            legend style={at={(0.5,-0.15)}, anchor=north, legend columns=2, font=\tiny, draw=none, /tikz/every even column/.append style={column sep=5pt}},
-            legend image code/.code={\draw[#1] (0cm,0.1cm) -- (0.5cm,0.1cm); \fill[#1] (0.25cm,0.1cm) circle (2pt);},
-        ]
-        \addplot[color=RoyalBlue, mark=*, mark options={scale=1.2}, very thick] coordinates {
-            (Baseline AdaBoost, 0.469)
-            (Cost-Sensitive AdaBoost, 0.789)
-        };
-        \addlegendentry{Recall}
-        \addplot[color=ScholarRed, mark=square*, mark options={scale=1.2}, very thick] coordinates {
-            (Baseline AdaBoost, 0.617)
-            (Cost-Sensitive AdaBoost, 0.334)
-        };
-        \addlegendentry{Precision}
-        \end{axis}
-    \end{tikzpicture}
-    \caption{The extreme precision-recall trade-off in AdaBoost after applying the cost-sensitive mechanism. }
-    \label{fig:adaboost_tradeoff}
-\end{figure}
 
-Finally, the radar chart in Figure~\ref{fig:xgboost_radar} illustrates the balanced improvement across multiple metrics (Recall, Precision, F1-Score, and G-Mean) for XGBoost when cost-sensitive learning is integrated.
 
-\begin{figure}[h]
-    \centering
-    \begin{tikzpicture}[scale=2.8]
-        \foreach \r in {0.2, 0.4, 0.6, 0.8} {
-            \draw[gray!30, loosely dashed] (0,0) circle (\r);
-            \node[gray!60, anchor=south west, inner sep=1pt, font=\tiny] at (45:\r) {\r};
-        }
-        \foreach \angle/\label in {90/Rec, 0/Prec, 270/F1, 180/GM} {
-            \draw[gray!70, ->] (0,0) -- (\angle:0.9);
-            \node[font=\tiny\bfseries] at (\angle:1.05) {\label};
-        }
-        \coordinate (B_Recall)    at (90:0.499);
-        \coordinate (B_Precision) at (0:0.586);
-        \coordinate (B_F1)        at (270:0.529);
-        \coordinate (B_GMean)     at (180:0.672);
-        \coordinate (C_Recall)    at (90:0.588);
-        \coordinate (C_Precision) at (0:0.562);
-        \coordinate (C_F1)        at (270:0.568);
-        \coordinate (C_GMean)     at (180:0.729);
-        \draw[thick, RoyalBlue, fill=RoyalBlue!20, fill opacity=0.4] (B_Recall) -- (B_Precision) -- (B_F1) -- (B_GMean) -- cycle;
-        \foreach \p in {B_Recall, B_Precision, B_F1, B_GMean} { \fill[RoyalBlue] (\p) circle (0.5pt); }
-        \draw[thick, ScholarRed, fill=ScholarRed!20, fill opacity=0.4] (C_Recall) -- (C_Precision) -- (C_F1) -- (C_GMean) -- cycle;
-        \foreach \p in {C_Recall, C_Precision, C_F1, C_GMean} { \fill[ScholarRed] (\p) circle (0.5pt); }
-        \begin{scope}[xshift=1.3cm, yshift=0.8cm]
-            \draw[thick, RoyalBlue, fill=RoyalBlue!20, fill opacity=0.6] (0,0) rectangle (0.1, 0.07);
-            \node[right, font=\tiny] at (0.12, 0.035) {Base};
-            \draw[thick, ScholarRed, fill=ScholarRed!20, fill opacity=0.6] (0,-0.12) rectangle (0.1, -0.05);
-            \node[right, font=\tiny] at (0.12, -0.085) {CS};
-        \end{scope}
-    \end{tikzpicture}
-    \caption{Radar Chart comparing the average performance of Baseline XGBoost and Cost-Sensitive XGBoost across all datasets.}
-    \label{fig:xgboost_radar}
-\end{figure}
 
 \subsection{Hybrid Methods}
 Hybrid methods integrate data resampling with algorithmic enhancements. This subsection evaluates the efficacy of boosting-based hybrid approaches.
@@ -1099,9 +1212,9 @@ Hybrid methods integrate data resampling with algorithmic enhancements. This sub
 \end{table*}
 
 \subsubsection{Visual Analysis of Hybrid Methods}
-The hybrid framework combines data-level resampling with algorithm-level boosting. Figure~\ref{fig:hybrid_boosting} and Figure~\ref{fig:smote_variants} provide insight into these combined effects.
+The hybrid framework combines data-level resampling with algorithm-level boosting. Figure~\ref{fig:experiment1_f1} and Figure~\ref{fig:smote_variants} provide insight into these combined effects.
 
-Figure~\ref{fig:hybrid_boosting} illustrates the F1-score performance of various hybrid boosting methods across four Yeast datasets.
+Figure~\ref{fig:experiment1_f1} illustrates the F1-score performance of various hybrid boosting methods across four Yeast datasets.
 
 \begin{figure}[h]
   \centering
@@ -1131,7 +1244,7 @@ Figure~\ref{fig:hybrid_boosting} illustrates the F1-score performance of various
     \end{axis}
   \end{tikzpicture}
   \caption{Experiment 1 F1-score Comparison Across Datasets.}
-  \label{fig:hybrid_boosting}
+  \label{fig:experiment1_f1}
 \end{figure}
 
 \subsubsection{Impact of SMOTE Variants in Hybrid Frameworks}
