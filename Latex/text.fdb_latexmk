@@ -1,13 +1,13 @@
 # Fdb version 4
-["bibtex text"] 1773589835.19668 "text.aux" "text.bbl" "text" 1773589837.96548 0
+["bibtex text"] 1773589835.19668 "text.aux" "text.bbl" "text" 1773589928.04753 0
   "./ACM-Reference-Format.bst" 1773491849 96784 12e0ced1522ea2bfa9b2fb12855c7e9e ""
   "./sample-base.bib" 1773491849 50853 df98e6764e8a8591af3f06cf54d52d06 ""
-  "text.aux" 1773589837 17065 659342b628db1f50ea175d7e9627ecde "pdflatex"
+  "text.aux" 1773589927 17065 c94ede1acc4ebc8f418b5da490364b2b "pdflatex"
   (generated)
   "text.bbl"
   "text.blg"
   (rewritten before read)
-["pdflatex"] 1773589835.37935 "c:/Users/peng1/Desktop/Lucy/中央大學/碩一下/資科/A1-Literature-survey/Latex/text.tex" "text.pdf" "text" 1773589837.96592 0
+["pdflatex"] 1773589925.45727 "c:/Users/peng1/Desktop/Lucy/中央大學/碩一下/資科/A1-Literature-survey/Latex/text.tex" "text.pdf" "text" 1773589928.04797 2
   "C:/Users/peng1/AppData/Local/MiKTeX/fonts/map/pdftex/pdftex.map" 1773572672 186066 c797610d3c7aadc509276bf4bcd8a24b ""
   "C:/Users/peng1/AppData/Local/MiKTeX/miktex/data/le/pdftex/pdflatex.fmt" 1773390987 13333849 021872d29036dc28b9a78cd20a6821b0 ""
   "C:/Users/peng1/AppData/Local/Programs/MiKTeX/fonts/enc/dvips/libertine/lbtn_25tcsq.enc" 1497089888 2921 8ca0eb0831f9bc5da080d3697cfe67bf ""
@@ -25,7 +25,6 @@
   "C:/Users/peng1/AppData/Local/Programs/MiKTeX/fonts/tfm/public/cm/cmr9.tfm" 1136765053 1292 6b21b9c2c7bebb38aa2273f7ca0fb3af ""
   "C:/Users/peng1/AppData/Local/Programs/MiKTeX/fonts/tfm/public/libertine/LinBiolinumT-tlf-t1--base.tfm" 1732620802 1744 9486ddc64e90094bbb83f53a83b0e415 ""
   "C:/Users/peng1/AppData/Local/Programs/MiKTeX/fonts/tfm/public/libertine/LinBiolinumT-tlf-t1.tfm" 1732620802 19548 768852037f39958c435d71846b8877ea ""
-  "C:/Users/peng1/AppData/Local/Programs/MiKTeX/fonts/tfm/public/libertine/LinBiolinumTB-tlf-t1--base.tfm" 1732620802 1768 23aace73e6def3193d6e0453af90487b ""
   "C:/Users/peng1/AppData/Local/Programs/MiKTeX/fonts/tfm/public/libertine/LinBiolinumTB-tlf-t1.tfm" 1732620802 19416 aedd2db224ad278ddf2c411f52d86014 ""
   "C:/Users/peng1/AppData/Local/Programs/MiKTeX/fonts/tfm/public/libertine/LinBiolinumTI-tlf-t1--base.tfm" 1732620802 1988 34f48347175f643e8b2134cd8f7a90a3 ""
   "C:/Users/peng1/AppData/Local/Programs/MiKTeX/fonts/tfm/public/libertine/LinBiolinumTI-tlf-t1.tfm" 1732620802 20012 beadc3a52552515981c78cd731a40afe ""
@@ -62,7 +61,6 @@
   "C:/Users/peng1/AppData/Local/Programs/MiKTeX/fonts/tfm/public/newtx/txmiaX.tfm" 1736607165 1708 e6ab41b8c6f33e297f8c7977f1424a40 ""
   "C:/Users/peng1/AppData/Local/Programs/MiKTeX/fonts/tfm/public/newtx/txsys.tfm" 1736607165 1656 68b5079c64f1cefe2cf442b6a60cf2fd ""
   "C:/Users/peng1/AppData/Local/Programs/MiKTeX/fonts/type1/public/libertine/LinBiolinumT.pfb" 1497089889 548786 4d0a934140d5c6e42930030a6225e8d6 ""
-  "C:/Users/peng1/AppData/Local/Programs/MiKTeX/fonts/type1/public/libertine/LinBiolinumTB.pfb" 1497089889 687959 d08b15f5c3ccd205dc84645998fa63bb ""
   "C:/Users/peng1/AppData/Local/Programs/MiKTeX/fonts/type1/public/libertine/LinBiolinumTI.pfb" 1497089888 879384 b65e1250540932c65529e258c09cae73 ""
   "C:/Users/peng1/AppData/Local/Programs/MiKTeX/fonts/type1/public/libertine/LinLibertineT.pfb" 1497089889 614791 d8dc0bdea92a3db7682402cda70ec199 ""
   "C:/Users/peng1/AppData/Local/Programs/MiKTeX/fonts/type1/public/libertine/LinLibertineTB.pfb" 1497089889 538965 c5f7f11a7c6a7978c8500457bfcd2138 ""
@@ -75,7 +73,6 @@
   "C:/Users/peng1/AppData/Local/Programs/MiKTeX/fonts/type1/public/newtx/txmiaX.pfb" 1736607166 65081 1217ccf27de85b7db49806ee29c16745 ""
   "C:/Users/peng1/AppData/Local/Programs/MiKTeX/fonts/type1/public/newtx/txsys.pfb" 1736607166 45985 fd5f8adcc4f0e93e9a95469e12126723 ""
   "C:/Users/peng1/AppData/Local/Programs/MiKTeX/fonts/vf/public/libertine/LinBiolinumT-tlf-t1.vf" 1732620847 1728 e76e04a950024a95b620698b679c9810 ""
-  "C:/Users/peng1/AppData/Local/Programs/MiKTeX/fonts/vf/public/libertine/LinBiolinumTB-tlf-t1.vf" 1732620847 1728 4ae633ddccb76ba8d0a0906a5e2e8fdf ""
   "C:/Users/peng1/AppData/Local/Programs/MiKTeX/fonts/vf/public/libertine/LinBiolinumTI-tlf-t1.vf" 1732620847 1728 0f47a4d345513e0ad2e29d47540d4f2a ""
   "C:/Users/peng1/AppData/Local/Programs/MiKTeX/fonts/vf/public/libertine/LinLibertineT-tlf-ot1.vf" 1732620847 968 633f2e9600614ced16b39ff258710cde ""
   "C:/Users/peng1/AppData/Local/Programs/MiKTeX/fonts/vf/public/libertine/LinLibertineT-tlf-t1.vf" 1732620847 1728 58c30b3c2a148b5042bfabf244389b2f ""
@@ -306,11 +303,11 @@
   "C:/Users/peng1/AppData/Local/Programs/MiKTeX/tex/latex/xkeyval/xkeyval.sty" 1656236919 4937 4ce600ce9bd4ec84d0250eb6892fcf4f ""
   "C:/Users/peng1/AppData/Local/Programs/MiKTeX/tex/latex/xstring/xstring.sty" 1693735632 123 a302f2c651a95033260db60e51527ae8 ""
   "acmart.cls" 1773491849 126055 54cc4edcc7b9cb1bf0a23c528626957c ""
-  "c:/Users/peng1/Desktop/Lucy/中央大學/碩一下/資科/A1-Literature-survey/Latex/text.tex" 1773589832 105793 cabf938b1c75a500b526e7ecc7f33244 ""
-  "text.aux" 1773589837 17065 659342b628db1f50ea175d7e9627ecde "pdflatex"
+  "c:/Users/peng1/Desktop/Lucy/中央大學/碩一下/資科/A1-Literature-survey/Latex/text.tex" 1773589922 105645 20dc28039a88ecfde66290a56d5d2c36 ""
+  "text.aux" 1773589927 17065 c94ede1acc4ebc8f418b5da490364b2b "pdflatex"
   "text.bbl" 1773589835 1751 4d28b6ea748d03d80535fe94a7371ddb "bibtex text"
-  "text.out" 1773589837 4673 5c2e46f0d70aee02668bd92a64cddc3f "pdflatex"
-  "text.tex" 1773589832 105793 cabf938b1c75a500b526e7ecc7f33244 ""
+  "text.out" 1773589927 4673 5c2e46f0d70aee02668bd92a64cddc3f "pdflatex"
+  "text.tex" 1773589922 105645 20dc28039a88ecfde66290a56d5d2c36 ""
   (generated)
   "text.aux"
   "text.log"

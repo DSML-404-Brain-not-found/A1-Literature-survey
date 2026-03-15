@@ -76,6 +76,7 @@
 \acmISBN{}
 \acmPrice{}
 \settopmatter{printccs=false, printacmref=false}
+\pagestyle{empty}
 
 
 %%
@@ -118,7 +119,7 @@
 %%
 %% The "title" command has an optional parameter,
 %% allowing the author to define a "short title" to be used in page headers.
-\title{Handling Imbalanced Data in Binary Classification: A Review and Comparative Experimental Study}
+\title[]{Handling Imbalanced Data in Binary Classification: A Review and Comparative Experimental Study}
 
 %%
 %% The "author" command and its associated commands are used to define
@@ -149,7 +150,8 @@
 %% other information printed in the page headers. This command allows
 %% the author to define a more concise list
 %% of authors' names for this purpose.
-\renewcommand{\shortauthors}{Trovato et al.}
+\renewcommand{\shortauthors}{}
+
 
 %%
 %% The abstract is a short summary of the work to be presented in the
@@ -174,6 +176,7 @@
 %% This command processes the author and affiliation and title
 %% information and builds the first part of the formatted document.
 \maketitle
+\thispagestyle{empty}
 
 \section{Introduction}
 
