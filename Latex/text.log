@@ -1,4 +1,4 @@
-This is pdfTeX, Version 3.141592653-2.6-1.40.29 (MiKTeX 26.2) (preloaded format=pdflatex 2026.3.13)  15 MAR 2026 23:54
+This is pdfTeX, Version 3.141592653-2.6-1.40.29 (MiKTeX 26.2) (preloaded format=pdflatex 2026.3.13)  16 MAR 2026 00:07
 entering extended mode
  restricted \write18 enabled.
  %&-line parsing enabled.
@@ -1469,6 +1469,9 @@ LaTeX Font Info:    Font shape `T1/LinuxLibertineT-TLF/b/n' will be
 (Font)              scaled to size 9.0pt on input line 178.
 LaTeX Font Info:    Font shape `T1/LinuxLibertineT-TLF/b/n' will be
 (Font)              scaled to size 10.95pt on input line 178.
+
+Underfull \vbox (badness 3312) has occurred while \output is active []
+
 LaTeX Font Info:    Font shape `OT1/LinuxLibertineT-TLF/m/n' will be
 (Font)              scaled to size 9.0pt on input line 203.
 LaTeX Font Info:    Font shape `OT1/LinuxLibertineT-TLF/m/n' will be
@@ -1683,36 +1686,36 @@ LaTeX Warning: `h' float specifier changed to `ht'.
 
 LaTeX Warning: `h' float specifier changed to `ht'.
 
-Package pgfplots info on input line 744: Using 'lua backend=false' for axis: x 
+Package pgfplots info on input line 745: Using 'lua backend=false' for axis: x 
 coord trafo unsupported.
 LaTeX Font Info:    Font shape `T1/LinuxLibertineT-TLF/m/n' will be
-(Font)              scaled to size 5.0pt on input line 749.
+(Font)              scaled to size 5.0pt on input line 750.
 
-Class acmart Warning: A possible image without description on input line 753.
-
-
-LaTeX Warning: `h' float specifier changed to `ht'.
-
-Package pgfplots info on input line 772: Using 'lua backend=false' for axis: x 
-coord trafo unsupported.
-
-Class acmart Warning: A possible image without description on input line 781.
+Class acmart Warning: A possible image without description on input line 754.
 
 
 LaTeX Warning: `h' float specifier changed to `ht'.
 
-Package pgfplots info on input line 800: Using 'lua backend=false' for axis: x 
+Package pgfplots info on input line 773: Using 'lua backend=false' for axis: x 
 coord trafo unsupported.
 
-Class acmart Warning: A possible image without description on input line 809.
+Class acmart Warning: A possible image without description on input line 782.
 
 
 LaTeX Warning: `h' float specifier changed to `ht'.
 
-Package pgfplots info on input line 828: Using 'lua backend=false' for axis: x 
+Package pgfplots info on input line 801: Using 'lua backend=false' for axis: x 
 coord trafo unsupported.
 
-Class acmart Warning: A possible image without description on input line 837.
+Class acmart Warning: A possible image without description on input line 810.
+
+
+LaTeX Warning: `h' float specifier changed to `ht'.
+
+Package pgfplots info on input line 829: Using 'lua backend=false' for axis: x 
+coord trafo unsupported.
+
+Class acmart Warning: A possible image without description on input line 838.
 
 
 LaTeX Warning: `h' float specifier changed to `ht'.
@@ -1721,113 +1724,138 @@ LaTeX Warning: `h' float specifier changed to `ht'.
 Underfull \vbox (badness 1490) has occurred while \output is active []
 
  [9.9]
-Package pgfplots info on input line 892: Using 'lua backend=false' for axis: x 
+Package pgfplots info on input line 893: Using 'lua backend=false' for axis: x 
 coord trafo unsupported.
 
 
-Class acmart Warning: A possible image without description on input line 900.
+Class acmart Warning: A possible image without description on input line 901.
 
 
 LaTeX Warning: `h' float specifier changed to `ht'.
 
 
-Class acmart Warning: A possible image without description on input line 935.
+Class acmart Warning: A possible image without description on input line 936.
 
 
 LaTeX Warning: `h' float specifier changed to `ht'.
 
-Package pgfplots info on input line 961: Using 'lua backend=false' for axis: x 
+Package pgfplots info on input line 962: Using 'lua backend=false' for axis: x 
 coord trafo unsupported.
 LaTeX Font Info:    Font shape `T1/LinuxLibertineT-TLF/b/n' will be
-(Font)              scaled to size 5.0pt on input line 966.
+(Font)              scaled to size 5.0pt on input line 967.
 
-Class acmart Warning: A possible image without description on input line 970.
+Class acmart Warning: A possible image without description on input line 971.
 
 [10.10]
 Underfull \vbox (badness 10000) has occurred while \output is active []
 
  [11.11]
-Overfull \hbox (2.4067pt too wide) in paragraph at lines 1008--1009
+Overfull \hbox (2.4067pt too wide) in paragraph at lines 1009--1010
  \T1/LinuxBiolinumT-TLF/m/it/9 (-20) 5.0.2 Ex-per-i-ment 2: Algorithm-level str
 ate-gies com-bined with SMOTE.[]
  []
 
 
-Overfull \hbox (4.40161pt too wide) in paragraph at lines 1025--1027
-[]\T1/LinuxLibertineT-TLF/m/n/9 (-20) Algorithm Se-lec-tion based on Im-bal-anc
-e Ra-tio (IR) For datasets
+Underfull \vbox (badness 2865) has occurred while \output is active []
+
+ [12.12]
+Underfull \hbox (badness 6641) in paragraph at lines 1112--1113
+[]\T1/LinuxLibertineT-TLF/m/n/7 (+20) Takaya Saito and Marc Rehmsmeier. 2015. T
+he Precision-Recall Plot
  []
 
+
+Underfull \hbox (badness 10000) in paragraph at lines 1112--1113
+\T1/LinuxLibertineT-TLF/m/n/7 (+20) Is More In-for-ma-tive than the ROC Plot Wh
+en Eval-u-at-ing Bi-nary
+ []
+
+
+Underfull \hbox (badness 3780) in paragraph at lines 1112--1113
+\T1/LinuxLibertineT-TLF/m/n/7 (+20) Clas-si-fiers on Im-bal-anced Datasets. PLo
+S ONE 10, 3 (2015), e0118432.
+ []
+
+
+Overfull \hbox (169.77107pt too wide) in paragraph at lines 1124--1137
+ [][] 
+ []
+
+
+Underfull \vbox (badness 10000) has occurred while \output is active []
+
 LaTeX Font Info:    Font shape `T1/LinuxLibertineT-TLF/m/n' will be
-(Font)              scaled to size 6.0pt on input line 1057.
+(Font)              scaled to size 6.0pt on input line 1154.
 LaTeX Font Info:    Font shape `OT1/LinuxLibertineT-TLF/m/n' will be
-(Font)              scaled to size 6.5pt on input line 1059.
+(Font)              scaled to size 6.5pt on input line 1156.
 LaTeX Font Info:    Font shape `OML/nxlmi/m/it' will be
-(Font)              scaled to size 6.5pt on input line 1059.
+(Font)              scaled to size 6.5pt on input line 1156.
 LaTeX Font Info:    Font shape `LMS/ntxsy/m/n' will be
-(Font)              scaled to size 6.5pt on input line 1059.
+(Font)              scaled to size 6.5pt on input line 1156.
 LaTeX Font Info:    Font shape `LMX/ntxexx/m/n' will be
-(Font)              scaled to size 6.5pt on input line 1059.
+(Font)              scaled to size 6.5pt on input line 1156.
 LaTeX Font Info:    Font shape `U/ntxmia/m/it' will be
-(Font)              scaled to size 6.5pt on input line 1059.
+(Font)              scaled to size 6.5pt on input line 1156.
 LaTeX Font Info:    Font shape `U/ntxsym/m/n' will be
-(Font)              scaled to size 6.5pt on input line 1059.
+(Font)              scaled to size 6.5pt on input line 1156.
 LaTeX Font Info:    Font shape `U/ntxsyc/m/n' will be
-(Font)              scaled to size 6.5pt on input line 1059.
+(Font)              scaled to size 6.5pt on input line 1156.
 LaTeX Font Info:    Font shape `U/ntxexa/m/n' will be
-(Font)              scaled to size 6.5pt on input line 1059.
+(Font)              scaled to size 6.5pt on input line 1156.
 LaTeX Font Info:    Font shape `T1/LinuxLibertineT-TLF/b/n' will be
-(Font)              scaled to size 6.0pt on input line 1061.
-Package pgfplots info on input line 1154: Using 'lua backend=false' for axis: x
+(Font)              scaled to size 6.0pt on input line 1158.
+Package pgfplots info on input line 1251: Using 'lua backend=false' for axis: x
+ coord trafo unsupported.
+ [13.13]
+
+LaTeX Warning: `h' float specifier changed to `ht'.
+
+
+LaTeX Warning: Reference `fig:smote_variants' on page 14 undefined on input lin
+e 1316.
+
+Package pgfplots info on input line 1338: Using 'lua backend=false' for axis: x
  coord trafo unsupported.
 
 LaTeX Warning: `h' float specifier changed to `ht'.
 
 
-LaTeX Warning: `h' float specifier changed to `ht'.
-
-Package pgfplots info on input line 1241: Using 'lua backend=false' for axis: x
- coord trafo unsupported.
-[12.12]
-
-LaTeX Warning: `h' float specifier changed to `ht'.
+LaTeX Warning: Reference `fig:smote_variants' on page 14 undefined on input lin
+e 1352.
 
 
-Overfull \hbox (4.69771pt too wide) in paragraph at lines 1255--1256
+Overfull \hbox (4.69771pt too wide) in paragraph at lines 1352--1353
 \T1/LinuxLibertineT-TLF/m/n/9 (-20) the pure data-level SMOTE and the cost-sens
 itive vari-ant SMOTECSL,
  []
 
-Package pgfplots info on input line 1274: Using 'lua backend=false' for axis: x
+Package pgfplots info on input line 1371: Using 'lua backend=false' for axis: x
  coord trafo unsupported.
 
-Underfull \hbox (badness 3364) in paragraph at lines 1281--1281
+Underfull \hbox (badness 3364) in paragraph at lines 1378--1378
 []\T1/LinuxLibertineT-TLF/b/n/9 (+20) Figure 10: |Ex-per-i-ment 2 F1-score Com-
 par-i-son Across
  []
 
 
-Class acmart Warning: A possible image without description on input line 1283.
+Class acmart Warning: A possible image without description on input line 1380.
 
 
 LaTeX Warning: `h' float specifier changed to `ht'.
 
 
-Overfull \hbox (8.40839pt too wide) in paragraph at lines 1286--1287
- \T1/LinuxBiolinumT-TLF/m/it/9 (-20) 10.2.3 ROC Curve Anal-y-sis for Hy-brid Fr
-ame-works.[] \T1/LinuxLibertineT-TLF/m/n/9 (-20) Fig-ure []11[] presents
+Overfull \hbox (4.49231pt too wide) in paragraph at lines 1383--1384
+ \T1/LinuxBiolinumT-TLF/m/it/9 (-20) 9.2.3 ROC Curve Anal-y-sis for Hy-brid Fra
+me-works.[] \T1/LinuxLibertineT-TLF/m/n/9 (-20) Fig-ure []11[] presents
  []
 
 
-Class acmart Warning: A possible image without description on input line 1388.
+Class acmart Warning: A possible image without description on input line 1485.
 
 
 LaTeX Warning: `h' float specifier changed to `ht'.
 
 (text.bbl
-Underfull \vbox (badness 6592) has occurred while \output is active []
-
-
 
 Package natbib Warning: Empty `thebibliography' environment on input line 39.
 
@@ -1855,36 +1883,56 @@ Class acmart Warning: ACM reference format is mandatory
 
 
 Class acmart Warning: \vspace should only be used to provide space above/below 
-surrounding objects on input line 1397.
+surrounding objects on input line 1494.
 
 
 Class acmart Warning: CCS concepts are mandatory for papers over two pages.
 
 
+Underfull \vbox (badness 10000) has occurred while \output is active []
+
+
+
 Package balance Warning: You have called \balance in second column
 (balance)                Columns might not be balanced.
 
-[13.13] [14.14]
+[14.14]
+Overfull \vbox (106.00183pt too high) has occurred while \output is active []
+
+
+Overfull \vbox (106.00183pt too high) has occurred while \output is active []
+
+
+[15.15] [16.16
+
+] [17.17]
 (C:\Users\peng1\AppData\Local\Programs\MiKTeX\tex/generic/stringenc\se-pdfdoc.d
 ef
 File: se-pdfdoc.def 2019/11/29 v1.12 stringenc: PDFDocEncoding
 )
 (C:\Users\peng1\AppData\Local\Programs\MiKTeX\tex/generic/stringenc\se-utf8.def
 File: se-utf8.def 2019/11/29 v1.12 stringenc: UTF-8
-) [15.15] (text.aux)
+) [18.18
+
+
+] (text.aux)
  ***********
 LaTeX2e <2025-11-01>
 L3 programming layer <2026-01-19>
  ***********
+
+
+LaTeX Warning: There were undefined references.
+
 Package rerunfilecheck Info: File `text.out' has not changed.
-(rerunfilecheck)             Checksum: 5C2E46F0D70AEE02668BD92A64CDDC3F;4673.
+(rerunfilecheck)             Checksum: 362C70F541812B46DF49353487AD583A;4645.
  ) 
 Here is how much of TeX's memory you used:
- 42187 strings out of 467867
- 930864 string characters out of 5418334
- 1588418 words of memory out of 5000000
- 69646 multiletter control sequences out of 15000+600000
- 822992 words of font info for 410 fonts, out of 8000000 for 9000
+ 42411 strings out of 467867
+ 934054 string characters out of 5418334
+ 1582949 words of memory out of 5000000
+ 69758 multiletter control sequences out of 15000+600000
+ 829724 words of font info for 458 fonts, out of 8000000 for 9000
  1302 hyphenation exceptions out of 8191
  99i,19n,131p,1581b,2349s stack positions out of 10000i,1000n,20000p,200000b,200000s
 <C:/Users/peng1/AppData/Local/Programs/MiKTeX/fonts/type1/public/newtx/Libert
@@ -1902,9 +1950,9 @@ grams/MiKTeX/fonts/type1/public/newtx/NewTXMI.pfb><C:/Users/peng1/AppData/Local
 /Programs/MiKTeX/fonts/type1/public/newtx/txexs.pfb><C:/Users/peng1/AppData/Loc
 al/Programs/MiKTeX/fonts/type1/public/newtx/txmiaX.pfb><C:/Users/peng1/AppData/
 Local/Programs/MiKTeX/fonts/type1/public/newtx/txsys.pfb>
-Output written on text.pdf (15 pages, 566961 bytes).
+Output written on text.pdf (18 pages, 592123 bytes).
 PDF statistics:
- 392 PDF objects out of 1000 (max. 8388607)
- 134 named destinations out of 1000 (max. 500000)
+ 495 PDF objects out of 1000 (max. 8388607)
+ 175 named destinations out of 1000 (max. 500000)
  102661 words of extra memory for PDF output out of 106986 (max. 10000000)
 

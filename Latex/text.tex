@@ -181,22 +181,22 @@
 \section{Introduction}
 
 \subsection{Background and Problem Definition}
-In recent years, the rapid expansion of data availability across large-scale, complex, and networked systems has propelled machine learning to prominent roles in numerous application domains [1].
-However, real-world data distributions are inherently complex and frequently exhibit a significant class imbalance. The class imbalance problem arises when the number of instances belonging to one class (the majority class) substantially outnumbers those of another (the minority class), resulting in a severely skewed training distribution [1, 2].
-This phenomenon is pervasive in many high-stakes domains, including financial fraud detection, network intrusion detection, and the diagnosis of rare diseases such as diabetes and stroke, where the minority class---despite its low frequency of occurrence---typically constitutes the primary target of predictive interest [3, 4].
+In recent years, the rapid expansion of data availability across large-scale, complex, and networked systems has propelled machine learning to prominent roles in numerous application domains \cite{1}.
+However, real-world data distributions are inherently complex and frequently exhibit a significant class imbalance. The class imbalance problem arises when the number of instances belonging to one class (the majority class) substantially outnumbers those of another (the minority class), resulting in a severely skewed training distribution \cite{1, 2}.
+This phenomenon is pervasive in many high-stakes domains, including financial fraud detection, network intrusion detection, and the diagnosis of rare diseases such as diabetes and stroke, where the minority class---despite its low frequency of occurrence---typically constitutes the primary target of predictive interest \cite{3, 4}.
  
 
 \subsection{Challenges and the Pitfalls of Evaluation Metrics}
-Standard machine learning models are generally designed under the implicit assumption of an approximately balanced class distribution. Consequently, when applied to skewed data, these models exhibit a systematic bias toward the majority class, yielding poor predictive performance for minority instances---precisely those of greatest practical concern [1].
-This issue is further compounded by the widespread use of conventional evaluation metrics. Overall accuracy, in particular, is highly misleading under class imbalance: a naive classifier that assigns all instances to the majority class can attain superficially high accuracy while entirely failing to identify any minority-class example [5].
-To overcome this limitation, the research community has advocated the adoption of more discriminative metrics, including the F1-Score, the Area Under the Receiver Operating Characteristic Curve (AUC-ROC) [6], and the Geometric Mean (G-Mean) [7], which collectively provide a more faithful assessment of model performance across both classes.
+Standard machine learning models are generally designed under the implicit assumption of an approximately balanced class distribution. Consequently, when applied to skewed data, these models exhibit a systematic bias toward the majority class, yielding poor predictive performance for minority instances---precisely those of greatest practical concern \cite{1}.
+This issue is further compounded by the widespread use of conventional evaluation metrics. Overall accuracy, in particular, is highly misleading under class imbalance: a naive classifier that assigns all instances to the majority class can attain superficially high accuracy while entirely failing to identify any minority-class example \cite{5}.
+To overcome this limitation, the research community has advocated the adoption of more discriminative metrics, including the F1-Score, the Area Under the Receiver Operating Characteristic Curve (AUC-ROC) \cite{6}, and the Geometric Mean (G-Mean) \cite{7}, which collectively provide a more faithful assessment of model performance across both classes.
 
 
 \subsection{Taxonomy of Imbalanced Learning Techniques}
-To address the challenges posed by imbalanced datasets, a rich body of literature has proposed numerous techniques, which are broadly categorized into three main families: data-level methods, algorithm-level methods, and hybrid strategies [1, 8].
-Data-level approaches modify the training data distribution prior to model induction, either by oversampling the minority class---most notably through the Synthetic Minority Over-sampling Technique (SMOTE) [2] and its variants---or by under sampling the majority class through methods such as Random Under-Sampling(RUS).
-Algorithm-level approaches, by contrast, leave the data distribution unchanged and instead modify the learning procedure itself; representative techniques include cost-sensitive learning and ensemble-based methods such as weighted classifiers and boosting frameworks [9].
-Finally, hybrid strategies combine the complementary strengths of both data resampling and algorithm robustness, with methods such as SMOTEBoost and RUSBoost serving as prominent examples [9].
+To address the challenges posed by imbalanced datasets, a rich body of literature has proposed numerous techniques, which are broadly categorized into three main families: data-level methods, algorithm-level methods, and hybrid strategies \cite{1, 8}.
+Data-level approaches modify the training data distribution prior to model induction, either by oversampling the minority class---most notably through the Synthetic Minority Over-sampling Technique (SMOTE) \cite{2} and its variants---or by under sampling the majority class through methods such as Random Under-Sampling(RUS).
+Algorithm-level approaches, by contrast, leave the data distribution unchanged and instead modify the learning procedure itself; representative techniques include cost-sensitive learning and ensemble-based methods such as weighted classifiers and boosting frameworks \cite{9}.
+Finally, hybrid strategies combine the complementary strengths of both data resampling and algorithm robustness, with methods such as SMOTEBoost and RUSBoost serving as prominent examples \cite{9}.
  
 \subsection{Research Gap and Objectives}
 Despite the substantial volume of existing work, many comparative studies evaluate imbalanced learning techniques across heterogeneous datasets that vary simultaneously in multiple dimensions---including class overlap, feature complexity, and sample size---making it difficult to isolate the independent effect of the Imbalance Ratio (IR) on classifier performance [1]. Confounding factors of this nature limit the interpretability of empirical findings and reduce their practical utility as guidelines for practitioners.
@@ -299,24 +299,24 @@ Entering the 2020s, Zhao et al. (2020) proposed WHMBoost [27], shifting the focu
 
 \paragraph{(v) SUBoost}~\\
 
-Continuing the exploration of information loss caused by under-sampling, Rasi Baghmishe et al. (2025) proposed the novel SUBoost method [28]. Unlike traditional approaches that rely on RUS, SUBoost adopts a selective under-sampling strategy. Specifically, it removes only those majority-class samples that are considered redundant or noisy, while retaining all minority samples and difficult majority samples that are frequently misclassified. Experimental results across more than 20 standard datasets show that SUBoost achieves superior performance in terms of AUC and G-mean compared with many mainstream hybrid methods, including RUSBoost and SMOTEBoost. The method has demonstrated strong robustness in applications such as cancer detection, financial fraud detection, and handwritten digit recognition. 
+Continuing the exploration of information loss caused by under-sampling, Rasi Baghmishe et al. (2025) proposed the novel SUBoost method \cite{28}. Unlike traditional approaches that rely on RUS, SUBoost adopts a selective under-sampling strategy. Specifically, it removes only those majority-class samples that are considered redundant or noisy, while retaining all minority samples and difficult majority samples that are frequently misclassified. Experimental results across more than 20 standard datasets show that SUBoost achieves superior performance in terms of AUC and G-mean compared with many mainstream hybrid methods, including RUSBoost and SMOTEBoost. The method has demonstrated strong robustness in applications such as cancer detection, financial fraud detection, and handwritten digit recognition. 
 
 \subsubsection{Other Hybrid Approaches }
 
 Beyond Boosting-based ensemble learning, researchers have also developed hybrid strategies that combine data-level techniques with other algorithmic frameworks. 
 
 \paragraph{(i) S-CSL }~\\
-Researchers have recognized that relying solely on data resampling or internal classifier cost adjustments has inherent limitations. To address this issue, Thai-Nghe et al. proposed an empirical framework known as S-CSL [29]. In this approach, SMOTE is first applied during the data preprocessing stage to moderately expand minority samples. Subsequently, an asymmetric cost matrix is introduced at the algorithm level to significantly increase the penalty for misclassifying minority instances. S-CSL effectively mitigates the tendency of SVM hyperplanes to shift toward the minority class when dealing with imbalanced data. Experiments conducted on 18 imbalanced datasets, including disease diagnosis and academic performance prediction tasks, demonstrate that the method significantly reduces the overall misclassification cost. 
+Researchers have recognized that relying solely on data resampling or internal classifier cost adjustments has inherent limitations. To address this issue, Thai-Nghe et al. proposed an empirical framework known as S-CSL \cite{29}. In this approach, SMOTE is first applied during the data preprocessing stage to moderately expand minority samples. Subsequently, an asymmetric cost matrix is introduced at the algorithm level to significantly increase the penalty for misclassifying minority instances. S-CSL effectively mitigates the tendency of SVM hyperplanes to shift toward the minority class when dealing with imbalanced data. Experiments conducted on 18 imbalanced datasets, including disease diagnosis and academic performance prediction tasks, demonstrate that the method significantly reduces the overall misclassification cost. 
 
 \paragraph{(ii) CTGAN-MOS}~\\
 
-With the rapid development of deep learning techniques, Majeed and Hwang (2023) proposed CTGAN-MOS [30].  As a novel hybrid framework, CTGAN-MOS integrates six key stages, including data engineering, vulnerability analysis, high-quality synthetic data generation using a CTGAN model, and an intelligent fusion process. Unlike traditional distance-interpolation approaches such as SMOTE, CTGAN-MOS employs entropy optimization to generate only a small number of highly representative minority-class samples. Subsequently, a coin-flipping algorithm is used to eliminate noisy synthetic records, addressing the common issue in generative models where unsafe samples are produced within majority-class regions. CTGAN-MOS has been widely applied in safety-critical tasks such as adult income prediction, stroke prediction, credit fraud detection, and COVID-19 diagnosis. 
+With the rapid development of deep learning techniques, Majeed and Hwang (2023) proposed CTGAN-MOS \cite{30}.  As a novel hybrid framework, CTGAN-MOS integrates six key stages, including data engineering, vulnerability analysis, high-quality synthetic data generation using a CTGAN model, and an intelligent fusion process. Unlike traditional distance-interpolation approaches such as SMOTE, CTGAN-MOS employs entropy optimization to generate only a small number of highly representative minority-class samples. Subsequently, a coin-flipping algorithm is used to eliminate noisy synthetic records, addressing the common issue in generative models where unsafe samples are produced within majority-class regions. CTGAN-MOS has been widely applied in safety-critical tasks such as adult income prediction, stroke prediction, credit fraud detection, and COVID-19 diagnosis. 
 
 
 \section{EXPERIMENTS}
 \subsection{Datasets}
 
-To rigorously investigate the effect of varying Imbalance Ratios (IR) on classifier performance in isolation from confounding factors, this study employs four benchmark datasets derived from the Yeast protein localization dataset, all sourced from the KEEL (Knowledge Extraction based on Evolutionary Learning) repository [31]. The Yeast dataset family is selected as the experimental foundation because all four variants share an identical feature space (8 features) and total sample size (n = 1,484), thereby ensuring that IR is the sole varying experimental variable. This controlled design eliminates confounds commonly present in cross-dataset comparisons, such as differences in feature complexity, dimensionality, and data size [8], enabling a direct and rigorous assessment of how escalating class imbalance affects classifier performance. 
+To rigorously investigate the effect of varying Imbalance Ratios (IR) on classifier performance in isolation from confounding factors, this study employs four benchmark datasets derived from the Yeast protein localization dataset, all sourced from the KEEL (Knowledge Extraction based on Evolutionary Learning) repository \cite{31}. The Yeast dataset family is selected as the experimental foundation because all four variants share an identical feature space (8 features) and total sample size (n = 1,484), thereby ensuring that IR is the sole varying experimental variable. This controlled design eliminates confounds commonly present in cross-dataset comparisons, such as differences in feature complexity, dimensionality, and data size \cite{8}, enabling a direct and rigorous assessment of how escalating class imbalance affects classifier performance. 
 
 
 The Imbalance Ratio is defined formally as:
@@ -326,7 +326,7 @@ The Imbalance Ratio is defined formally as:
   \label{eq:IR}
 \end{equation}
 %
-where $|S_{\mathrm{maj}}|$ and $|S_{\mathrm{min}}|$ denote the number of instances in the majority and minority classes, respectively. Following the categorization proposed in the imbalanced learning literature [1], the four datasets are stratified across four severity levels:
+where $|S_{\mathrm{maj}}|$ and $|S_{\mathrm{min}}|$ denote the number of instances in the majority and minority classes, respectively. Following the categorization proposed in the imbalanced learning literature \cite{1}, the four datasets are stratified across four severity levels:
  \emph{mild} ($\mathrm{IR} < 3$), \emph{moderate}
 ($3 \le \mathrm{IR} < 15$), \emph{severe} ($15 \le \mathrm{IR} < 30$),
 and \emph{extreme} ($\mathrm{IR} \ge 30$), with each Yeast variant representing one distinct level.
@@ -366,23 +366,23 @@ To ensure the reproducibility of the experimental results, all stochastic proces
 
 \subsubsection{Data Level}~\\
 
-In terms of the experimental design, four data-level approaches---the baseline (original data), ROS, SMOTE, and SMOTE+ENN---were evaluated across three distinct classifiers: K-Nearest Neighbors (KNN), Random Forest, and Support Vector Machine (SVM) [32]. Specifically, both ROS and SMOTE are configured to increase the minority class to achieve a 1:1 class ratio. In contrast, SMOTE+ENN first balances the classes to a 1:1 ratio and subsequently performs a data reduction phase to remove instances. Given its status as a cornerstone method in imbalanced learning, SMOTE serves as the central benchmark. The comparison among SMOTE, the baseline, and ROS validates SMOTE's efficacy in addressing fundamental class imbalance issues. Conversely, contrasting SMOTE with the SMOTE+ENN method effectively illustrates the inherent limitations of SMOTE across these different learning algorithms.  
+In terms of the experimental design, four data-level approaches---the baseline (original data), ROS, SMOTE, and SMOTE+ENN---were evaluated across three distinct classifiers: K-Nearest Neighbors (KNN), Random Forest, and Support Vector Machine (SVM) \cite{32}. Specifically, both ROS and SMOTE are configured to increase the minority class to achieve a 1:1 class ratio. In contrast, SMOTE+ENN first balances the classes to a 1:1 ratio and subsequently performs a data reduction phase to remove instances. Given its status as a cornerstone method in imbalanced learning, SMOTE serves as the central benchmark. The comparison among SMOTE, the baseline, and ROS validates SMOTE's efficacy in addressing fundamental class imbalance issues. Conversely, contrasting SMOTE with the SMOTE+ENN method effectively illustrates the inherent limitations of SMOTE across these different learning algorithms.  
 
 \subsubsection{Algorithm Level}~\\
 
 Six experimental models were designed at the algorithm level, organized into three comparative pairs: standard Random Forest, standard XGBoost, and standard AdaBoost serve as baselines, each corresponding to a Cost-Sensitive counterpart --- Weighted Random Forest, Cost-Sensitive XGBoost, and Cost-Sensitive AdaBoost, respectively. The following describes the Cost-Sensitive parameter settings and their corresponding mathematical mechanisms for each model. 
 
 \paragraph{(i) Weighted Random Forest}
-Weighted Random Forest addresses class imbalance by assigning different penalty weights to each class, directing the decision trees to place greater attention on minority class samples during the growing process [33]. In this study, the mechanism is implemented by setting class\_weight to balanced, which allows the model to automatically compute class weights based on the inverse of each class's sample frequency. 
+Weighted Random Forest addresses class imbalance by assigning different penalty weights to each class, directing the decision trees to place greater attention on minority class samples during the growing process \cite{33}. In this study, the mechanism is implemented by setting class\_weight to balanced, which allows the model to automatically compute class weights based on the inverse of each class's sample frequency. 
 
 \paragraph{(ii) Cost-Sensitive XGBoost}
- Cost-Sensitive XGBoost is implemented by setting scale\_pos\_weight to the Imbalance Ratio of the dataset, which proportionally amplifies the first-order gradient of minority class samples within the loss function [21]. This configuration directs the model to prioritize the correction of minority class errors at each iteration, achieving a cost-compensation effect within the Boosting framework [18]. 
+ Cost-Sensitive XGBoost is implemented by setting scale\_pos\_weight to the Imbalance Ratio of the dataset, which proportionally amplifies the first-order gradient of minority class samples within the loss function \cite{21}. This configuration directs the model to prioritize the correction of minority class errors at each iteration, achieving a cost-compensation effect within the Boosting framework \cite{18}. 
 
 \paragraph{(iii) Cost-Sensitive AdaBoost}
 
- Cost-Sensitive AdaBoost is implemented by setting the class\_weight of the base weak learner (Decision Stump) to balanced, which causes each decision tree to assign higher impurity penalty weights to minority class nodes during growth. This ensures that the Boosting iterative process treats the correction of minority class errors as a priority from the very first round [22]. 
+ Cost-Sensitive AdaBoost is implemented by setting the class\_weight of the base weak learner (Decision Stump) to balanced, which causes each decision tree to assign higher impurity penalty weights to minority class nodes during growth. This ensures that the Boosting iterative process treats the correction of minority class errors as a priority from the very first round \cite{22}. 
 
-Beyond the Cost-Sensitive parameters described above, all remaining hyperparameters for each model were set to the default values provided by the scikit-learn and XGBoost libraries [21]. This ensures a consistent comparison baseline across models, so that any differences in experimental results can be attributed to the model architecture and Cost-Sensitive mechanism itself, rather than to differences in hyperparameter tuning strategies. 
+Beyond the Cost-Sensitive parameters described above, all remaining hyperparameters for each model were set to the default values provided by the scikit-learn and XGBoost libraries \cite{21}. This ensures a consistent comparison baseline across models, so that any differences in experimental results can be attributed to the model architecture and Cost-Sensitive mechanism itself, rather than to differences in hyperparameter tuning strategies. 
 
 
 \subsubsection{Hybrid Methods}~\\
@@ -402,7 +402,7 @@ When SMOTE is used as the primary data augmentation technique, the second experi
 
 \paragraph{(ii) Experimental Framework}
 
-To ensure fairness and reproducibility, this study does not directly rely on heterogeneous open-source implementations that may introduce hidden variations. Instead, a unified algorithmic testing framework was implemented based on scikit-learn and imblearn, with all algorithms reimplemented to align with the mathematical formulations described in the original literature [23, 24, 26]. 
+To ensure fairness and reproducibility, this study does not directly rely on heterogeneous open-source implementations that may introduce hidden variations. Instead, a unified algorithmic testing framework was implemented based on scikit-learn and imblearn, with all algorithms reimplemented to align with the mathematical formulations described in the original literature \cite{23, 24, 26}. 
 
 All models were trained and evaluated within this unified framework to ensure that performance differences originate solely from the imbalance-handling mechanisms rather than implementation discrepancies. 
 
@@ -410,7 +410,7 @@ All models were trained and evaluated within this unified framework to ensure th
 To ensure that the experimental results are solely influenced by the imbalance-handling strategies, several variables are strictly controlled across all models. 
 
 \subparagraph{(1) Base estimator alignment}
-Traditional AdaBoost implementations commonly use decision stumps (max\_depth = 1) [18]. However, shallow trees may fail to capture complex decision boundaries in imbalanced datasets. Following the experimental settings of SMOTEBoost, all Boosting-based models in this study adopt decision trees with max\_depth = 5 as base classifiers [23--26]. 
+Traditional AdaBoost implementations commonly use decision stumps (max\_depth = 1) \cite{18}. However, shallow trees may fail to capture complex decision boundaries in imbalanced datasets. Following the experimental settings of SMOTEBoost, all Boosting-based models in this study adopt decision trees with max\_depth = 5 as base classifiers \cite{23, 24, 25, 26}. 
 
 \subparagraph{(2) Unified AdaBoost engine}
 Many machine learning libraries implement AdaBoost using the probabilistic SAMME.R variant. However, most imbalance-learning studies derive their theoretical formulations using discrete class labels. To maintain consistency with the original literature, all Boosting-based models in this study adopt the SAMME algorithm. 
@@ -431,15 +431,15 @@ To preserve the intended hybrid design, the under-sampling and oversampling rati
 
 \subparagraph{(3) Cost Matrix Anchoring in SMOTECSL:}  
 
-When SMOTE is applied before cost-sensitive learning, the resulting balanced dataset may cause the classifier to assign equal class weights, thereby neutralizing the intended cost-sensitive mechanism [29]. 
+When SMOTE is applied before cost-sensitive learning, the resulting balanced dataset may cause the classifier to assign equal class weights, thereby neutralizing the intended cost-sensitive mechanism \cite{29}. 
 
 To address this issue, the true cost matrix is computed from the original imbalanced labels prior to the SMOTE process and then explicitly mapped to the classifier loss function. This design ensures that feature-space expansion and algorithm-level cost penalties can operate simultaneously without canceling each other. 
 \subsection{Evaluation Metrics}
 
 A central challenge in evaluating classifiers on imbalanced datasets is
 metric selection.
-As demonstrated by He and Garcia[1] and mathematically
-formalised by Luque~et~al.[5], overall \emph{Accuracy}
+As demonstrated by He and Garcia \cite{1} and mathematically
+formalised by Luque~et~al.\cite{5}, overall \emph{Accuracy}
 is a fundamentally flawed metric under class imbalance: a degenerate
 classifier that assigns every instance to the majority class can attain
 superficially high accuracy while entirely failing to detect any
@@ -455,7 +455,7 @@ Precision measures the proportion of predicted positive instances that are
 truly positive; Recall (Sensitivity) measures the proportion of actual
 positive instances that are correctly identified.
 Both metrics are defined over the minority class and are expressed
-as[34]:
+as \cite{34}:
 %
 \begin{equation}
   \mathrm{Precision} = \frac{TP}{TP + FP},
@@ -470,7 +470,7 @@ as[34]:
 \paragraph{F1-Score.}
 The F1-Score is the harmonic mean of Precision and Recall, providing a
 single scalar that penalises severe imbalances between the
-two[35]:
+two \cite{35}:
 %
 \begin{equation}
   F_1
@@ -488,7 +488,7 @@ informative composite measure for imbalanced classification tasks.
 The Area Under the Receiver Operating Characteristic Curve (AUC-ROC) is a
 threshold-independent metric that quantifies a classifier's ability to
 discriminate between classes across all possible decision
-thresholds[6].
+thresholds \cite{6}.
 Let the False Positive Rate (FPR) and True Positive Rate (TPR) be defined
 as:
 %
@@ -509,14 +509,14 @@ The AUC-ROC is then computed as:
 %
 A value of $0.5$ corresponds to random classification, while $1.0$ denotes
 a perfect classifier.
-As noted by Saito and Rehmsmeier[36], however,
+As noted by Saito and Rehmsmeier \cite{36}, however,
 ROC-based metrics can present an overly optimistic picture under extreme
 class imbalance, because the large pool of true negatives in the majority
 class suppresses the FPR, thereby inflating the apparent curve.
 
 \paragraph{G-Mean.}
 The Geometric Mean (G-Mean), originally proposed by Kubat and
-Matwin[7] for imbalanced learning, is the square
+Matwin \cite{7} for imbalanced learning, is the square
 root of the product of Sensitivity (Recall) and Specificity.
 It provides a balanced assessment of performance across both classes
 simultaneously: poor performance on \emph{either} class leads to a sharp
@@ -544,7 +544,7 @@ the precision--recall trade-off for the minority class; the AUC-ROC captures
 threshold-independent ranking ability across all decision boundaries; and
 the G-Mean ensures that majority-class performance is not sacrificed for
 minority-class gains.
-primary comparisons, in accordance with the limitations identified in prior literature[1, 5, 36].
+primary comparisons, in accordance with the limitations identified in prior literature \cite{1, 5, 36}.
 
 \section{Results}
 
@@ -667,11 +667,11 @@ primary comparisons, in accordance with the limitations identified in prior lite
 
 This section presents the experimental results evaluated at the data level. The summary chart (Table 2) illustrates the average performance of the various data pre-processing methods across all classifiers, while the comprehensive experimental data can be found in the Appendix. 
 
-To facilitate an in-depth analysis utilizing the G-Mean as the core evaluation metric, the detailed results and visualizations are organized as follows: 
-\begin{itemize}
-\item Tabular Results by Classifier: The detailed G-Mean performance for each classifier is presented in Table~\ref{tab:knn_gmean} (KNN), Table~\ref{tab:svm_gmean} (SVM), and Table~\ref{tab:rf_gmean} (Random Forest). 
-\item Visualizations by Dataset: The comparative performance of the different data-level approaches across the three classifiers is graphically depicted by dataset in Figure 2 (yeast1), Figure 3 (yeast3), Figure 4 (yeast4), and Figure 5 (yeast6). 
-\end{itemize}
+To facilitate an in-depth analysis utilizing the G-Mean as the core evaluation metric, the detailed results and visualizations are organized as follows:
+
+\textbf{Tabular Results by Classifier:} The detailed G-Mean performance for each classifier is presented in Table~\ref{tab:knn_gmean} (KNN), Table~\ref{tab:svm_gmean} (SVM), and Table~\ref{tab:rf_gmean} (Random Forest).
+
+\textbf{Visualizations by Dataset:} The comparative performance of the different data-level approaches across the three classifiers is graphically depicted by dataset in Figure~\ref{fig:yeast1_gmean} (yeast1), Figure~\ref{fig:yeast3_gmean} (yeast3), Figure~\ref{fig:yeast4_gmean} (yeast4), and Figure~\ref{fig:yeast6_gmean} (yeast6).
 
 \begin{table*}[h]
   \centering
@@ -723,6 +723,7 @@ To facilitate an in-depth analysis utilizing the G-Mean as the core evaluation m
     \bottomrule
   \end{tabular}
 \end{table*}
+
 
 \begin{figure}[h]
   \centering
@@ -1022,11 +1023,11 @@ Taken together, the results from the two experiments provide a consistent observ
 Based on the experimental results above, we can draw the following conclusions: 
 
 \begin{itemize}
-    \item Algorithm Selection based on Imbalance Ratio (IR) 
+    \item \textit{Algorithm Selection based on Imbalance Ratio (IR) }
           For datasets with low IR, relatively straightforward techniques such as data-level SMOTE or algorithm-level Cost-Sensitive XGBoost are sufficient to achieve a good classification balance. However, for high to extreme IR tasks, models require robust Hybrid methods like SMOTEBoost to simultaneously generate minority features and boost learning. Furthermore, if the task strictly prioritizes the minority class recall, SMOTE-ENN is highly recommended due to its boundary cleaning capability, while Random under-sampling methods (e.g., RUSBoost) should be avoided as they discard too much valuable information. 
-    \item The Pitfall of Accuracy
+    \item \textit{The Pitfall of Accuracy}
            Accuracy is an unsuitable evaluation metric for highly imbalanced datasets. As the Imbalance Ratio (IR) increases, a classifier can achieve superficially high Accuracy simply by predicting the majority class for all instances. To reflect the true predictive performance on the minority class, discriminatory metrics such as F1-Score, ROC-AUC, and G-Mean must be adopted instead. 
-    \item Limitations 
+    \item \textit{Limitations} 
           Although the four datasets employed in this study span a spectrum from mild to severe class imbalance, their relatively small sample sizes and low feature dimensionality may not fully encapsulate the complexities of real-world applications. To enhance the generalizability of these findings, future research should incorporate large-scale, high-dimensional datasets from diverse domains. 
 \end{itemize}
 
@@ -1036,11 +1037,107 @@ This review systematically examines data-level, algorithm-level, and hybrid leve
 
 \section{Reference}
 
-\section{Appendix}
+\begin{thebibliography}{36}
+
+\bibitem{1} Haibo He and Edwardo A. Garcia. 2009. Learning from Imbalanced Data. IEEE Transactions on Knowledge and Data Engineering 21, 9 (2009), 1263–1284. https://doi.org/10.1109/TKDE.2008.239
+
+\bibitem{2} Nitesh V. Chawla, Kevin W. Bowyer, Lawrence O. Hall, and W. Philip Kegelmeyer. 2002. SMOTE: Synthetic Minority Over-sampling Technique. Journal of Artificial Intelligence Research 16 (2002), 321–357. https://doi.org/10.1613/jair.953
+
+\bibitem{3} Alberto Fernández, Salvador García, Francisco Herrera, and Nitesh V. Chawla. 2018. SMOTE for Learning from Imbalanced Data: Progress and Challenges, Marking the 15-year Anniversary. Journal of Artificial Intelligence Research 61 (2018), 863–905. https://doi.org/10.1613/jair.1.11192
+
+\bibitem{4} Alberto Fernández, Salvador García, Mikel Galar, Ronaldo C. Prati, Bartosz Krawczyk, and Francisco Herrera. 2018. Learning from Imbalanced Data Sets. Springer, Cham. https://doi.org/10.1007/978-3-319-98074-4
+
+\bibitem{5} Amalia Luque, Alejandro Carrasco, Alejandro Martín, and Ana de las Heras. 2019. The impact of class imbalance in classification performance metrics based on the binary confusion matrix. Pattern Recognition 91 (2019), 216–231. https://doi.org/10.1016/j.patcog.2019.02.023
+
+\bibitem{6} Tom Fawcett. 2006. An introduction to ROC analysis. Pattern Recognition Letters 27, 8 (2006), 861–874. https://doi.org/10.1016/j.patrec.2005.10.010
+
+\bibitem{7} Miroslav Kubat and Stan Matwin. 1997. Addressing the Curse of Imbalanced Training Sets: One-Sided Selection. In Proceedings of the 14th International Conference on Machine Learning (ICML). 179–186.
+
+\bibitem{8} Victoria López, Alberto Fernández, Salvador García, Vasile Palade, and Francisco Herrera. 2013. An Insight into Classification with Imbalanced Data: Empirical Results and Current Trends on Using Data Intrinsic Characteristics. Information Sciences 250 (2013), 113–141. https://doi.org/10.1016/j.ins.2013.07.007
+
+\bibitem{9} Mikel Galar, Alberto Fernández, Edurne Barrenechea, Humberto Bustince, and Francisco Herrera. 2012. A Review on Ensembles for the Class Imbalance Problem: Bagging-, Boosting-, and Hybrid-Based Approaches. IEEE Transactions on Systems, Man, and Cybernetics, Part C: Applications and Reviews 42, 4 (2012), 463–484. https://doi.org/10.1109/TSMCC.2011.2161285
+
+\bibitem{10} G.E. Batista, R.C. Prati, M.C. Monard, A study of the behavior of several methods for balancing machine learning training data, ACM SIGKDD Explor. Newsl. 6 (2004) 20–29.
+
+\bibitem{11} A. Estabrooks, T. Jo, N. Japkowicz, A multiple resampling method for learning from imbalanced data sets, Comput. Intell. 20 (2004) 18–36.
+
+\bibitem{12} C. Seiffert, T. M. Khoshgoftaar, and J. Van Hulse, "Hybrid sampling for imbalanced data," in Proc. IEEE Int. Conf. Inf. Reuse and Integration, 2008, pp. 202–207.
+
+\bibitem{13} N. Chawla, K. Bowyer, L. Hall, W. Kegelmeyer, SMOTE: Synthetic minority over-sampling technique, J. Artificial Intelligence Res. 16 (2002) 321–357.
+
+\bibitem{14} E. Troullinou, G. Tsagkatakis, A. Losonczy, P. Poirazi, and P. Tsakalides, “A generative neighborhood-based deep autoencoder for robust imbalanced classification,” IEEE Trans. Artif. Intell., vol. 5, no. 1, pp. 80–91, Jan. 2024.
+
+\bibitem{15} H. Han, W. Wen-Yuan, M. Bing-Huan, Borderline-SMOTE: A new oversampling method in imbalanced data sets learning, in: Advances in Intelligent Computing, Springer, Berlin, 2005, pp. 878–887.
+
+\bibitem{16} E. At, A. M, A.-M. F, and S. M, “Classification of Imbalance Data using Tomek Link (T-Link) Combined with Random Under-sampling (RUS) as a Data Reduction Method,” Global J Technol Optim, vol. 01, no. S1, 2016, doi: 10.4172/2229- 8711.S1111.
+
+\bibitem{17} Wilson, D. L. Asymptotic Properties of Nearest Neighbor Rules Using Edited Data. IEEE Transactions on Systems, Man, and Communications 2, 3 (1972), 408–421.
+
+\bibitem{18} H. He and E. A. Garcia, "Learning from imbalanced data," IEEE Transactions on Knowledge and Data Engineering, vol. 21, no. 9, pp. 1263-1284, 2009.
+
+\bibitem{19} C. Elkan, "The foundations of cost-sensitive learning," in Proceedings of the 17th International Joint Conference on Artificial Intelligence, 2001, vol. 2, pp. 973-978.
+
+\bibitem{20} L. Breiman, "Random forests," Machine Learning, vol. 45, no. 1, pp. 5-32, 2001.
+
+\bibitem{21} T. Chen and C. Guestrin, "XGBoost: A scalable tree boosting system," in Proceedings of the 22nd ACM SIGKDD International Conference on Knowledge Discovery and Data Mining, 2016, pp. 785-794.
+
+\bibitem{22} Y. Freund and R. E. Schapire, "A decision-theoretic generalization of on-line learning and an application to boosting," Journal of Computer and System Sciences, vol. 55, no. 1, pp. 119-139, 1997.
+
+\bibitem{23} N. V. Chawla, A. Lazarevic, L. O. Hall, and K. W. Bowyer, "SMOTEBoost: Improving prediction of the minority class in boosting," in European Conference on Principles of Data Mining and Knowledge Discovery, Springer, 2003, pp. 107-119.
+
+\bibitem{24} C. Seiffert, T. M. Khoshgoftaar, J. Van Hulse, and A. Napolitano, "RUSBoost: A hybrid approach to alleviating class imbalance," IEEE Transactions on Systems, Man, and Cybernetics-Part A: Systems and Humans, vol. 40, no. 1, pp. 185-197, 2010.
+
+\bibitem{25} M. Galar, A. Fernandez, E. Barrenechea, and F. Herrera, "EUSBoost: Enhancing ensembles for highly imbalanced data-sets by evolutionary undersampling," Pattern Recognition, vol. 46, no. 12, pp. 3460-3471, 2013.
+
+\bibitem{26} J. Gong and H. Kim, "RHSBoost: Improving classification performance in imbalance data," Computational Statistics \& Data Analysis, vol. 111, pp. 1-13, 2017.
+
+\bibitem{27} J. Zhao, J. Jin, S. Chen, R. Zhang, B. Yu, and Q. Liu, "A weighted hybrid ensemble method for classifying imbalanced data," Knowledge-Based Systems, vol. 203, p. 106087, 2020.
+
+\bibitem{28} N. R. Baghmishe, J. Tanha, and E. Roshan, "SUBoost: A Novel Boosting-Based Selective Undersampling for Handling Imbalanced Data," 2025.
+
+\bibitem{29} N. Thai-Nghe, Z. Gantner, and L. Schmidt-Thieme, "Cost-sensitive learning methods for imbalanced data," in The 2010 International Joint Conference on Neural Networks (IJCNN), IEEE, 2010, pp. 1-8.
+
+\bibitem{30} A. Majeed and S. O. Hwang, "CTGAN-MOS: Conditional Generative Adversarial Network Based Minority-Class-Augmented Oversampling Scheme for Imbalanced Problems," IEEE Access, vol. 11, pp. 83556-83574, 2023.
+
+\bibitem{31} J. Alcalá-Fdez, A. Fernández, J. Luengo, J. Derrac, S. García, L. Sánchez, and F. Herrera. 2011. KEEL Data-Mining Software Tool: Data Set Repository, Integration of Algorithms and Experimental Analysis Framework. Journal of Multiple-Valued Logic and Soft Computing 17, 2–3 (2011), 255–287.
+
+\bibitem{32} S. Rezvani and X. Wang, “A Broad Review on Class Imbalance Learning Techniques,” Applied Soft Computing, vol. 143, no. C , pp. 9, 2023.
+
+\bibitem{33} C. Chen, A. Liaw, and L. Breiman, "Using random forest to learn imbalanced data," Technical Report 666, Statistics Department, University of California, Berkeley, 2004.
+
+\bibitem{34} Marina Sokolova and Guy Lapalme. 2009. A systematic analysis of performance measures for classification tasks. Information Processing \& Management 45, 4 (2009), 427–437. https://doi.org/10.1007/978-3-540-31865-1\_25
+
+\bibitem{35} Cyril Goutte and Eric Gaussier. 2005. A Probabilistic Interpretation of Precision, Recall and F-Score, with Implication for Evaluation. In Advances in Information Retrieval (ECIR 2005). Springer, 345–359. https://doi.org/10.1007/978-3-540-31865-1\_25
+
+\bibitem{36} Takaya Saito and Marc Rehmsmeier. 2015. The Precision-Recall Plot Is More Informative than the ROC Plot When Evaluating Binary Classifiers on Imbalanced Datasets. PLoS ONE 10, 3 (2015), e0118432. https://doi.org/10.1371/journal.pone.0118432
+
+\end{thebibliography}
 
 \section{WORK DIVISION}
 
-
+\begin{table}[htbp]
+    \centering
+    % 稍微增加行距，讓多行文字的表格看起來不那麼擁擠
+    \renewcommand{\arraystretch}{1.3} 
+    
+    % 設定三個欄位：姓名(寬 3.5cm)、工作內容(寬 8cm)、貢獻度(置中 c)
+    \begin{tabular}{|p{3.5cm}|p{8cm}|c|}
+        \hline
+        \textbf{Name} & \textbf{Work description} & \textbf{Contribution} \\
+        \hline
+        Chi-Wei, Peng \newline 114423004 & Introduction \newline Experiment: data set, evaluation metrics \newline Consolidate files & 25\% \\
+        \hline
+        Ting-Chun, Lin \newline 114423009 & Method: data level \newline Experiment: data level, overall result & 25\% \\
+        \hline
+        Chiu-Hsiang, Lin \newline 114423049 & Method: algorithm level \newline Experiment: algorithm level \newline Conclusion & 25\% \\
+        \hline
+        Chia-Chen, Lee \newline 114423050 & 1. Method: hybrid level \newline 2. Experiment: hybrid level & 25\% \\
+        \hline
+    \end{tabular}
+    
+    \caption{Team Contribution and Work Distribution}
+    \label{tab:contribution}
+\end{table}
 
 \section{Detailed Experimental Analysis}
 \label{sec:experimental_analysis}
