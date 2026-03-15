@@ -1,4 +1,4 @@
-﻿%%
+%%
 %% This is file `sample-sigconf.tex',
 %% generated with the docstrip utility.
 %%
@@ -53,6 +53,7 @@
 \usepackage{multirow}
 \usepackage{pgfplots}
 \pgfplotsset{compat=1.18}
+\usepackage{indentfirst}
 \definecolor{RoyalBlue}{RGB}{0, 70, 156}
 \definecolor{ScholarRed}{RGB}{160, 0, 0}
 \definecolor{ScholarGold}{RGB}{212, 160, 0}
@@ -148,11 +149,12 @@
 %% The abstract is a short summary of the work to be presented in the
 %% article.
 \begin{abstract}
-  add later...
+  Class imbalance remains a pervasive challenge in binary classification, yet most comparative studies confound the effects of the imbalance ratio (IR) with variations in feature dimension and dataset size. This study addresses this gap by adopting a strictly controlled experimental design using four variants of the Yeast dataset. Because these variants share an identical feature space, the design effectively isolates the impact of class distribution, revealing the intricate interplay between IR and intrinsic data complexity (e.g., class overlap and small disjuncts). To ensure a robust performance comparison, three families of techniques---data-level, algorithm-level, and hybrid methods---are systematically evaluated across three base classifiers. The empirical results yield crucial insights: at the data level, SMOTE+ENN achieves the highest G-Mean under severe imbalance; at the algorithm level, Cost-Sensitive XGBoost offers the optimal precision-recall balance, while AdaBoost suffers from an extreme trade-off; and among hybrid approaches, SMOTEBoost demonstrates the most robust stability under extreme IR. Furthermore, the experiments reveal that intrinsic data complexity often dictates performance degradation more decisively than the sheer IR. Across all levels, accuracy proves to be a deceptively misleading metric, reinforcing the necessity of imbalance-aware evaluation. These findings provide actionable, data-driven guidelines for selecting appropriate strategies based on the specific nature of the imbalance and real-world error tolerance.
+
 \end{abstract}
 
 % CCS Concepts and Keywords
-\keywords{Imbalanced Data, Resampling Methods, Boosting Algorithms, Machine Learning}
+\keywords{Class Imbalance; Binary Classification; Resampling Techniques; Cost-Sensitive Learning; Ensemble Learning; Data Complexity.}
 %% A "teaser" image appears between the author and affiliation
 %% information and the body of the document, and typically spans the
 %% page.
@@ -171,33 +173,27 @@
 
 \subsection{Background and Problem Definition}
 In recent years, the rapid expansion of data availability across large-scale, complex, and networked systems has propelled machine learning to prominent roles in numerous application domains [1].
-
 However, real-world data distributions are inherently complex and frequently exhibit a significant class imbalance. The class imbalance problem arises when the number of instances belonging to one class (the majority class) substantially outnumbers those of another (the minority class), resulting in a severely skewed training distribution [1, 2].
-
 This phenomenon is pervasive in many high-stakes domains, including financial fraud detection, network intrusion detection, and the diagnosis of rare diseases such as diabetes and stroke, where the minority class---despite its low frequency of occurrence---typically constitutes the primary target of predictive interest [3, 4].
+ 
 
 \subsection{Challenges and the Pitfalls of Evaluation Metrics}
 Standard machine learning models are generally designed under the implicit assumption of an approximately balanced class distribution. Consequently, when applied to skewed data, these models exhibit a systematic bias toward the majority class, yielding poor predictive performance for minority instances---precisely those of greatest practical concern [1].
-
 This issue is further compounded by the widespread use of conventional evaluation metrics. Overall accuracy, in particular, is highly misleading under class imbalance: a naive classifier that assigns all instances to the majority class can attain superficially high accuracy while entirely failing to identify any minority-class example [5].
-
 To overcome this limitation, the research community has advocated the adoption of more discriminative metrics, including the F1-Score, the Area Under the Receiver Operating Characteristic Curve (AUC-ROC) [6], and the Geometric Mean (G-Mean) [7], which collectively provide a more faithful assessment of model performance across both classes.
 
+
 \subsection{Taxonomy of Imbalanced Learning Techniques}
-To address the challenges posed by imbalanced datasets, a rich body of literature has proposed numerous techniques, which are broadly categorized into three main families: data-level methods, algorithmic-level methods, and hybrid strategies [1, 8].
-
-Data-level approaches modify the training data distribution prior to model induction, either by oversampling the minority class---most notably through the Synthetic Minority Over-sampling Technique (SMOTE) [2] and its variants---or by undersampling the majority class through methods such as Random Under-Sampling (RUS).
-
-Algorithmic-level approaches, by contrast, leave the data distribution unchanged and instead modify the learning procedure itself; representative techniques include cost-sensitive learning and ensemble-based methods such as weighted classifiers and boosting frameworks [9].
-
-Finally, hybrid strategies combine the complementary strengths of both data resampling and algorithmic robustness, with methods such as SMOTEBoost and RUSBoost serving as prominent examples [9].
-
+To address the challenges posed by imbalanced datasets, a rich body of literature has proposed numerous techniques, which are broadly categorized into three main families: data-level methods, algorithm-level methods, and hybrid strategies [1, 8].
+Data-level approaches modify the training data distribution prior to model induction, either by oversampling the minority class---most notably through the Synthetic Minority Over-sampling Technique (SMOTE) [2] and its variants---or by under sampling the majority class through methods such as Random Under-Sampling(RUS).
+Algorithm-level approaches, by contrast, leave the data distribution unchanged and instead modify the learning procedure itself; representative techniques include cost-sensitive learning and ensemble-based methods such as weighted classifiers and boosting frameworks [9].
+Finally, hybrid strategies combine the complementary strengths of both data resampling and algorithm robustness, with methods such as SMOTEBoost and RUSBoost serving as prominent examples [9].
+ 
 \subsection{Research Gap and Objectives}
 Despite the substantial volume of existing work, many comparative studies evaluate imbalanced learning techniques across heterogeneous datasets that vary simultaneously in multiple dimensions---including class overlap, feature complexity, and sample size---making it difficult to isolate the independent effect of the Imbalance Ratio (IR) on classifier performance [1]. Confounding factors of this nature limit the interpretability of empirical findings and reduce their practical utility as guidelines for practitioners.
-
 To address this gap, this study proposes a rigorous empirical framework grounded in controlled experimental design. Rather than relying solely on a diverse collection of independent datasets, we systematically vary the IR within a curated set of benchmark datasets spanning a wide range of imbalance severity---from mild (IR $\approx$ 2.4) to extreme (IR $\approx$ 41.4)---thereby enabling direct, controlled comparisons across escalating levels of class imbalance.
-
-Within this framework, we conduct a systematic evaluation of representative methods from all three technique families---data-level, algorithmic-level, and hybrid---using three established base classifiers (SVM, Random Forest, and XGBoost) and a comprehensive set of evaluation metrics (F1-Score, AUC-ROC, and G-Mean). By analyzing the performance degradation trajectories of each strategy as class imbalance worsens, this study aims to provide both a nuanced empirical understanding of the strengths and limitations of existing approaches and actionable practical guidance for selecting appropriate imbalanced learning techniques in binary classification tasks.
+Within this framework, we conduct a systematic evaluation of representative methods from all three technique families---data-level, algorithm-level, and hybrid---using three established base classifiers (SVM, Random Forest, and XGBoost) and a comprehensive set of evaluation metrics (F1-Score, AUC-ROC, and G-Mean). By analyzing the performance degradation trajectories of each strategy as class imbalance worsens, this study aims to provide both a nuanced empirical understanding of the strengths and limitations of existing approaches and actionable practical guidance for selecting appropriate imbalanced learning techniques in binary classification tasks.
+ 
 
 \section{Method}
 \label{sec:method}
@@ -206,25 +202,113 @@ Within this framework, we conduct a systematic evaluation of representative meth
 At the data pre-processing stage, techniques for addressing class imbalance can be broadly categorized into two types: non-synthetic and synthetic methods. Non-synthetic methods adjust the class distribution using existing data, leaving the underlying information unaltered. Conversely, synthetic methods mitigate the imbalance by generating new data samples using existing features.
 
 \subsubsection{Non-synthetic method}
-\paragraph{(i) Random sampling:} Resampling strategies generally include techniques such as under-sampling, over-sampling, and hybrid sampling. Random under-sampling (RUS) deletes samples from the majority class, which may discard useful data. Random over-sampling (ROS) achieves dataset balance by duplicating minority class samples, but this exact duplication increases the risk of overfitting. [81, 10]
+\paragraph{(i) Random sampling:} 
+Resampling strategies generally include techniques such as under-sampling, over-sampling, and hybrid sampling. Random under-sampling(RUS) deletes samples from the majority class, which may discard useful data. Random over-sampling(ROS) achieves dataset balance by duplicating minority class samples, but this exact duplication increases the risk of overfitting.[10] 
 
-In most cases, under-sampling improves model performance more effectively than over-sampling. However, in certain specific scenarios—such as when the negative class is dominant—the opposite holds true. The optimal resampling ratio varies depending on the dataset and the chosen resampling strategy, rather than simply supplementing or reducing classes to a perfectly balanced state. [44, 11]
+In most cases, under-sampling improves model performance more effectively than over-sampling. However, in certain specific scenarios---such as when the negative class is dominant---the opposite holds true. The optimal resampling ratio varies depending on the dataset and the chosen resampling strategy, rather than simply supplementing or reducing classes to a perfectly balanced state. [11] 
 
-\paragraph{(ii) Hybrid sampling:} Hybrid sampling combines the advantages of both over-sampling and under-sampling while mitigating their respective disadvantages. Applying over-sampling before under-sampling generally yields better performance than the reverse order. However, the hybrid sampling ratio must be determined manually, often requiring domain knowledge. If this ratio is inappropriately set for a given dataset, the approach may fail to show the benefits of hybridization and could even perform worse than using either technique alone. [12]
+\paragraph{(ii) Hybrid sampling:} Hybrid sampling combines the advantages of both over-sampling and under-sampling while mitigating their respective disadvantages. Applying over-sampling before under-sampling generally yields better performance than the reverse order. However, the hybrid sampling ratio must be determined manually, often requiring domain knowledge. If this ratio is inappropriately set for a given dataset, the approach may fail to show the benefits of hybridization and could even perform worse than using either technique alone. [12] 
+%
 
-\section{EXPERIMENTAL SETUP}
+\subsubsection{Synthetic method}
+\paragraph{(i) SMOTE} 
+To overcome the limitations inherent in random resampling, the Synthetic Minority Over-sampling Technique (SMOTE) was introduced [13]. Instead of merely duplicating existing instances, SMOTE over-samples the minority class by creating synthetic examples. This mechanism effectively forces the decision regions of the minority class to be more extensive and generalized. 
 
+The specific mechanism of SMOTE involves taking each minority class instance and generating new synthetic samples by randomly interpolating points along the line segments connecting it to its K nearest minority-class neighbors. A significant drawback of this approach is its failure to consider the distribution of the majority class during synthesis. Consequently, this oversight can generate ambiguous samples and blur decision boundaries, particularly in scenarios with substantial inter-class overlap. [14] 
+
+Several SMOTE extensions have been proposed to address the shortcomings. Borderline-SMOTE solves the problem of blindly over-sampling all minority samples [15]. Furthermore, SMOTE+Tomek and SMOTE+ENN overcome the class overlapping and overfitting issues frequently caused by SMOTE [10]. In other words, Borderline-SMOTE focuses on selective generation, while SMOTE+Tomek and SMOTE+ENN focus on comprehensive data cleaning after synthetic examples are created.
+
+\paragraph{(ii) Borderline-SMOTE}
+
+The Borderline-SMOTE algorithm operates in two primary stages. The first stage focuses on identifying boundary samples. Each minority class instance, $p_i$, is categorized into one of three types: Noise (excluded from synthesis), Safe (excluded from over-sampling), and Danger (targeted for over-sampling and added to the DANGER set).  
+
+The second stage involves generating synthetic samples. Boundary samples within the DANGER set are interpolated using a random number multiplier to create new instances. This stage employs two distinct strategies: Borderline-SMOTE1 exclusively utilizes nearest neighbors from the minority class, yielding highly balanced and superior performance in terms of True Positive (TP) rate and F-value. Conversely, Borderline-SMOTE2 incorporates neighbors from both the minority and majority classes. While this approach maximizes the detection rate of the minority class, it inherently risks creating overlapping feature spaces between the two classes. 
+
+\paragraph{(iii) SMOTE+Tomek and SMOTE+ENN} ~\\
+
+(1) SMOTE+Tomek 
+
+A Tomek link is defined as a pair of instances from opposite classes that are mutual nearest neighbors [16]. The presence of such a link suggests that either one instance is noise, or both reside exactly on the decision boundary. The SMOTE+Tomek approach initiates by over-sampling the dataset via SMOTE, followed by the identification of Tomek links. In the subsequent data cleaning phase, both instances constituting a Tomek link are simultaneously removed to establish distinct and well-defined class boundaries. 
+
+(2) SMOTE+ENN 
+
+Similar to the SMOTE+Tomek links approach, SMOTE+ENN employs the Edited Nearest Neighbor (ENN) algorithm during the data cleaning phase. ENN is a noise removal technique based on the k-nearest neighbors rule [17]. Specifically, SMOTE+ENN examines each instance in the training set; if an instance is misclassified by the majority vote of its three nearest neighbors (k=3), it is identified as noise and subsequently eliminated from the dataset. 
+
+SMOTE+Tomek links involves finding pairs of samples from different classes that are mutual nearest neighbors. In contrast, SMOTE+ENN comprehensively considers the distribution of a sample's three nearest neighbors, eliminating the sample if the majority belong to the opposing class. Consequently, models trained with SMOTE+ENN usually show the smallest increase in average decision rules, indicating that it produces more streamlined models. 
+
+\subsection{Algorithm-level Methods}
+Algorithm-level strategies aim to address class imbalance by directly modifying the internal learning mechanisms of machine learning algorithms, rather than altering the original dataset, so that the model places greater emphasis on minority class samples during training [18]. 
+
+\subsubsection{Cost-Sensitive learning}~\\
+
+Traditional classification algorithms typically assume that all misclassification errors carry equal cost, and therefore optimize toward maximizing overall accuracy. In imbalanced data settings, however, the cost of misclassifying a minority class sample is often substantially higher than that of misclassifying a majority class sample [19]. 
+
+The core idea of Cost-Sensitive Learning is to introduce a Cost Matrix that assigns different penalty weights to misclassifications across different classes [19]. Through this mechanism, the model can be compelled to shift greater attention toward the minority class during training without modifying the original class distribution. This concept underpins the implementation approach of the three models discussed in the following sections. 
+
+\subsubsection{Ensemble method}~\\
+
+The core idea of ensemble methods is to combine multiple weak learners to construct a more powerful model. This review focuses on two dominant frameworks: the Bagging framework, represented by Random Forest, and the Boosting framework, represented by XGBoost and AdaBoost [18]. 
+
+\paragraph{(i) Random Forest (Bagging Framework)}
+
+Random Forest improves model stability by constructing multiple decision trees in parallel and aggregating their predictions through majority voting [20]. In imbalanced data settings, however, each decision tree grows by minimizing overall Gini Impurity, which causes the model to prioritize the purification of majority class nodes. As a result, the decision boundaries for minority class samples tend to be overlooked [18].
+
+\paragraph{(ii) XGBoost (Boosting Framework)}
+
+XGBoost was proposed by Chen \& Guestrin in 2016, and operates by sequentially adding new functions to the model to progressively correct its errors [20]. Unlike the parallel construction of Random Forest, XGBoost's learning process is driven by the loss function — the model determines the growth direction of each tree by iteratively minimizing this loss. However, since standard Log Loss applies equal misclassification penalties across all samples, the overwhelming proportion of majority class samples in imbalanced datasets causes the gradient update to be consistently dominated by the majority class. Even when minority class errors occur repeatedly, their contribution to the overall loss remains marginal, making it difficult for the model to effectively correct these prediction errors over successive iterations [21]. 
+
+\paragraph{(iii) Adaboost (Boosting Framework)}
+
+AdaBoost was proposed by Freund \& Schapire (1995), and its core mechanism involves dynamically adjusting sample weights at each iteration based on the classification results of the previous round. Misclassified samples receive higher weights, directing the next tree to focus more on correcting these difficult cases [22]. In severely imbalanced datasets, however, although the weights assigned to misclassified minority class samples increase over iterations, the sheer volume of majority class samples means that the cumulative influence of the minority class remains relatively limited within the overall weight distribution, and the iterative process may still be dominated by the majority class [19]. 
+
+
+\subsection{Hybrid Methods}
+
+In binary classification problems with imbalanced datasets, relying solely on data-level resampling or algorithm-level strategies is often insufficient, particularly under extreme imbalance or overlapping decision boundaries. To address these limitations, many researchers have attempted to integrate both approaches in innovative ways to overcome their respective drawbacks. In this study, hybrid methods are defined as approaches that integrate data-level sampling or data generation strategies with algorithm-level learning frameworks, thereby exploiting the complementarystrengths of both techniques. The following sections review the evolution of Boosting-based hybrid methods and other representative hybrid approaches. 
+
+\subsubsection{Boosting-based Hybrid Methods}
+
+Within ensemble learning methods, AdaBoost [18] is one of the most representative algorithms. However, its original design was not optimized for handling class imbalance and therefore tends to produce biased predictions toward the majority class. To address this issue, numerous studies over the past two decades have proposed hybrid approaches that embed data resampling techniques into the iterative Boosting process, forming a clear evolutionary trajectory. 
+
+\paragraph{(i) SMOTEBoost}~\\
+
+Chawla et al. (2003) [23] first proposed the pioneering SMOTEBoost algorithm. This method integrates SMOTE into the AdaBoost.M2 framework. By creating new samples in the feature space, SMOTEBoost effectively enlarges the decision region of the minority class, thereby mitigating the learning bias caused by the equal treatment of misclassification errors in standard Boosting. SMOTEBoost has demonstrated strong recall performance in domains such as network intrusion detection, medical diagnosis, and web mining. However, under highly overlapping data distributions, blindly generated synthetic samples may introduce noise and blur the decision boundary. 
+
+\paragraph{(ii) RUSBoost}~\\
+
+To overcome the limitations of SMOTEBoost, Seiffert et al. (2010) proposed RUSBoost [24]. In this method, random under-sampling of the majority class is performed prior to each Boosting iteration to rebalance the dataset. By significantly reducing the training data size, RUSBoost achieves much faster training speed compared to SMOTEBoost while simultaneously avoiding the risk of overfitting and noise introduced by artificial samples. This method is particularly suitable for large-scale datasets, such as those encountered in software quality modeling. Empirical results demonstrate that its classification performance, measured by metrics such as AUC and G-mean, is comparable to or even superior to SMOTEBoost, establishing it as a new benchmark for handling imbalanced data at the time. 
+
+\paragraph{(iii) EUSBoost and RHSBoost}~\\
+
+Subsequently, Galar et al. (2013) introduced EUSBoost [25], which aimed to address the randomness inherent in traditional sampling strategies by incorporating intelligent evolutionary mechanisms. In this method, evolutionary algorithms replace purely RUS, and a CHC-based genetic algorithm is employed to intelligently search for and retain the most representative majority-class samples during each iteration. Furthermore, the fitness function is modified to enforce diversity among classifiers. EUSBoost has achieved notable improvements in applications such as anomaly detection, facial age estimation, and image annotation, and has been shown to outperform RUSBoost on highly imbalanced datasets. 
+
+In 2017, Gong and Kim proposed RHSBoost [26], which integrates multiple sampling strategies within a single framework. In each AdaBoost iteration, majority samples are first reduced via RUS, followed by ROSE, which employs kernel density estimation to generate samples with variability without increasing the total dataset size. This bidirectional sampling strategy enables RHSBoost to produce clearer decision boundaries compared with single sampling approaches while avoiding significant increases in training cost. The method has shown advantages in applications such as financial risk management, corporate default prediction, and rare disease diagnosis. 
+
+\paragraph{(iv) WHMBoost}~\\
+
+Entering the 2020s, Zhao et al. (2020) proposed WHMBoost [27], shifting the focus from single sampling techniques toward weighted ensemble strategies. This framework constructs multiple balanced subsets at the data level using SMOTE and an improved adjustable random balance strategy. Decision trees and support vector machines are then alternately used as base classifiers. By evaluating the predictive capability of each classifier on positive and negative samples, adaptive weights are assigned dynamically. Through the integration of hybrid data processing and advanced algorithmic weighting mechanisms, WHMBoost demonstrates superior performance in credit card fraud detection and various benchmark datasets. 
+
+\paragraph{(v) SUBoost}~\\
+
+Continuing the exploration of information loss caused by under-sampling, Rasi Baghmishe et al. (2025) proposed the novel SUBoost method [28]. Unlike traditional approaches that rely on RUS, SUBoost adopts a selective under-sampling strategy. Specifically, it removes only those majority-class samples that are considered redundant or noisy, while retaining all minority samples and difficult majority samples that are frequently misclassified. Experimental results across more than 20 standard datasets show that SUBoost achieves superior performance in terms of AUC and G-mean compared with many mainstream hybrid methods, including RUSBoost and SMOTEBoost. The method has demonstrated strong robustness in applications such as cancer detection, financial fraud detection, and handwritten digit recognition. 
+
+\subsubsection{Other Hybrid Approaches }
+
+Beyond Boosting-based ensemble learning, researchers have also developed hybrid strategies that combine data-level techniques with other algorithmic frameworks. 
+
+\paragraph{(i) S-CSL }~\\
+Researchers have recognized that relying solely on data resampling or internal classifier cost adjustments has inherent limitations. To address this issue, Thai-Nghe et al. proposed an empirical framework known as S-CSL [29]. In this approach, SMOTE is first applied during the data preprocessing stage to moderately expand minority samples. Subsequently, an asymmetric cost matrix is introduced at the algorithm level to significantly increase the penalty for misclassifying minority instances. S-CSL effectively mitigates the tendency of SVM hyperplanes to shift toward the minority class when dealing with imbalanced data. Experiments conducted on 18 imbalanced datasets, including disease diagnosis and academic performance prediction tasks, demonstrate that the method significantly reduces the overall misclassification cost. 
+
+\paragraph{(ii) CTGAN-MOS}~\\
+
+With the rapid development of deep learning techniques, Majeed and Hwang (2023) proposed CTGAN-MOS [30].  As a novel hybrid framework, CTGAN-MOS integrates six key stages, including data engineering, vulnerability analysis, high-quality synthetic data generation using a CTGAN model, and an intelligent fusion process. Unlike traditional distance-interpolation approaches such as SMOTE, CTGAN-MOS employs entropy optimization to generate only a small number of highly representative minority-class samples. Subsequently, a coin-flipping algorithm is used to eliminate noisy synthetic records, addressing the common issue in generative models where unsafe samples are produced within majority-class regions. CTGAN-MOS has been widely applied in safety-critical tasks such as adult income prediction, stroke prediction, credit fraud detection, and COVID-19 diagnosis. 
+
+
+\section{EXPERIMENTS}
 \subsection{Datasets}
 
-To rigorously investigate the effect of varying Imbalance Ratios~(IR) on
-classifier performance, this study employs eight benchmark datasets sourced
-from the KEEL (Knowledge Extraction based on Evolutionary Learning)
-repository~\cite{alcala2011keel}, a widely adopted resource for imbalanced
-classification research.
-The selected datasets span a broad spectrum of imbalance severity---from
-mild to extreme---and originate from diverse real-world domains, thereby
-enabling controlled cross-IR comparisons while maintaining ecological
-validity.
+To rigorously investigate the effect of varying Imbalance Ratios (IR) on classifier performance in isolation from confounding factors, this study employs four benchmark datasets derived from the Yeast protein localization dataset, all sourced from the KEEL (Knowledge Extraction based on Evolutionary Learning) repository [31]. The Yeast dataset family is selected as the experimental foundation because all four variants share an identical feature space (8 features) and total sample size (n = 1,484), thereby ensuring that IR is the sole varying experimental variable. This controlled design eliminates confounds commonly present in cross-dataset comparisons, such as differences in feature complexity, dimensionality, and data size [8], enabling a direct and rigorous assessment of how escalating class imbalance affects classifier performance. 
+
 
 The Imbalance Ratio is defined formally as:
 %
@@ -233,18 +317,15 @@ The Imbalance Ratio is defined formally as:
   \label{eq:IR}
 \end{equation}
 %
-where $|S_{\mathrm{maj}}|$ and $|S_{\mathrm{min}}|$ denote the cardinalities
-of the majority and minority classes, respectively.
-Following the severity categorization proposed in the imbalanced learning
-literature~\cite{he2009learning}, the datasets are stratified into four
-levels: \emph{mild} ($\mathrm{IR} < 3$), \emph{moderate}
+where $|S_{\mathrm{maj}}|$ and $|S_{\mathrm{min}}|$ denote the number of instances in the majority and minority classes, respectively. Following the categorization proposed in the imbalanced learning literature [1], the four datasets are stratified across four severity levels:
+ \emph{mild} ($\mathrm{IR} < 3$), \emph{moderate}
 ($3 \le \mathrm{IR} < 15$), \emph{severe} ($15 \le \mathrm{IR} < 30$),
-and \emph{extreme} ($\mathrm{IR} \ge 30$).
+and \emph{extreme} ($\mathrm{IR} \ge 30$), with each Yeast variant representing one distinct level.
 
 All experiments employ \textbf{stratified 5-fold cross-validation} to
 ensure that the class distribution is preserved in every fold.
 The complete characteristics of the benchmark suite are summarised in
-Table~\ref{tab:datasets}.
+Table[~\ref{tab:datasets}].
 
 % ---------- Table 1 ----------
 \begin{table*}[t]
@@ -266,20 +347,90 @@ Table~\ref{tab:datasets}.
 \end{table*}
 % ---------- End Table 1 ----------
 
-The inclusion of four Yeast variants (Yeast-1, -3, -4, and -6) sharing an
-identical feature space and sample size ($n = 1{,}484$) is a deliberate
-methodological choice: by holding feature complexity and data size constant
-while varying only the IR, these four datasets allow the direct isolation of
-class imbalance severity as the sole experimental variable, effectively
-controlling for confounds that commonly hinder cross-dataset
-comparisons~\cite{he2009learning}.
+Note: All four datasets originate from the same Yeast protein localization source and share an identical feature space, ensuring that IR is the sole experimental variable across conditions. 
 
+The four Yeast variants span IR values from 2.46 to 41.40, covering nearly a 17-fold increase in class imbalance severity. This progression allows the systematic observation of performance degradation trajectories across all three families of imbalanced learning techniques evaluated in this study — data-level, algorithm-level, and hybrid methods — under strictly controlled experimental conditions. 
+
+\subsection{Experimental Setup}
+
+To ensure the reproducibility of the experimental results, all stochastic processes in the experimental pipeline are controlled using a fixed random\_state value of 8. 
+
+\subsubsection{Data Level}~\\
+
+In terms of the experimental design, four data-level approaches---the baseline (original data), ROS, SMOTE, and SMOTE+ENN---were evaluated across three distinct classifiers: K-Nearest Neighbors (KNN), Random Forest, and Support Vector Machine (SVM) [32]. Specifically, both ROS and SMOTE are configured to increase the minority class to achieve a 1:1 class ratio. In contrast, SMOTE+ENN first balances the classes to a 1:1 ratio and subsequently performs a data reduction phase to remove instances. Given its status as a cornerstone method in imbalanced learning, SMOTE serves as the central benchmark. The comparison among SMOTE, the baseline, and ROS validates SMOTE's efficacy in addressing fundamental class imbalance issues. Conversely, contrasting SMOTE with the SMOTE+ENN method effectively illustrates the inherent limitations of SMOTE across these different learning algorithms.  
+
+\subsubsection{Algorithm Level}~\\
+
+Six experimental models were designed at the algorithm level, organized into three comparative pairs: standard Random Forest, standard XGBoost, and standard AdaBoost serve as baselines, each corresponding to a Cost-Sensitive counterpart --- Weighted Random Forest, Cost-Sensitive XGBoost, and Cost-Sensitive AdaBoost, respectively. The following describes the Cost-Sensitive parameter settings and their corresponding mathematical mechanisms for each model. 
+
+\paragraph{(i) Weighted Random Forest}
+Weighted Random Forest addresses class imbalance by assigning different penalty weights to each class, directing the decision trees to place greater attention on minority class samples during the growing process [33]. In this study, the mechanism is implemented by setting class\_weight to balanced, which allows the model to automatically compute class weights based on the inverse of each class's sample frequency. 
+
+\paragraph{(ii) Cost-Sensitive XGBoost}
+ Cost-Sensitive XGBoost is implemented by setting scale\_pos\_weight to the Imbalance Ratio of the dataset, which proportionally amplifies the first-order gradient of minority class samples within the loss function [21]. This configuration directs the model to prioritize the correction of minority class errors at each iteration, achieving a cost-compensation effect within the Boosting framework [18]. 
+
+\paragraph{(iii) Cost-Sensitive AdaBoost}
+
+ Cost-Sensitive AdaBoost is implemented by setting the class\_weight of the base weak learner (Decision Stump) to balanced, which causes each decision tree to assign higher impurity penalty weights to minority class nodes during growth. This ensures that the Boosting iterative process treats the correction of minority class errors as a priority from the very first round [22]. 
+
+Beyond the Cost-Sensitive parameters described above, all remaining hyperparameters for each model were set to the default values provided by the scikit-learn and XGBoost libraries [21]. This ensures a consistent comparison baseline across models, so that any differences in experimental results can be attributed to the model architecture and Cost-Sensitive mechanism itself, rather than to differences in hyperparameter tuning strategies. 
+
+
+\subsubsection{Hybrid Methods}~\\
+
+To comprehensively evaluate the effectiveness of data-level sampling techniques and algorithm-level cost mechanisms, this study designs two core experiments focusing on different hybrid learning strategies for imbalanced classification. 
+
+\paragraph{(i) Experimental Objectives}
+Two experiments are conducted to investigate different hybrid learning configurations. The evaluated methods include SMOTE, AdaBoost, SMOTEBoost, RUSBoost, RHSBoost, SUBoost, and SMOTECSL. 
+
+\subparagraph{(1) Experiment 1: Data-level methods under a Boosting framework}
+
+ The first experiment examines the impact of various data-level sampling techniques when embedded within a Boosting framework. By integrating different sampling strategies into the Boosting iteration process, this experiment analyzes how data-level interventions influence the learning dynamics and minority-class detection performance. The evaluated approaches include Standard AdaBoost as the baseline method, as well as several hybrid variants, namely SMOTEBoost, RUSBoost, RHSBoost, and SUBoost. 
+
+\subparagraph{(2) Experiment 2: Algorithm-level mechanisms combined with SMOTE}
+
+When SMOTE is used as the primary data augmentation technique, the second experiment investigates which algorithm-level mechanism can further improve classification performance. In this experiment, SMOTE is used as a common preprocessing step, and the following configurations are compared: SMOTE combined with a baseline classifier, SMOTEBoost, and SMOTECSL. 
+
+\paragraph{(ii) Experimental Framework}
+
+To ensure fairness and reproducibility, this study does not directly rely on heterogeneous open-source implementations that may introduce hidden variations. Instead, a unified algorithmic testing framework was implemented based on scikit-learn and imblearn, with all algorithms reimplemented to align with the mathematical formulations described in the original literature [23, 24, 26]. 
+
+All models were trained and evaluated within this unified framework to ensure that performance differences originate solely from the imbalance-handling mechanisms rather than implementation discrepancies. 
+
+\paragraph{(iii) Control Variables}
+To ensure that the experimental results are solely influenced by the imbalance-handling strategies, several variables are strictly controlled across all models. 
+
+\subparagraph{(1) Base estimator alignment}
+Traditional AdaBoost implementations commonly use decision stumps (max\_depth = 1) [18]. However, shallow trees may fail to capture complex decision boundaries in imbalanced datasets. Following the experimental settings of SMOTEBoost, all Boosting-based models in this study adopt decision trees with max\_depth = 5 as base classifiers [23--26]. 
+
+\subparagraph{(2) Unified AdaBoost engine}
+Many machine learning libraries implement AdaBoost using the probabilistic SAMME.R variant. However, most imbalance-learning studies derive their theoretical formulations using discrete class labels. To maintain consistency with the original literature, all Boosting-based models in this study adopt the SAMME algorithm. 
+
+\paragraph{(iv) Literature-aligned Implementation Adjustments}
+Directly integrating existing Python implementations may cause deviations from the theoretical assumptions described in the original literature. Therefore, several implementation adjustments were introduced to preserve algorithmic consistency. 
+
+\subparagraph{(1) Weight Isolation Mechanism}
+If classification errors are calculated using resampled datasets, the theoretical convergence properties of AdaBoost may be compromised. To address this issue, a weight isolation mechanism is introduced. 
+
+Weak classifiers are trained on the resampled datasets, while classification errors, classifier weights ($\alpha_t$), and sample weight updates are computed using predictions on the original training dataset. This design ensures that the Boosting weight update process remains theoretically valid. 
+
+\subparagraph{(2) Decoupled Sampling Strategy in RHSBoost}
+
+In many open-source implementations of RHSBoost, the default sampling configuration may reduce the majority class to a perfectly balanced ratio during the under-sampling stage. This behavior prevents the subsequent oversampling step from functioning effectively. 
+
+To preserve the intended hybrid design, the under-sampling and oversampling ratios are explicitly decoupled. Majority samples are first reduced while retaining sufficient information, and minority samples are subsequently expanded through oversampling. 
+
+\subparagraph{(3) Cost Matrix Anchoring in SMOTECSL:}  
+
+When SMOTE is applied before cost-sensitive learning, the resulting balanced dataset may cause the classifier to assign equal class weights, thereby neutralizing the intended cost-sensitive mechanism [29]. 
+
+To address this issue, the true cost matrix is computed from the original imbalanced labels prior to the SMOTE process and then explicitly mapped to the classifier loss function. This design ensures that feature-space expansion and algorithm-level cost penalties can operate simultaneously without canceling each other. 
 \subsection{Evaluation Metrics}
 
 A central challenge in evaluating classifiers on imbalanced datasets is
 metric selection.
-As demonstrated by He and Garcia~\cite{he2009learning} and mathematically
-formalised by Luque~et~al.~\cite{luque2019impact}, overall \emph{Accuracy}
+As demonstrated by He and Garcia[1] and mathematically
+formalised by Luque~et~al.[5], overall \emph{Accuracy}
 is a fundamentally flawed metric under class imbalance: a degenerate
 classifier that assigns every instance to the majority class can attain
 superficially high accuracy while entirely failing to detect any
@@ -295,7 +446,7 @@ Precision measures the proportion of predicted positive instances that are
 truly positive; Recall (Sensitivity) measures the proportion of actual
 positive instances that are correctly identified.
 Both metrics are defined over the minority class and are expressed
-as~\cite{sokolova2009systematic}:
+as[34]:
 %
 \begin{equation}
   \mathrm{Precision} = \frac{TP}{TP + FP},
@@ -310,7 +461,7 @@ as~\cite{sokolova2009systematic}:
 \paragraph{F1-Score.}
 The F1-Score is the harmonic mean of Precision and Recall, providing a
 single scalar that penalises severe imbalances between the
-two~\cite{goutte2005probabilistic}:
+two[35]:
 %
 \begin{equation}
   F_1
@@ -328,7 +479,7 @@ informative composite measure for imbalanced classification tasks.
 The Area Under the Receiver Operating Characteristic Curve (AUC-ROC) is a
 threshold-independent metric that quantifies a classifier's ability to
 discriminate between classes across all possible decision
-thresholds~\cite{fawcett2006roc}.
+thresholds[6].
 Let the False Positive Rate (FPR) and True Positive Rate (TPR) be defined
 as:
 %
@@ -349,14 +500,14 @@ The AUC-ROC is then computed as:
 %
 A value of $0.5$ corresponds to random classification, while $1.0$ denotes
 a perfect classifier.
-As noted by Saito and Rehmsmeier~\cite{saito2015precision}, however,
+As noted by Saito and Rehmsmeier[36], however,
 ROC-based metrics can present an overly optimistic picture under extreme
 class imbalance, because the large pool of true negatives in the majority
 class suppresses the FPR, thereby inflating the apparent curve.
 
 \paragraph{G-Mean.}
 The Geometric Mean (G-Mean), originally proposed by Kubat and
-Matwin~\cite{kubat1997addressing} for imbalanced learning, is the square
+Matwin[7] for imbalanced learning, is the square
 root of the product of Sensitivity (Recall) and Specificity.
 It provides a balanced assessment of performance across both classes
 simultaneously: poor performance on \emph{either} class leads to a sharp
@@ -384,132 +535,336 @@ the precision--recall trade-off for the minority class; the AUC-ROC captures
 threshold-independent ranking ability across all decision boundaries; and
 the G-Mean ensures that majority-class performance is not sacrificed for
 minority-class gains.
-primary comparisons, in accordance with the limitations identified in prior literature~\cite{he2009learning, luque2019impact, saito2015precision}.
+primary comparisons, in accordance with the limitations identified in prior literature[1, 5, 36].
+
+\section{Results}
+
+\begin{table*}[htbp]
+  \centering
+  \caption{Summary table}
+  \label{tab:full_summary}
+  \footnotesize
+  \setlength{\tabcolsep}{3.5pt}
+  \begin{tabular}{llccccccccc}
+    \toprule
+    \textbf{Type} & \textbf{Method} & \textbf{Dataset} & \textbf{Acc.} & \textbf{Prec.} & \textbf{Rec.} & \textbf{F1} & \textbf{ROC-AUC} & \textbf{PR-AUC} & \textbf{G-Mean} & \textbf{BAcc.} \\
+    \midrule
+    % ── Data Level ──
+    \multirow{16}{*}{Data Level}
+    & \multirow{4}{*}{Baseline}
+      & yeast1 & 0.7581 & 0.6410 & 0.4025 & 0.4850 & 0.7881 & 0.5887 & 0.5976 & 0.6526 \\
+    & & yeast3 & 0.9477 & 0.8106 & 0.6848 & 0.7412 & 0.9570 & 0.7924 & 0.8184 & 0.8325 \\
+    & & yeast4 & 0.9661 & 0.3556 & 0.0970 & 0.1403 & 0.8561 & 0.3739 & 0.2219 & 0.5470 \\
+    & & yeast6 & 0.9798 & 0.4556 & 0.2952 & 0.3445 & 0.8999 & 0.5656 & 0.4296 & 0.6458 \\
+    \cmidrule{2-11}
+    & \multirow{4}{*}{Oversampling}
+      & yeast1 & 0.7280 & 0.5356 & 0.6596 & 0.5841 & 0.7835 & 0.5737 & 0.7021 & 0.7077 \\
+    & & yeast3 & 0.9292 & 0.6479 & 0.8488 & 0.7290 & 0.9509 & 0.7530 & 0.8920 & 0.8940 \\
+    & & yeast4 & 0.9261 & 0.3308 & 0.4897 & 0.3022 & 0.8732 & 0.3626 & 0.6272 & 0.7157 \\
+    & & yeast6 & 0.9537 & 0.3796 & 0.6857 & 0.4355 & 0.9080 & 0.4895 & 0.7952 & 0.8230 \\
+    \cmidrule{2-11}
+    & \multirow{4}{*}{SMOTE}
+      & yeast1 & 0.7201 & 0.5209 & 0.6760 & 0.5831 & 0.7834 & 0.5747 & 0.7029 & 0.7070 \\
+    & & yeast3 & 0.9328 & 0.6561 & 0.8551 & 0.7391 & 0.9571 & 0.7664 & 0.8971 & 0.8988 \\
+    & & yeast4 & 0.9115 & 0.2465 & 0.6152 & 0.3315 & 0.8801 & 0.3527 & 0.7406 & 0.7686 \\
+    & & yeast6 & 0.9452 & 0.3202 & 0.7333 & 0.4155 & 0.9240 & 0.4788 & 0.8248 & 0.8418 \\
+    \cmidrule{2-11}
+    & \multirow{4}{*}{SMOTE+ENN}
+      & yeast1 & 0.6734 & 0.4657 & 0.7948 & 0.5846 & 0.7803 & 0.5666 & 0.7011 & 0.7094 \\
+    & & yeast3 & 0.9216 & 0.6028 & 0.8938 & 0.7177 & 0.9533 & 0.7438 & 0.9089 & 0.9094 \\
+    & & yeast4 & 0.8821 & 0.1900 & 0.6921 & 0.2928 & 0.8881 & 0.3371 & 0.7769 & 0.7905 \\
+    & & yeast6 & 0.9306 & 0.2587 & 0.7810 & 0.3724 & 0.9324 & 0.4875 & 0.8468 & 0.8576 \\
+    \midrule
+    % ── Algorithm Level ──
+    \multirow{20}{*}{Algorithm Level}
+    & \multirow{4}{*}{RandomForest}
+      & yeast1 & 0.7783 & 0.6650 & 0.4803 & 0.5553 & 0.8133 & 0.6435 & 0.6561 & 0.6899 \\
+    & & yeast3 & 0.9447 & 0.7870 & 0.6805 & 0.7275 & 0.9706 & 0.8316 & 0.8134 & 0.8289 \\
+    & & yeast4 & 0.9677 & 0.6000 & 0.1364 & 0.2062 & 0.9206 & 0.4073 & 0.3206 & 0.5668 \\
+    & & yeast6 & 0.9831 & 0.7667 & 0.4000 & 0.5054 & 0.8997 & 0.5629 & 0.6088 & 0.6986 \\
+    \cmidrule{2-11}
+    & \multirow{4}{*}{CS+RandomForest}
+      & yeast1 & 0.7891 & 0.6979 & 0.4825 & 0.5688 & 0.8114 & 0.6420 & 0.6632 & 0.6981 \\
+    & & yeast3 & 0.9461 & 0.7896 & 0.6992 & 0.7396 & 0.9726 & 0.8479 & 0.8254 & 0.8379 \\
+    & & yeast4 & 0.9650 & 0.3333 & 0.1164 & 0.1655 & 0.9269 & 0.4298 & 0.2572 & 0.5557 \\
+    & & yeast6 & 0.9838 & 0.8667 & 0.4286 & 0.5305 & 0.8965 & 0.5907 & 0.6350 & 0.7129 \\
+    \cmidrule{2-11}
+    & \multirow{4}{*}{AdaBoost(d=1)}
+      & yeast1 & 0.7601 & 0.6293 & 0.4219 & 0.5045 & 0.7878 & 0.5760 & 0.6152 & 0.6598 \\
+    & & yeast3 & 0.9508 & 0.7891 & 0.7725 & 0.7770 & 0.9721 & 0.7808 & 0.8664 & 0.8726 \\
+    & & yeast4 & 0.9623 & 0.3500 & 0.1945 & 0.2439 & 0.9217 & 0.3758 & 0.3814 & 0.5920 \\
+    & & yeast6 & 0.9831 & 0.7000 & 0.4857 & 0.5655 & 0.9380 & 0.5549 & 0.6836 & 0.7404 \\
+    \cmidrule{2-11}
+    & \multirow{4}{*}{CS+AdaBoost}
+      & yeast1 & 0.6658 & 0.4496 & 0.6922 & 0.5449 & 0.6736 & 0.4009 & 0.6729 & 0.6736 \\
+    & & yeast3 & 0.8956 & 0.5169 & 0.9203 & 0.6610 & 0.9470 & 0.7058 & 0.9061 & 0.9064 \\
+    & & yeast4 & 0.7224 & 0.2093 & 0.7436 & 0.3251 & 0.9190 & 0.2352 & 0.8154 & 0.8205 \\
+    & & yeast6 & 0.8956 & 0.1608 & 0.8000 & 0.2655 & 0.8972 & 0.2441 & 0.8374 & 0.8489 \\
+    \cmidrule{2-11}
+    & \multirow{4}{*}{XGBoost}
+      & yeast1 & 0.7648 & 0.6122 & 0.5151 & 0.5569 & 0.7847 & 0.6034 & 0.6662 & 0.6907 \\
+    & & yeast3 & 0.9434 & 0.7567 & 0.7176 & 0.7354 & 0.9612 & 0.7726 & 0.8338 & 0.8444 \\
+    & & yeast4 & 0.9629 & 0.4503 & 0.2764 & 0.3241 & 0.9165 & 0.3767 & 0.5024 & 0.6319 \\
+    & & yeast6 & 0.9771 & 0.5267 & 0.4857 & 0.4992 & 0.9246 & 0.5340 & 0.6875 & 0.7373 \\
+    \cmidrule{2-11}
+    & \multirow{4}{*}{CS+XGBoost}
+      & yeast1 & 0.7561 & 0.5765 & 0.5989 & 0.5861 & 0.7859 & 0.6012 & 0.6998 & 0.7094 \\
+    & & yeast3 & 0.9468 & 0.7482 & 0.7852 & 0.7649 & 0.9615 & 0.7895 & 0.8709 & 0.8760 \\
+    & & yeast4 & 0.9582 & 0.4230 & 0.3945 & 0.3932 & 0.9107 & 0.4053 & 0.6066 & 0.6865 \\
+    & & yeast6 & 0.9764 & 0.4984 & 0.5714 & 0.5294 & 0.9242 & 0.5515 & 0.7399 & 0.7788 \\
+    \midrule
+    % ── Hybrid Method ──
+    \multirow{28}{*}{Hybrid}
+    & \multirow{4}{*}{AdaBoost(d=5)}
+      & yeast1 & 0.7540 & 0.5853 & 0.5196 & 0.5470 & 0.7821 & 0.5880 & 0.6612 & 0.6845 \\
+    & & yeast3 & 0.9421 & 0.7577 & 0.6928 & 0.7231 & 0.9591 & 0.7695 & 0.8199 & 0.8328 \\
+    & & yeast4 & 0.9650 & 0.5500 & 0.1964 & 0.2727 & 0.9312 & 0.4115 & 0.3923 & 0.5943 \\
+    & & yeast6 & 0.9778 & 0.5500 & 0.3714 & 0.4392 & 0.8979 & 0.4859 & 0.6043 & 0.6819 \\
+    \cmidrule{2-11}
+    & \multirow{4}{*}{RHSBoost}
+      & yeast1 & 0.7507 & 0.5613 & 0.6456 & 0.5993 & 0.7910 & 0.5896 & 0.7148 & 0.7195 \\
+    & & yeast3 & 0.9191 & 0.5901 & 0.9015 & 0.7115 & 0.9546 & 0.6852 & 0.9111 & 0.9114 \\
+    & & yeast4 & 0.8396 & 0.1545 & 0.8036 & 0.2584 & 0.8824 & 0.1807 & 0.8210 & 0.8223 \\
+    & & yeast6 & 0.8679 & 0.1359 & 0.8571 & 0.2340 & 0.8675 & 0.1328 & 0.8580 & 0.8627 \\
+    \cmidrule{2-11}
+    & \multirow{4}{*}{RUSBoost}
+      & yeast1 & 0.7156 & 0.5171 & 0.6085 & 0.5498 & 0.7558 & 0.5147 & 0.6728 & 0.6839 \\
+    & & yeast3 & 0.9003 & 0.5325 & 0.9203 & 0.6731 & 0.9348 & 0.5969 & 0.9090 & 0.9090 \\
+    & & yeast4 & 0.8255 & 0.1469 & 0.8418 & 0.2499 & 0.8847 & 0.1846 & 0.8321 & 0.8333 \\
+    & & yeast6 & 0.7864 & 0.0856 & 0.8286 & 0.1548 & 0.8265 & 0.0983 & 0.8009 & 0.8070 \\
+    \cmidrule{2-11}
+    & \multirow{4}{*}{SMOTEBoost}
+      & yeast1 & 0.7473 & 0.5560 & 0.6294 & 0.5903 & 0.7718 & 0.5543 & 0.7074 & 0.7123 \\
+    & & yeast3 & 0.9468 & 0.7530 & 0.7725 & 0.7611 & 0.9596 & 0.7989 & 0.8641 & 0.8704 \\
+    & & yeast4 & 0.9535 & 0.3799 & 0.3946 & 0.3730 & 0.9147 & 0.4122 & 0.6148 & 0.6840 \\
+    & & yeast6 & 0.9778 & 0.5101 & 0.6286 & 0.5539 & 0.9147 & 0.5500 & 0.7704 & 0.8074 \\
+    \cmidrule{2-11}
+    & \multirow{4}{*}{SMOTECSL}
+      & yeast1 & 0.5492 & 0.3855 & 0.9416 & 0.5470 & 0.7931 & 0.5956 & 0.6053 & 0.6656 \\
+    & & yeast3 & 0.8538 & 0.4260 & 0.9510 & 0.5883 & 0.9688 & 0.8093 & 0.8947 & 0.8964 \\
+    & & yeast4 & 0.6874 & 0.0877 & 0.8618 & 0.1591 & 0.8535 & 0.1488 & 0.7648 & 0.7715 \\
+    & & yeast6 & 0.7540 & 0.0865 & 0.9429 & 0.1573 & 0.9100 & 0.3574 & 0.8363 & 0.8462 \\
+    \cmidrule{2-11}
+    & \multirow{4}{*}{SUBoost}
+      & yeast1 & 0.7224 & 0.5297 & 0.5408 & 0.5277 & 0.7571 & 0.5586 & 0.6512 & 0.6685 \\
+    & & yeast3 & 0.9394 & 0.7743 & 0.6267 & 0.6877 & 0.9548 & 0.7286 & 0.7778 & 0.8024 \\
+    & & yeast4 & 0.9589 & 0.4417 & 0.2746 & 0.3146 & 0.8879 & 0.3961 & 0.4581 & 0.6289 \\
+    & & yeast6 & 0.9771 & 0.5343 & 0.4286 & 0.4462 & 0.8706 & 0.4566 & 0.6227 & 0.7095 \\
+    \bottomrule
+  \end{tabular}
+\end{table*}
+
+\subsection{Data Level}
+
+This section presents the experimental results evaluated at the data level. The summary chart (Table 2) illustrates the average performance of the various data pre-processing methods across all classifiers, while the comprehensive experimental data can be found in the Appendix. 
+
+To facilitate an in-depth analysis utilizing the G-Mean as the core evaluation metric, the detailed results and visualizations are organized as follows: 
+\begin{itemize}
+\item Tabular Results by Classifier: The detailed G-Mean performance for each classifier is presented in Table~\ref{tab:knn_gmean} (KNN), Table~\ref{tab:svm_gmean} (SVM), and Table~\ref{tab:rf_gmean} (Random Forest). 
+\item Visualizations by Dataset: The comparative performance of the different data-level approaches across the three classifiers is graphically depicted by dataset in Figure 2 (yeast1), Figure 3 (yeast3), Figure 4 (yeast4), and Figure 5 (yeast6). 
+\end{itemize}
+
+\begin{table*}[h]
+  \centering
+  \caption{Classification outcomes (G-Mean) for kNN algorithm}
+  \label{tab:knn_gmean}
+  \small
+  \begin{tabular}{lcccc}
+    \toprule
+    Method & Yeast1 & Yeast3 & Yeast4 & Yeast6 \\
+    \midrule
+    Original & 0.6120 & 0.8133 & 0.3451 & 0.6801 \\
+    Oversampling & 0.6791 & 0.8855 & 0.7068 & 0.8233 \\
+    SMOTE & 0.6855 & 0.8929 & 0.7571 & 0.8434 \\
+    SMOTE+ENN & 0.7011 & 0.8897 & 0.8071 & 0.8624 \\
+    \bottomrule
+  \end{tabular}
+\end{table*}
+
+\begin{table*}[h]
+  \centering
+  \caption{Classification outcomes (G-Mean) for random forest algorithm}
+  \label{tab:rf_gmean}
+  \small
+  \begin{tabular}{lcccc}
+    \toprule
+    Method & Yeast1 & Yeast3 & Yeast4 & Yeast6 \\
+    \midrule
+    Original & 0.6561 & 0.8134 & 0.3206 & 0.6088 \\
+    Oversampling & 0.7007 & 0.8752 & 0.3781 & 0.6752 \\
+    SMOTE & 0.7059 & 0.8898 & 0.6667 & 0.7705 \\
+    SMOTE+ENN & 0.7130 & 0.9141 & 0.7208 & 0.8056 \\
+    \bottomrule
+  \end{tabular}
+\end{table*}
+
+\begin{table*}[h]
+  \centering
+  \caption{Classification outcomes (G-Mean) for SVM algorithm}
+  \label{tab:svm_gmean}
+  \small
+  \begin{tabular}{lcccc}
+    \toprule
+    Method & Yeast1 & Yeast3 & Yeast4 & Yeast6 \\
+    \midrule
+    Original & 0.5246 & 0.8285 & 0.0000 & 0.0000 \\
+    Oversampling & 0.7266 & 0.9153 & 0.7965 & 0.8870 \\
+    SMOTE & 0.7173 & 0.9086 & 0.7980 & 0.8606 \\
+    SMOTE+ENN & 0.6891 & 0.9231 & 0.8029 & 0.8724 \\
+    \bottomrule
+  \end{tabular}
+\end{table*}
+
+\begin{figure}[h]
+  \centering
+  \begin{tikzpicture}
+    \begin{axis}[
+        ybar,
+        height=6cm,
+        width=0.48\textwidth,
+        bar width=6pt,
+        ylabel={G-Mean},
+        symbolic x coords={original,oversampling,SMOTE,SMOTE+ENN},
+        xtick=data,
+        ymin=0, ymax=1.0,
+        legend style={at={(0.5,-0.2)}, anchor=north, legend columns=-1, font=\tiny, draw=none, /tikz/every even column/.append style={column sep=5pt}},
+        legend image code/.code={\draw[#1] (0cm,-0.1cm) rectangle (0.15cm,0.1cm);},
+        ymajorgrids=true,
+        grid style={dashed,gray!30},
+        title={Yeast1},
+      ]
+      \addplot+ [fill=RoyalBlue] coordinates {(original,0.6120) (oversampling,0.6791) (SMOTE,0.6855) (SMOTE+ENN,0.7011)};
+      \addplot+ [fill=ScholarRed] coordinates {(original,0.6561) (oversampling,0.7007) (SMOTE,0.7059) (SMOTE+ENN,0.7130)};
+      \addplot+ [fill=ScholarGold] coordinates {(original,0.5246) (oversampling,0.7266) (SMOTE,0.7173) (SMOTE+ENN,0.6891)};
+      \legend{KNN, RandomForest, SVM}
+    \end{axis}
+  \end{tikzpicture}
+  \caption{G-Mean between different techniques for Yeast1 dataset}
+  \label{fig:yeast1_gmean}
+\end{figure}
+
+\begin{figure}[h]
+  \centering
+  \begin{tikzpicture}
+    \begin{axis}[
+        ybar,
+        height=6cm,
+        width=0.48\textwidth,
+        bar width=6pt,
+        ylabel={G-Mean},
+        symbolic x coords={original,oversampling,SMOTE,SMOTE+ENN},
+        xtick=data,
+        ymin=0, ymax=1.0,
+        legend style={at={(0.5,-0.2)}, anchor=north, legend columns=-1, font=\tiny, draw=none, /tikz/every even column/.append style={column sep=5pt}},
+        legend image code/.code={\draw[#1] (0cm,-0.1cm) rectangle (0.15cm,0.1cm);},
+        ymajorgrids=true,
+        grid style={dashed,gray!30},
+        title={Yeast3},
+      ]
+      \addplot+ [fill=RoyalBlue] coordinates {(original,0.8133) (oversampling,0.8855) (SMOTE,0.8929) (SMOTE+ENN,0.8897)};
+      \addplot+ [fill=ScholarRed] coordinates {(original,0.8134) (oversampling,0.8752) (SMOTE,0.8898) (SMOTE+ENN,0.9141)};
+      \addplot+ [fill=ScholarGold] coordinates {(original,0.8285) (oversampling,0.9153) (SMOTE,0.9086) (SMOTE+ENN,0.9231)};
+      \legend{KNN, RandomForest, SVM}
+    \end{axis}
+  \end{tikzpicture}
+  \caption{G-Mean between different techniques for Yeast3 dataset}
+  \label{fig:yeast3_gmean}
+\end{figure}
+
+\begin{figure}[h]
+  \centering
+  \begin{tikzpicture}
+    \begin{axis}[
+        ybar,
+        height=6cm,
+        width=0.48\textwidth,
+        bar width=6pt,
+        ylabel={G-Mean},
+        symbolic x coords={original,oversampling,SMOTE,SMOTE+ENN},
+        xtick=data,
+        ymin=0, ymax=1.0,
+        legend style={at={(0.5,-0.2)}, anchor=north, legend columns=-1, font=\tiny, draw=none, /tikz/every even column/.append style={column sep=5pt}},
+        legend image code/.code={\draw[#1] (0cm,-0.1cm) rectangle (0.15cm,0.1cm);},
+        ymajorgrids=true,
+        grid style={dashed,gray!30},
+        title={Yeast4},
+      ]
+      \addplot+ [fill=RoyalBlue] coordinates {(original,0.3451) (oversampling,0.7068) (SMOTE,0.7571) (SMOTE+ENN,0.8071)};
+      \addplot+ [fill=ScholarRed] coordinates {(original,0.3206) (oversampling,0.3781) (SMOTE,0.6667) (SMOTE+ENN,0.7208)};
+      \addplot+ [fill=ScholarGold] coordinates {(original,0.0000) (oversampling,0.7965) (SMOTE,0.7980) (SMOTE+ENN,0.8029)};
+      \legend{KNN, RandomForest, SVM}
+    \end{axis}
+  \end{tikzpicture}
+  \caption{G-Mean between different techniques for Yeast4 dataset}
+  \label{fig:yeast4_gmean}
+\end{figure}
+
+\begin{figure}[h]
+  \centering
+  \begin{tikzpicture}
+    \begin{axis}[
+        ybar,
+        height=6cm,
+        width=0.48\textwidth,
+        bar width=6pt,
+        ylabel={G-Mean},
+        symbolic x coords={original,oversampling,SMOTE,SMOTE+ENN},
+        xtick=data,
+        ymin=0, ymax=1.0,
+        legend style={at={(0.5,-0.2)}, anchor=north, legend columns=-1, font=\tiny, draw=none, /tikz/every even column/.append style={column sep=5pt}},
+        legend image code/.code={\draw[#1] (0cm,-0.1cm) rectangle (0.15cm,0.1cm);},
+        ymajorgrids=true,
+        grid style={dashed,gray!30},
+        title={Yeast6},
+      ]
+      \addplot+ [fill=RoyalBlue] coordinates {(original,0.6801) (oversampling,0.8233) (SMOTE,0.8434) (SMOTE+ENN,0.8624)};
+      \addplot+ [fill=ScholarRed] coordinates {(original,0.6088) (oversampling,0.6752) (SMOTE,0.7705) (SMOTE+ENN,0.8056)};
+      \addplot+ [fill=ScholarGold] coordinates {(original,0.0000) (oversampling,0.8870) (SMOTE,0.8606) (SMOTE+ENN,0.8724)};
+      \legend{KNN, RandomForest, SVM}
+    \end{axis}
+  \end{tikzpicture}
+  \caption{G-Mean between different techniques for Yeast6 dataset}
+  \label{fig:yeast6_gmean}
+\end{figure}
+
+\subsubsection{Baseline vs. ROS}
+
+\subsubsection{ROS vs. SMOTE}
+
+
+\subsubsection{SMOTE vs. SMOTE-ENN}
+
+\subsubsection{Different classifiers}
+
+
+
+\subsection{Algorithm Level}
+
+\subsection{Hybrid Method}
 
 \section{Experimental Results Summary}
 
 This section provides a comprehensive summary of the experimental results across all evaluated methods and datasets.
+
+
+
+
+
+
+
+
 
 \section{Detailed Experimental Analysis}
 \label{sec:experimental_analysis}
 
 In this section, we provide a detailed analysis of the experimental results, categorized by the level of intervention: data-level, algorithm-level, and hybrid strategies.
 
-\begin{table*}[t]
-  \centering
-  \caption{Comprehensive Experimental Results Summary across all methodology levels.}
-  \label{tab:comprehensive_summary}
-  \footnotesize
-  \setlength{\tabcolsep}{3.5pt}
-  \begin{tabular}{llcccccccccc}
-    \toprule
-    \textbf{Type} & \textbf{Method} & \textbf{Dataset} & \textbf{Acc.} & \textbf{Prec.} & \textbf{Rec.} & \textbf{F1} & \textbf{AUC} & \textbf{PR-AUC} & \textbf{G-Mean} & \textbf{BAcc.} \\
-    \midrule
-    \multirow{16}{*}{Data Level} & \multirow{4}{*}{Baseline} 
-    & yeast1 & 0.7581 & 0.6410 & 0.4025 & 0.4850 & 0.7881 & 0.5887 & 0.5976 & 0.6526 \\
-    & & yeast3 & 0.9477 & 0.8106 & 0.6848 & 0.7412 & 0.9570 & 0.7924 & 0.8184 & 0.8325 \\
-    & & yeast4 & 0.9661 & 0.3556 & 0.0970 & 0.1403 & 0.8561 & 0.3739 & 0.2219 & 0.5470 \\
-    & & yeast6 & 0.9798 & 0.4556 & 0.2952 & 0.3445 & 0.8999 & 0.5656 & 0.4296 & 0.6458 \\
-    \cmidrule{2-11}
-    & \multirow{4}{*}{oversampling} 
-    & yeast1 & 0.7280 & 0.5356 & 0.6596 & 0.5841 & 0.7835 & 0.5737 & 0.7021 & 0.7077 \\
-    & & yeast3 & 0.9292 & 0.6479 & 0.8488 & 0.7290 & 0.9509 & 0.7530 & 0.8920 & 0.8940 \\
-    & & yeast4 & 0.9261 & 0.3308 & 0.4897 & 0.3022 & 0.8732 & 0.3626 & 0.6272 & 0.7157 \\
-    & & yeast6 & 0.9537 & 0.3796 & 0.6857 & 0.4355 & 0.9080 & 0.4895 & 0.7952 & 0.8230 \\
-    \cmidrule{2-11}
-    & \multirow{4}{*}{SMOTE} 
-    & yeast1 & 0.7201 & 0.5209 & 0.6760 & 0.5831 & 0.7834 & 0.5747 & 0.7029 & 0.7070 \\
-    & & yeast3 & 0.9328 & 0.6561 & 0.8551 & 0.7391 & 0.9571 & 0.7664 & 0.8971 & 0.8988 \\
-    & & yeast4 & 0.9115 & 0.2465 & 0.6152 & 0.3315 & 0.8801 & 0.3527 & 0.7406 & 0.7686 \\
-    & & yeast6 & 0.9452 & 0.3202 & 0.7333 & 0.4155 & 0.9240 & 0.4788 & 0.8248 & 0.8418 \\
-    \cmidrule{2-11}
-    & \multirow{4}{*}{SMOTE-ENN} 
-    & yeast1 & 0.6734 & 0.4657 & 0.7948 & 0.5846 & 0.7803 & 0.5666 & 0.7011 & 0.7094 \\
-    & & yeast3 & 0.9216 & 0.6028 & 0.8938 & 0.7177 & 0.9533 & 0.7438 & 0.9089 & 0.9094 \\
-    & & yeast4 & 0.8821 & 0.1900 & 0.6921 & 0.2928 & 0.8881 & 0.3371 & 0.7769 & 0.7905 \\
-    & & yeast6 & 0.9306 & 0.2587 & 0.7810 & 0.3724 & 0.9324 & 0.4875 & 0.8468 & 0.8576 \\
-    \midrule
-    \multirow{24}{*}{Algorithm Level} & \multirow{4}{*}{RandomForest} 
-    & yeast1 & 0.7783 & 0.6650 & 0.4803 & 0.5553 & 0.8133 & 0.6435 & 0.6561 & 0.6899 \\
-    & & yeast3 & 0.9447 & 0.7870 & 0.6805 & 0.7275 & 0.9706 & 0.8316 & 0.8134 & 0.8289 \\
-    & & yeast4 & 0.9677 & 0.6000 & 0.1364 & 0.2062 & 0.9206 & 0.4073 & 0.3206 & 0.5668 \\
-    & & yeast6 & 0.9831 & 0.7667 & 0.4000 & 0.5054 & 0.8997 & 0.5629 & 0.6088 & 0.6986 \\
-    \cmidrule{2-11}
-    & \multirow{4}{*}{\begin{tabular}[c]{@{}l@{}}CS-\\RandomForest\end{tabular}} 
-    & yeast1 & 0.7891 & 0.6979 & 0.4825 & 0.5688 & 0.8114 & 0.6420 & 0.6632 & 0.6981 \\
-    & & yeast3 & 0.9461 & 0.7896 & 0.6992 & 0.7396 & 0.9726 & 0.8479 & 0.8254 & 0.8379 \\
-    & & yeast4 & 0.9650 & 0.3333 & 0.1164 & 0.1655 & 0.9269 & 0.4298 & 0.2572 & 0.5557 \\
-    & & yeast6 & 0.9838 & 0.8667 & 0.4286 & 0.5305 & 0.8965 & 0.5907 & 0.6350 & 0.7129 \\
-    \cmidrule{2-11}
-    & \multirow{4}{*}{XGBoost} 
-    & yeast1 & 0.7648 & 0.6122 & 0.5151 & 0.5569 & 0.7847 & 0.6034 & 0.6662 & 0.6907 \\
-    & & yeast3 & 0.9434 & 0.7567 & 0.7176 & 0.7354 & 0.9612 & 0.7726 & 0.8338 & 0.8444 \\
-    & & yeast4 & 0.9629 & 0.4503 & 0.2764 & 0.3241 & 0.9165 & 0.3767 & 0.5024 & 0.6319 \\
-    & & yeast6 & 0.9771 & 0.5267 & 0.4857 & 0.4992 & 0.9246 & 0.5340 & 0.6875 & 0.7373 \\
-    \cmidrule{2-11}
-    & \multirow{4}{*}{\begin{tabular}[c]{@{}l@{}}CS-\\XGBoost\end{tabular}} 
-    & yeast1 & 0.7561 & 0.5765 & 0.5989 & 0.5861 & 0.7859 & 0.6012 & 0.6998 & 0.7094 \\
-    & & yeast3 & 0.9468 & 0.7482 & 0.7852 & 0.7649 & 0.9615 & 0.7895 & 0.8709 & 0.8760 \\
-    & & yeast4 & 0.9582 & 0.4230 & 0.3945 & 0.3932 & 0.9107 & 0.4053 & 0.6066 & 0.6865 \\
-    & & yeast6 & 0.9764 & 0.4984 & 0.5714 & 0.5294 & 0.9242 & 0.5515 & 0.7399 & 0.7788 \\
-    \cmidrule{2-11}
-    & \multirow{4}{*}{AdaBoost (d=1)} 
-    & yeast1 & 0.7601 & 0.6293 & 0.4219 & 0.5045 & 0.7878 & 0.5760 & 0.6152 & 0.6598 \\
-    & & yeast3 & 0.9508 & 0.7891 & 0.7725 & 0.7770 & 0.9721 & 0.7808 & 0.8664 & 0.8726 \\
-    & & yeast4 & 0.9623 & 0.3500 & 0.1945 & 0.2439 & 0.9217 & 0.3758 & 0.3814 & 0.5920 \\
-    & & yeast6 & 0.9831 & 0.7000 & 0.4857 & 0.5655 & 0.9380 & 0.5549 & 0.6836 & 0.7404 \\
-    \cmidrule{2-11}
-    & \multirow{4}{*}{\begin{tabular}[c]{@{}l@{}}CS-\\AdaBoost\end{tabular}} 
-    & yeast1 & 0.6658 & 0.4496 & 0.6922 & 0.5449 & 0.6736 & 0.4009 & 0.6729 & 0.6736 \\
-    & & yeast3 & 0.8956 & 0.5169 & 0.9203 & 0.6610 & 0.9470 & 0.7058 & 0.9061 & 0.9064 \\
-    & & yeast4 & 0.8922 & 0.2093 & 0.7436 & 0.3251 & 0.9190 & 0.2352 & 0.8154 & 0.8205 \\
-    & & yeast6 & 0.8956 & 0.1608 & 0.8000 & 0.2655 & 0.8972 & 0.2441 & 0.8374 & 0.8489 \\
-    \midrule
-    \multirow{24}{*}{Hybrid Method} & \multirow{4}{*}{AdaBoost (d=5)} 
-    & yeast1 & 0.7540 & 0.5853 & 0.5196 & 0.5470 & 0.7821 & 0.5880 & 0.6612 & 0.6845 \\
-    & & yeast3 & 0.9421 & 0.7577 & 0.6928 & 0.7231 & 0.9591 & 0.7695 & 0.8199 & 0.8328 \\
-    & & yeast4 & 0.9650 & 0.5500 & 0.1964 & 0.2727 & 0.9312 & 0.4115 & 0.3923 & 0.5943 \\
-    & & yeast6 & 0.9778 & 0.5500 & 0.3714 & 0.4392 & 0.8979 & 0.4859 & 0.6043 & 0.6819 \\
-    \cmidrule{2-11}
-    & \multirow{4}{*}{SMOTEBoost} 
-    & yeast1 & 0.7473 & 0.5560 & 0.6294 & 0.5903 & 0.7718 & 0.5543 & 0.7074 & 0.7123 \\
-    & & yeast3 & 0.9468 & 0.7530 & 0.7725 & 0.7611 & 0.9596 & 0.7989 & 0.8641 & 0.8704 \\
-    & & yeast4 & 0.9535 & 0.3799 & 0.3946 & 0.3730 & 0.9147 & 0.4122 & 0.6148 & 0.6840 \\
-    & & yeast6 & 0.9778 & 0.5101 & 0.6286 & 0.5539 & 0.9147 & 0.5500 & 0.7704 & 0.8074 \\
-    \cmidrule{2-11}
-    & \multirow{4}{*}{RUSBoost} 
-    & yeast1 & 0.7156 & 0.5171 & 0.6085 & 0.5498 & 0.7558 & 0.5147 & 0.6728 & 0.6839 \\
-    & & yeast3 & 0.9003 & 0.5325 & 0.9203 & 0.6731 & 0.9348 & 0.5969 & 0.9090 & 0.9090 \\
-    & & yeast4 & 0.8255 & 0.1469 & 0.8418 & 0.2499 & 0.8847 & 0.1846 & 0.8321 & 0.8333 \\
-    & & yeast6 & 0.7864 & 0.0856 & 0.8286 & 0.1548 & 0.8265 & 0.0983 & 0.8009 & 0.8070 \\
-    \cmidrule{2-11}
-    & \multirow{4}{*}{RHSBoost} 
-    & yeast1 & 0.7507 & 0.5613 & 0.6456 & 0.5993 & 0.7910 & 0.5896 & 0.7148 & 0.7195 \\
-    & & yeast3 & 0.9191 & 0.5901 & 0.9015 & 0.7115 & 0.9546 & 0.6852 & 0.9111 & 0.9114 \\
-    & & yeast4 & 0.8396 & 0.1545 & 0.8036 & 0.2584 & 0.8824 & 0.1807 & 0.8210 & 0.8223 \\
-    & & yeast6 & 0.8679 & 0.1359 & 0.8571 & 0.2340 & 0.8675 & 0.1328 & 0.8580 & 0.8627 \\
-    \cmidrule{2-11}
-    & \multirow{4}{*}{SUBoost} 
-    & yeast1 & 0.7224 & 0.5297 & 0.5408 & 0.5277 & 0.7571 & 0.5586 & 0.6512 & 0.6685 \\
-    & & yeast3 & 0.9394 & 0.7743 & 0.6267 & 0.6877 & 0.9548 & 0.7286 & 0.7778 & 0.8024 \\
-    & & yeast4 & 0.9589 & 0.4417 & 0.2746 & 0.3146 & 0.8879 & 0.3961 & 0.4581 & 0.6289 \\
-    & & yeast6 & 0.9771 & 0.5343 & 0.4286 & 0.4462 & 0.8706 & 0.4566 & 0.6227 & 0.7095 \\
-    \cmidrule{2-11}
-    & \multirow{4}{*}{SMOTECSL} 
-    & yeast1 & 0.5492 & 0.3855 & 0.9416 & 0.5470 & 0.7931 & 0.5956 & 0.6053 & 0.6656 \\
-    & & yeast3 & 0.8538 & 0.4260 & 0.9510 & 0.5883 & 0.9688 & 0.8093 & 0.8947 & 0.8964 \\
-    & & yeast4 & 0.6874 & 0.0877 & 0.8618 & 0.1591 & 0.8535 & 0.1488 & 0.7648 & 0.7715 \\
-    & & yeast6 & 0.7540 & 0.0865 & 0.9429 & 0.1573 & 0.9100 & 0.3574 & 0.8363 & 0.8462 \\
-    \bottomrule
-  \end{tabular}
-\end{table*}
-
 \subsection{Data Level Methods}
 Data-level methods focus on reslicing the training set to achieve a more balanced distribution. This section presenting the G-Mean performance for individual classifiers and visual analysis of the results.
 
 \begin{table*}[t]
   \centering
-  \caption{[Data Level] Summary of Experimental Results (Data-Level Methods)}
+  \caption{Summary of Experimental Results (Data-Level Methods)}
   \label{tab:datalevel_summary}
   \scriptsize
   \setlength{\tabcolsep}{3.5pt}
@@ -584,172 +939,7 @@ Data-level methods focus on reslicing the training set to achieve a more balance
   \end{tabular}
 \end{table*}
 
-\subsubsection{Experimental Tables: Data-Level Results}
-\begin{table}[h]
-  \centering
-  \caption{[Data Level] G-Mean Performance Comparison for KNN Classifier}
-  \label{tab:knn_gmean}
-  \small
-  \begin{tabular}{lcccc}
-    \toprule
-    Method & Yeast1 & Yeast3 & Yeast4 & Yeast6 \\
-    \midrule
-    Original & 0.6120 & 0.8133 & 0.3451 & 0.6801 \\
-    Oversampling & 0.6791 & 0.8855 & 0.7068 & 0.8233 \\
-    SMOTE & 0.6855 & 0.8929 & 0.7571 & 0.8434 \\
-    SMOTE+ENN & 0.7011 & 0.8897 & 0.8071 & 0.8624 \\
-    \bottomrule
-  \end{tabular}
-\end{table}
 
-\begin{table}[h]
-  \centering
-  \caption{[Data Level] G-Mean Performance Comparison for Random Forest Classifier}
-  \label{tab:rf_gmean}
-  \small
-  \begin{tabular}{lcccc}
-    \toprule
-    Method & Yeast1 & Yeast3 & Yeast4 & Yeast6 \\
-    \midrule
-    Original & 0.6561 & 0.8134 & 0.3206 & 0.6088 \\
-    Oversampling & 0.7007 & 0.8752 & 0.3781 & 0.6752 \\
-    SMOTE & 0.7059 & 0.8898 & 0.6667 & 0.7705 \\
-    SMOTE+ENN & 0.7130 & 0.9141 & 0.7208 & 0.8056 \\
-    \bottomrule
-  \end{tabular}
-\end{table}
-
-\begin{table}[h]
-  \centering
-  \caption{[Data Level] G-Mean Performance Comparison for SVM Classifier}
-  \label{tab:svm_gmean}
-  \small
-  \begin{tabular}{lcccc}
-    \toprule
-    Method & Yeast1 & Yeast3 & Yeast4 & Yeast6 \\
-    \midrule
-    Original & 0.5246 & 0.8285 & 0.0000 & 0.0000 \\
-    Oversampling & 0.7266 & 0.9153 & 0.7965 & 0.8870 \\
-    SMOTE & 0.7173 & 0.9086 & 0.7980 & 0.8606 \\
-    SMOTE+ENN & 0.6891 & 0.9231 & 0.8029 & 0.8724 \\
-    \bottomrule
-  \end{tabular}
-\end{table}
-
-\subsubsection{Visual Analysis of Data-Level Methods}
-This subcategory compares the G-mean performance across multiple classifiers (KNN, Random Forest, SVM) using different data-resampling techniques. Figures~\ref{fig:yeast1_gmean} through \ref{fig:yeast6_gmean} illustrate the impact of oversampling, SMOTE, and SMOTE+ENN.
-
-\begin{figure}[h]
-  \centering
-  \begin{tikzpicture}
-    \begin{axis}[
-        ybar,
-        height=6cm,
-        width=0.48\textwidth,
-        bar width=6pt,
-        ylabel={G-Mean},
-        symbolic x coords={original,oversampling,SMOTE,SMOTE+ENN},
-        xtick=data,
-        ymin=0, ymax=1.0,
-        legend style={at={(0.5,-0.2)}, anchor=north, legend columns=-1, font=\tiny, draw=none, /tikz/every even column/.append style={column sep=5pt}},
-        legend image code/.code={\draw[#1] (0cm,-0.1cm) rectangle (0.15cm,0.1cm);},
-        ymajorgrids=true,
-        grid style={dashed,gray!30},
-        title={Data Level Performance: Yeast1},
-      ]
-      \addplot+ [fill=RoyalBlue] coordinates {(original,0.6120) (oversampling,0.6791) (SMOTE,0.6855) (SMOTE+ENN,0.7011)};
-      \addplot+ [fill=ScholarRed] coordinates {(original,0.6561) (oversampling,0.7007) (SMOTE,0.7059) (SMOTE+ENN,0.7130)};
-      \addplot+ [fill=ScholarGold] coordinates {(original,0.5246) (oversampling,0.7266) (SMOTE,0.7173) (SMOTE+ENN,0.6891)};
-      \legend{KNN, RandomForest, SVM}
-    \end{axis}
-  \end{tikzpicture}
-  \caption{[Data Level] G-Mean performance comparison on Yeast1 dataset.}
-  \label{fig:yeast1_gmean}
-\end{figure}
-
-\begin{figure}[h]
-  \centering
-  \begin{tikzpicture}
-    \begin{axis}[
-        ybar,
-        height=6cm,
-        width=0.48\textwidth,
-        bar width=6pt,
-        ylabel={G-Mean},
-        symbolic x coords={original,oversampling,SMOTE,SMOTE+ENN},
-        xtick=data,
-        ymin=0, ymax=1.0,
-        legend style={at={(0.5,-0.2)}, anchor=north, legend columns=-1, font=\tiny, draw=none, /tikz/every even column/.append style={column sep=5pt}},
-        legend image code/.code={\draw[#1] (0cm,-0.1cm) rectangle (0.15cm,0.1cm);},
-        ymajorgrids=true,
-        grid style={dashed,gray!30},
-        title={Data Level Performance: Yeast3},
-      ]
-      \addplot+ [fill=RoyalBlue] coordinates {(original,0.8133) (oversampling,0.8855) (SMOTE,0.8929) (SMOTE+ENN,0.8897)};
-      \addplot+ [fill=ScholarRed] coordinates {(original,0.8134) (oversampling,0.8752) (SMOTE,0.8898) (SMOTE+ENN,0.9141)};
-      \addplot+ [fill=ScholarGold] coordinates {(original,0.8285) (oversampling,0.9153) (SMOTE,0.9086) (SMOTE+ENN,0.9231)};
-      \legend{KNN, RandomForest, SVM}
-    \end{axis}
-  \end{tikzpicture}
-  \caption{[Data Level] G-Mean performance comparison on Yeast3 dataset.}
-  \label{fig:yeast3_gmean}
-\end{figure}
-
-\begin{figure}[h]
-  \centering
-  \begin{tikzpicture}
-    \begin{axis}[
-        ybar,
-        height=6cm,
-        width=0.48\textwidth,
-        bar width=6pt,
-        ylabel={G-Mean},
-        symbolic x coords={original,oversampling,SMOTE,SMOTE+ENN},
-        xtick=data,
-        ymin=0, ymax=1.0,
-        legend style={at={(0.5,-0.2)}, anchor=north, legend columns=-1, font=\tiny, draw=none, /tikz/every even column/.append style={column sep=5pt}},
-        legend image code/.code={\draw[#1] (0cm,-0.1cm) rectangle (0.15cm,0.1cm);},
-        ymajorgrids=true,
-        grid style={dashed,gray!30},
-        title={Data Level Performance: Yeast4},
-      ]
-      \addplot+ [fill=RoyalBlue] coordinates {(original,0.3451) (oversampling,0.7068) (SMOTE,0.7571) (SMOTE+ENN,0.8071)};
-      \addplot+ [fill=ScholarRed] coordinates {(original,0.3206) (oversampling,0.3781) (SMOTE,0.6667) (SMOTE+ENN,0.7208)};
-      \addplot+ [fill=ScholarGold] coordinates {(original,0.0000) (oversampling,0.7965) (SMOTE,0.7980) (SMOTE+ENN,0.8029)};
-      \legend{KNN, RandomForest, SVM}
-    \end{axis}
-  \end{tikzpicture}
-  \caption{[Data Level] G-Mean performance comparison on Yeast4 dataset.}
-  \label{fig:yeast4_gmean}
-\end{figure}
-
-\begin{figure}[h]
-  \centering
-  \begin{tikzpicture}
-    \begin{axis}[
-        ybar,
-        height=6cm,
-        width=0.48\textwidth,
-        bar width=6pt,
-        ylabel={G-Mean},
-        symbolic x coords={original,oversampling,SMOTE,SMOTE+ENN},
-        xtick=data,
-        ymin=0, ymax=1.0,
-        legend style={at={(0.5,-0.2)}, anchor=north, legend columns=-1, font=\tiny, draw=none, /tikz/every even column/.append style={column sep=5pt}},
-        legend image code/.code={\draw[#1] (0cm,-0.1cm) rectangle (0.15cm,0.1cm);},
-        ymajorgrids=true,
-        grid style={dashed,gray!30},
-        title={Data Level Performance: Yeast6},
-      ]
-      \addplot+ [fill=RoyalBlue] coordinates {(original,0.6801) (oversampling,0.8233) (SMOTE,0.8434) (SMOTE+ENN,0.8624)};
-      \addplot+ [fill=ScholarRed] coordinates {(original,0.6088) (oversampling,0.6752) (SMOTE,0.7705) (SMOTE+ENN,0.8056)};
-      \addplot+ [fill=ScholarGold] coordinates {(original,0.0000) (oversampling,0.8870) (SMOTE,0.8606) (SMOTE+ENN,0.8724)};
-      \legend{KNN, RandomForest, SVM}
-    \end{axis}
-  \end{tikzpicture}
-  \caption{[Data Level] G-Mean performance comparison on Yeast6 dataset.}
-  \label{fig:yeast6_gmean}
-\end{figure}
 
 \subsection{Algorithm Level Methods}
 Algorithm-level methods, such as Cost-Sensitive learning combined with ensemble classifiers (Random Forest, XGBoost, AdaBoost), show higher robustness across varying imbalance ratios by directly internalizing the cost of misclassifying minority instances.
@@ -776,14 +966,14 @@ Figure~\ref{fig:algorithm_recall} presents a comparison of Recall scores between
         legend image code/.code={\draw[#1] (0cm,-0.1cm) rectangle (0.15cm,0.1cm);},
         ymajorgrids=true,
         grid style={dashed,gray!30},
-        title={Recall Performance: RF vs. Weighted RF},
+        title={Recall Performance},
       ]
       \addplot+ [fill=RoyalBlue] coordinates {(yeast1,0.480) (yeast3,0.681) (yeast4,0.136) (yeast6,0.400)};
       \addplot+ [fill=ScholarOrange] coordinates {(yeast1,0.483) (yeast3,0.699) (yeast4,0.116) (yeast6,0.429)};
       \legend{Random Forest, Weighted Random Forest}
     \end{axis}
   \end{tikzpicture}
-  \caption{[Algorithm Level] Recall comparison of standard and weighted Random Forest.}
+  \caption{Comparison of Recall Performance between Baseline RF and Cost-Sensitive RF Across Datasets }
   \label{fig:algorithm_recall}
 \end{figure}
 
@@ -818,7 +1008,7 @@ Furthermore, Table~\ref{tab:comprehensive_summary} and Figure~\ref{fig:adaboost_
         \addlegendentry{Precision}
         \end{axis}
     \end{tikzpicture}
-    \caption{[Algorithm Level] Dual-metric line chart illustrating the trade-off in AdaBoost.}
+    \caption{The extreme precision-recall trade-off in AdaBoost after applying the cost-sensitive mechanism. }
     \label{fig:adaboost_tradeoff}
 \end{figure}
 
@@ -854,16 +1044,16 @@ Finally, the radar chart in Figure~\ref{fig:xgboost_radar} illustrates the balan
             \node[right, font=\tiny] at (0.12, -0.085) {CS};
         \end{scope}
     \end{tikzpicture}
-    \caption{[Algorithm Level] Radar Chart comparing Average XGBoost vs. CS-XGBoost.}
+    \caption{Radar Chart comparing the average performance of Baseline XGBoost and Cost-Sensitive XGBoost across all datasets.}
     \label{fig:xgboost_radar}
 \end{figure}
 
 \subsection{Hybrid Methods}
 Hybrid methods integrate data resampling with algorithmic enhancements. This subsection evaluates the efficacy of boosting-based hybrid approaches.
 
-\begin{table}[h]
+\begin{table*}[h]
   \centering
-  \caption{[Hybrid Method] Summary of Experimental Results (Boosting-based Methods)}
+  \caption{The complete experiment result of hybrid methods.}
   \label{tab:hybrid_summary}
   \small
   \begin{tabular}{llccc}
@@ -906,7 +1096,7 @@ Hybrid methods integrate data resampling with algorithmic enhancements. This sub
     & yeast6 & 0.4462 & 0.8706 & 0.6227 \\
     \bottomrule
   \end{tabular}
-\end{table}
+\end{table*}
 
 \subsubsection{Visual Analysis of Hybrid Methods}
 The hybrid framework combines data-level resampling with algorithm-level boosting. Figure~\ref{fig:hybrid_boosting} and Figure~\ref{fig:smote_variants} provide insight into these combined effects.
@@ -930,7 +1120,7 @@ Figure~\ref{fig:hybrid_boosting} illustrates the F1-score performance of various
         legend image code/.code={\draw[#1] (0cm,-0.1cm) rectangle (0.15cm,0.1cm);},
         ymajorgrids=true,
         grid style={dashed,gray!30},
-        title={F1-score of Hybrid Boosting Methods},
+        title={F1-score},
       ]
       \addplot+ [fill=RoyalBlue] coordinates {(yeast1,0.547) (yeast3,0.723) (yeast4,0.273) (yeast6,0.439)};
       \addplot+ [fill=ScholarRed] coordinates {(yeast1,0.590) (yeast3,0.761) (yeast4,0.373) (yeast6,0.554)};
@@ -940,7 +1130,7 @@ Figure~\ref{fig:hybrid_boosting} illustrates the F1-score performance of various
       \legend{StandardAdaBoost, SMOTEBoost, RUSBoost, RHSBoost, SUBoost}
     \end{axis}
   \end{tikzpicture}
-  \caption{[Hybrid Method] Performance comparison of various hybrid boosting methods (based on exp\_1.csv).}
+  \caption{Experiment 1 F1-score Comparison Across Datasets.}
   \label{fig:hybrid_boosting}
 \end{figure}
 
@@ -963,7 +1153,7 @@ Figure~\ref{fig:smote_variants} shows the comparative performance of SMOTE-based
         legend image code/.code={\draw[#1] (0cm,-0.1cm) rectangle (0.15cm,0.1cm);},
         ymajorgrids=true,
         grid style={dashed,gray!30},
-        title={F1-score of SMOTE-based Variants},
+        title={F1-score},
       ]
       \addplot+ [fill=ScholarTeal] coordinates {(yeast1,0.583) (yeast3,0.739) (yeast4,0.331) (yeast6,0.416)};
       \addplot+ [fill=ScholarRed] coordinates {(yeast1,0.590) (yeast3,0.761) (yeast4,0.373) (yeast6,0.554)};
@@ -971,120 +1161,118 @@ Figure~\ref{fig:smote_variants} shows the comparative performance of SMOTE-based
       \legend{SMOTE, SMOTEBoost, SMOTECSL}
     \end{axis}
   \end{tikzpicture}
-  \caption{[Hybrid Method] Impact of SMOTE variants on model performance (based on exp\_2.csv).}
+  \caption{Experiment 2 F1-score Comparison Across Datasets.}
   \label{fig:smote_variants}
 \end{figure}
 
 \subsubsection{ROC Curve Analysis for Hybrid Frameworks}
-Figure~\ref{fig:roc_curves} presents the ROC curves of various hybrid boosting methods across the four Yeast datasets. The area under the curve (AUC) provides a summary metric for classification performance.
+Figure~\ref{fig:roc_curves} presents the ROC curves of various hybrid boosting methods across the four Yeast datasets. The curves illustrate the trade-off between the true positive rate and the false positive rate, with the area under the curve (AUC) providing a metric for overall classification performance.
 
 \begin{figure*}[h]
   \centering
-\pgfplotsset{
-  roc style/.style={
-    xmin=0, xmax=1, ymin=0, ymax=1.02,
-    xlabel={False Positive Rate},
-    ylabel={True Positive Rate},
-    width=7.5cm, height=6.5cm,
-    grid=major,
-    grid style={dotted, gray!40},
-    legend pos=south east,
-    legend style={font=\tiny, row sep=-2pt},
-    tick label style={font=\footnotesize},
-    label style={font=\footnotesize},
-    title style={font=\bfseries\small},
+  \pgfplotsset{
+    roc style/.style={
+      xmin=0, xmax=1, ymin=0, ymax=1.02,
+      xlabel={False Positive Rate},
+      ylabel={True Positive Rate},
+      width=0.45\textwidth, height=6.5cm,
+      grid=major,
+      grid style={dotted, gray!40},
+      legend pos=south east,
+      legend style={font=\tiny, row sep=-2pt},
+      tick label style={font=\footnotesize},
+      label style={font=\footnotesize},
+      title style={font=\bfseries\small},
+    }
   }
-}
+  \begin{tikzpicture}
+    % --- yeast1 ---
+    \begin{axis}[
+      roc style,
+      title={yeast1},
+      at={(0,0)},
+      name=ax1
+    ]
+      \addplot[black, dashed, thick, forget plot] coordinates {(0,0)(1,1)};
+      \addplot[blue, thick] coordinates {(0.0000,0.0000) (0.0038,0.0280) (0.0066,0.0513) (0.0104,0.0746) (0.0142,0.1049) (0.0171,0.1166) (0.0227,0.1538) (0.0265,0.1772) (0.0303,0.1958) (0.0341,0.2284) (0.0417,0.2448) (0.0445,0.2611) (0.0493,0.2751) (0.0521,0.2890) (0.0578,0.3007) (0.0673,0.3310) (0.0711,0.3403) (0.0787,0.3520) (0.0815,0.3683) (0.0882,0.3776) (0.0929,0.3846) (0.0967,0.4103) (0.1033,0.4242) (0.1090,0.4336) (0.1156,0.4522) (0.1242,0.4755) (0.1289,0.4918) (0.1355,0.5128) (0.1517,0.5198) (0.1564,0.5291) (0.1611,0.5455) (0.1678,0.5571) (0.1773,0.5711) (0.1848,0.5828) (0.1934,0.5897) (0.2038,0.5991) (0.2104,0.6177) (0.2275,0.6247) (0.2455,0.6317) (0.2483,0.6434) (0.2569,0.6550) (0.2635,0.6690) (0.2673,0.6853) (0.2730,0.6970) (0.2900,0.7086) (0.3005,0.7203) (0.3062,0.7273) (0.3128,0.7436) (0.3194,0.7552) (0.3270,0.7622) (0.3365,0.7739) (0.3630,0.7855) (0.3754,0.7925) (0.3820,0.7995) (0.3886,0.8065) (0.4028,0.8135) (0.4142,0.8228) (0.4199,0.8298) (0.4275,0.8415) (0.4588,0.8508) (0.4720,0.8578) (0.4872,0.8648) (0.5100,0.8718) (0.5194,0.8788) (0.5374,0.8858) (0.5744,0.8951) (0.5943,0.9044) (0.6171,0.9114) (0.6370,0.9184) (0.6531,0.9277) (0.6701,0.9371) (0.6768,0.9441) (0.6825,0.9534) (0.7175,0.9604) (0.7555,0.9674) (0.7877,0.9720) (0.8123,0.9790) (0.8701,0.9860) (0.8815,0.9930) (1.0000,1.0000)};
+      \addlegendentry{StandardAdaBoost (AUC=0.781)}
+      \addplot[orange!90!black, thick] coordinates {(0.0000,0.0000) (0.0152,0.0956) (0.0161,0.1002) (0.0171,0.1049) (0.0209,0.1096) (0.0246,0.1119) (0.0275,0.1212) (0.0294,0.1329) (0.0332,0.1515) (0.0360,0.1678) (0.0417,0.1841) (0.0464,0.2028) (0.0588,0.2448) (0.0616,0.2587) (0.0626,0.2611) (0.0692,0.2704) (0.0919,0.3520) (0.0938,0.3566) (0.0976,0.3823) (0.1033,0.3893) (0.1071,0.3916) (0.1156,0.4172) (0.1251,0.4406) (0.1280,0.4429) (0.1403,0.4825) (0.1517,0.5198) (0.1630,0.5478) (0.1659,0.5478) (0.1716,0.5618) (0.1801,0.5688) (0.1981,0.6084) (0.1991,0.6200) (0.2028,0.6270) (0.2047,0.6294) (0.2171,0.6457) (0.2218,0.6527) (0.2379,0.6620) (0.2389,0.6643) (0.2464,0.6783) (0.2493,0.6876) (0.2607,0.7040) (0.2682,0.7110) (0.2720,0.7110) (0.2749,0.7179) (0.3043,0.7413) (0.3081,0.7436) (0.3204,0.7459) (0.3299,0.7483) (0.3431,0.7552) (0.3488,0.7552) (0.3630,0.7599) (0.3668,0.7599) (0.4019,0.7879) (0.4171,0.7925) (0.4209,0.8019) (0.4218,0.8042) (0.4303,0.8042) (0.4493,0.8322) (0.4540,0.8368) (0.4645,0.8392) (0.4787,0.8508) (0.4900,0.8531) (0.4948,0.8555) (0.4995,0.8578) (0.5118,0.8578) (0.5204,0.8625) (0.5469,0.8718) (0.5706,0.8858) (0.5782,0.8904) (0.6066,0.8998) (0.6597,0.9301) (0.6863,0.9441) (0.7024,0.9441) (0.7118,0.9464) (0.7336,0.9487) (0.7374,0.9487) (0.7422,0.9557) (0.7649,0.9720) (0.7668,0.9744) (1.0000,1.0000)};
+      \addlegendentry{SMOTEBoost (AUC=0.772)}
+      \addplot[green!60!black, thick] coordinates {(0.0000,0.0000) (0.0645,0.2657) (0.0645,0.2681) (0.0664,0.2751) (0.0692,0.2774) (0.0720,0.2914) (0.0730,0.2984) (0.0863,0.3170) (0.0919,0.3193) (0.0929,0.3240) (0.0948,0.3310) (0.0986,0.3380) (0.1071,0.3566) (0.1071,0.3636) (0.1100,0.3660) (0.1128,0.3660) (0.1166,0.3869) (0.1213,0.4033) (0.1251,0.4033) (0.1327,0.4196) (0.1327,0.4219) (1.0000,1.0000)};
+      \addlegendentry{RUSBoost (AUC=0.757)}
+      \addplot[red, thick] coordinates {(0.0000,0.0000) (0.0085,0.0536) (0.0085,0.0606) (0.0142,0.0769) (0.0152,0.1072) (0.0171,0.1212) (1.0000,1.0000)};
+      \addlegendentry{RHSBoost (AUC=0.791)}
+      \addplot[violet, thick] coordinates {(0.0000,0.0000) (0.0057,0.0233) (0.0133,0.0746) (0.0180,0.0909) (0.0218,0.1049) (1.0000,1.0000)};
+      \addlegendentry{SUBoost (AUC=0.754)}
+    \end{axis}
 
-\begin{tikzpicture}
+    % --- yeast3 ---
+    \begin{axis}[
+      roc style,
+      title={yeast3},
+      at={(0.52\textwidth,0)},
+      name=ax2
+    ]
+      \addplot[black, dashed, thick, forget plot] coordinates {(0,0)(1,1)};
+      \addplot[blue, thick] coordinates {(0.0000,0.0000) (0.0000,0.0307) (0.0008,0.0429) (0.0015,0.1043) (0.0023,0.1166) (0.0030,0.2086) (0.0038,0.2331) (0.0061,0.2638) (0.0076,0.2822) (0.0083,0.3129) (0.0091,0.3313) (0.0098,0.3374) (0.0106,0.3620) (0.0114,0.3681) (0.0121,0.4233) (0.0129,0.4294) (0.0136,0.4417) (0.0144,0.4479) (0.0151,0.4969) (0.0159,0.5399) (0.0182,0.5460) (0.0189,0.5767) (0.0212,0.5828) (0.0220,0.5890) (0.0227,0.6074) (0.0235,0.6258) (0.0250,0.6626) (0.0257,0.6748) (0.0265,0.6810) (0.0273,0.6994) (0.0280,0.7055) (0.0295,0.7669) (0.0303,0.7914) (0.0333,0.7975) (0.0356,0.8037) (0.0371,0.8098) (0.0401,0.8160) (0.0439,0.8221) (0.0447,0.8282) (0.0454,0.8344) (0.0469,0.8466) (0.0568,0.8528) (0.0583,0.8589) (0.0613,0.8650) (0.0636,0.8712) (0.0696,0.8773) (0.0749,0.8834) (0.0931,0.8896) (0.0969,0.8957) (0.1022,0.9018) (0.1045,0.9080) (0.1105,0.9141) (0.1249,0.9202) (0.1272,0.9264) (0.1355,0.9325) (0.1393,0.9387) (0.1431,0.9448) (0.1499,0.9509) (0.2051,0.9571) (0.2869,0.9632) (0.2952,0.9693) (0.3338,0.9755) (0.3702,0.9816) (0.4943,0.9877) (0.5799,0.9939) (0.8486,1.0000) (1.0000,1.0000)};
+      \addlegendentry{StandardAdaBoost (AUC=0.958)}
+      \addplot[orange!90!black, thick] coordinates {(0.0000,0.0000) (0.0023,0.0798) (0.0030,0.1166) (0.0038,0.1595) (0.0045,0.1840) (0.0053,0.3681) (0.0061,0.4049) (0.0076,0.4294) (0.0083,0.4356) (0.0091,0.4601) (0.0114,0.4724) (0.0129,0.5031) (0.0151,0.5276) (0.0167,0.5337) (0.0174,0.5951) (0.0182,0.6135) (0.0197,0.6258) (0.0204,0.6319) (0.0235,0.6564) (0.0257,0.6748) (0.0273,0.6933) (0.0280,0.7239) (0.0288,0.7362) (0.0303,0.7607) (0.0318,0.7730) (0.0326,0.7853) (0.0348,0.7975) (0.0394,0.8037) (0.0401,0.8098) (0.0409,0.8160) (0.0447,0.8221) (0.0477,0.8344) (0.0530,0.8405) (0.0537,0.8466) (0.0560,0.8528) (0.0568,0.8589) (0.0727,0.8712) (0.0734,0.8773) (0.0749,0.8896) (0.0802,0.8957) (0.0840,0.9141) (0.0908,0.9202) (0.0931,0.9264) (0.0946,0.9325) (0.1400,0.9387) (0.1802,0.9448) (0.1847,0.9509) (0.1862,0.9571) (0.2816,0.9693) (0.3588,0.9755) (0.3603,0.9877) (0.7782,0.9939) (0.9364,1.0000) (1.0000,1.0000)};
+      \addlegendentry{SMOTEBoost (AUC=0.959)}
+      \addplot[green!60!black, thick] coordinates {(0.0000,0.0000) (0.0553,0.7301) (0.0560,0.7546) (0.0568,0.7607) (0.0621,0.7669) (0.0651,0.7730) (0.0651,0.7791) (0.0681,0.7853) (0.0689,0.7975) (0.0719,0.8037) (0.0719,0.8160) (0.0742,0.8405) (0.0810,0.8589) (0.0855,0.8896) (0.0878,0.9080) (0.0984,0.9141) (0.1022,0.9202) (0.1204,0.9264) (0.1385,0.9387) (0.1522,0.9448) (0.1862,0.9509) (0.2036,0.9571) (1.0000,1.0000)};
+      \addlegendentry{RUSBoost (AUC=0.934)}
+      \addplot[red, thick] coordinates {(0.0000,0.0000) (0.0341,0.7546) (0.0356,0.7607) (0.0363,0.7669) (0.0424,0.7853) (0.0469,0.7914) (0.0530,0.8037) (0.0553,0.8160) (0.0606,0.8344) (0.0643,0.8405) (0.0643,0.8528) (0.0681,0.8712) (0.0719,0.8773) (0.0765,0.9018) (0.0924,0.9202) (0.0946,0.9264) (0.0977,0.9387) (0.0999,0.9448) (0.1544,0.9571) (0.1718,0.9632) (0.1923,0.9693) (0.1998,0.9755) (1.0000,1.0000)};
+      \addlegendentry{RHSBoost (AUC=0.955)}
+      \addplot[violet, thick] coordinates {(0.0000,0.0000) (0.0008,0.0123) (0.0015,0.0184) (0.0023,0.0245) (0.0030,0.0920) (0.0045,0.0982) (0.0053,0.1043) (0.0061,0.2209) (0.0068,0.2331) (0.0083,0.2822) (0.0091,0.3006) (0.0098,0.3436) (0.0106,0.3558) (0.0121,0.3620) (0.0136,0.3804) (0.0144,0.3865) (0.0151,0.4417) (0.0159,0.4908) (0.0174,0.5399) (0.0182,0.5583) (0.0189,0.5706) (0.0204,0.6258) (0.0250,0.6319) (0.0295,0.6810) (0.0326,0.6871) (0.0333,0.6933) (0.0401,0.7055) (0.0469,0.7362) (0.0500,0.7423) (0.0515,0.7485) (0.0530,0.7607) (0.0795,0.7669) (0.0886,0.7730) (0.0916,0.7853) (0.0946,0.7914) (0.0961,0.8098) (0.1007,0.8160) (0.1067,0.8221) (0.1090,0.8282) (0.1113,0.8344) (0.1181,0.8405) (0.1257,0.8650) (0.1287,0.8712) (0.1294,0.8773) (0.1310,0.8834) (0.1347,0.8896) (0.1506,0.8957) (0.1575,0.9080) (0.1665,0.9141) (0.1787,0.9202) (0.1817,0.9325) (0.1855,0.9387) (0.1893,0.9448) (0.2369,0.9571) (0.2400,0.9632) (0.2445,0.9693) (0.2801,0.9755) (0.3089,0.9816) (0.3301,0.9877) (0.8577,0.9939) (1.0000,1.0000)};
+      \addlegendentry{SUBoost (AUC=0.943)}
+    \end{axis}
 
-% ── yeast1 ──
-\begin{axis}[
-  roc style,
-  title={yeast1},
-  at={(0cm, 0cm)},
-  anchor=north west,
-]
-\addplot[black, dashed, thick, forget plot] coordinates {(0,0)(1,1)};
-\addplot[blue, thick] coordinates {(0.0000,0.0000) (0.0038,0.0280) (0.0066,0.0513) (0.0104,0.0746) (0.0142,0.1049) (0.0171,0.1166) (0.0227,0.1538) (0.0265,0.1772) (0.0303,0.1958) (0.0341,0.2284) (0.0417,0.2448) (0.0445,0.2611) (0.0493,0.2751) (0.0521,0.2890) (0.0578,0.3007) (0.0673,0.3310) (0.0711,0.3403) (0.0787,0.3520) (0.0815,0.3683) (0.0882,0.3776) (0.0929,0.3846) (0.0967,0.4103) (0.1033,0.4242) (0.1090,0.4336) (0.1156,0.4522) (0.1242,0.4755) (0.1289,0.4918) (0.1355,0.5128) (0.1517,0.5198) (0.1564,0.5291) (0.1611,0.5455) (0.1678,0.5571) (0.1773,0.5711) (0.1848,0.5828) (0.1934,0.5897) (0.2038,0.5991) (0.2104,0.6177) (0.2275,0.6247) (0.2455,0.6317) (0.2483,0.6434) (0.2569,0.6550) (0.2635,0.6690) (0.2673,0.6853) (0.2730,0.6970) (0.2900,0.7086) (0.3005,0.7203) (0.3062,0.7273) (0.3128,0.7436) (0.3194,0.7552) (0.3270,0.7622) (0.3365,0.7739) (0.3630,0.7855) (0.3754,0.7925) (0.3820,0.7995) (0.3886,0.8065) (0.4028,0.8135) (0.4142,0.8228) (0.4199,0.8298) (0.4275,0.8415) (0.4588,0.8508) (0.4720,0.8578) (0.4872,0.8648) (0.5100,0.8718) (0.5194,0.8788) (0.5374,0.8858) (0.5744,0.8951) (0.5943,0.9044) (0.6171,0.9114) (0.6370,0.9184) (0.6531,0.9277) (0.6701,0.9371) (0.6768,0.9441) (0.6825,0.9534) (0.7175,0.9604) (0.7555,0.9674) (0.7877,0.9720) (0.8123,0.9790) (0.8701,0.9860) (0.8815,0.9930) (1.0000,1.0000)};
-\addlegendentry{AdaBoost\string(depth=5\string) (0.781)}
-\addplot[orange!90!black, thick] coordinates {(0.0000,0.0000) (0.0152,0.0956) (0.0161,0.1002) (0.0171,0.1049) (0.0209,0.1096) (0.0246,0.1119) (0.0275,0.1212) (0.0294,0.1329) (0.0332,0.1515) (0.0360,0.1678) (0.0417,0.1841) (0.0464,0.2028) (0.0588,0.2448) (0.0616,0.2587) (0.0626,0.2611) (0.0692,0.2704) (0.0919,0.3520) (0.0938,0.3566) (0.0976,0.3823) (0.1033,0.3893) (0.1071,0.3916) (0.1156,0.4172) (0.1251,0.4406) (0.1280,0.4429) (0.1403,0.4825) (0.1517,0.5198) (0.1630,0.5478) (0.1659,0.5478) (0.1716,0.5618) (0.1801,0.5688) (0.1981,0.6084) (0.1991,0.6200) (0.2028,0.6270) (0.2047,0.6294) (0.2171,0.6457) (0.2218,0.6527) (0.2379,0.6620) (0.2389,0.6643) (0.2464,0.6783) (0.2493,0.6876) (0.2607,0.7040) (0.2682,0.7110) (0.2720,0.7110) (0.2749,0.7179) (0.3043,0.7413) (0.3081,0.7436) (0.3204,0.7459) (0.3299,0.7483) (0.3431,0.7552) (0.3488,0.7552) (0.3630,0.7599) (0.3668,0.7599) (0.4019,0.7879) (0.4171,0.7925) (0.4209,0.8019) (0.4218,0.8042) (0.4303,0.8042) (0.4493,0.8322) (0.4540,0.8368) (0.4645,0.8392) (0.4787,0.8508) (0.4900,0.8531) (0.4948,0.8555) (0.4995,0.8578) (0.5118,0.8578) (0.5204,0.8625) (0.5469,0.8718) (0.5706,0.8858) (0.5782,0.8904) (0.6066,0.8998) (0.6597,0.9301) (0.6863,0.9441) (0.7024,0.9441) (0.7118,0.9464) (0.7336,0.9487) (0.7374,0.9487) (0.7422,0.9557) (0.7649,0.9720) (0.7668,0.9744) (1.0000,1.0000)};
-\addlegendentry{SMOTEBoost (0.772)}
-\addplot[green!60!black, thick] coordinates {(0.0000,0.0000) (0.0645,0.2657) (0.0645,0.2681) (0.0664,0.2751) (0.0692,0.2774) (0.0720,0.2914) (0.0730,0.2984) (0.0863,0.3170) (0.0919,0.3193) (0.0929,0.3240) (0.0948,0.3310) (0.0986,0.3380) (0.1071,0.3566) (0.1071,0.3636) (0.1100,0.3660) (0.1128,0.3660) (0.1166,0.3869) (0.1213,0.4033) (0.1251,0.4033) (0.1327,0.4196) (0.1327,0.4219) (0.1469,0.4732) (0.1517,0.4848) (0.1545,0.4988) (0.1573,0.5012) (0.1640,0.5105) (0.1668,0.5105) (0.1687,0.5105) (0.1706,0.5152) (0.1716,0.5198) (0.1754,0.5198) (0.1763,0.5221) (0.1886,0.5524) (0.1962,0.5641) (0.2047,0.5734) (0.2123,0.5804) (0.2256,0.5944) (0.2389,0.6084) (0.2408,0.6084) (0.2427,0.6131) (0.2474,0.6270) (0.2645,0.6317) (0.2701,0.6317) (0.3289,0.7063) (0.3299,0.7063) (0.3327,0.7086) (0.3460,0.7133) (0.3479,0.7133) (0.3498,0.7156) (0.3545,0.7179) (0.4057,0.7925) (0.4066,0.7925) (0.4256,0.8019) (0.4360,0.8135) (0.4370,0.8159) (0.4559,0.8298) (0.4711,0.8368) (0.4777,0.8462) (0.4796,0.8462) (0.4900,0.8462) (0.4948,0.8485) (0.5005,0.8508) (0.5175,0.8601) (0.5289,0.8625) (0.5336,0.8625) (0.5336,0.8671) (0.5839,0.8858) (0.5877,0.8881) (0.6019,0.9021) (0.6057,0.9021) (0.6180,0.9068) (0.6341,0.9161) (0.6389,0.9161) (0.6806,0.9510) (0.6834,0.9510) (0.6938,0.9510) (0.7232,0.9604) (0.7336,0.9674) (0.7355,0.9674) (1.0000,1.0000)};
-\addlegendentry{RUSBoost (0.757)}
-\addplot[red, thick] coordinates {(0.0000,0.0000) (0.0085,0.0536) (0.0085,0.0606) (0.0142,0.0769) (0.0152,0.1072) (0.0171,0.1212) (0.0209,0.1422) (0.0294,0.1772) (0.0303,0.2028) (0.0379,0.2191) (0.0408,0.2284) (0.0455,0.2681) (0.0474,0.2727) (0.0682,0.3193) (0.0796,0.3566) (0.0834,0.3636) (0.0844,0.3753) (0.0872,0.3823) (0.0948,0.3939) (0.0967,0.4009) (0.0986,0.4289) (0.1071,0.4685) (0.1147,0.4779) (0.1166,0.4802) (0.1232,0.4942) (0.1299,0.4988) (0.1384,0.5291) (0.1460,0.5478) (0.1536,0.5594) (0.1564,0.5618) (0.1725,0.5991) (0.1754,0.5991) (0.1782,0.6014) (0.1943,0.6434) (0.2000,0.6434) (0.2066,0.6457) (0.2227,0.6643) (0.2275,0.6737) (0.2303,0.6830) (0.2332,0.6853) (0.2360,0.6876) (0.2455,0.6946) (0.2540,0.7040) (0.2550,0.7063) (0.2768,0.7203) (0.2777,0.7249) (0.2787,0.7273) (0.3033,0.7506) (0.3545,0.7995) (0.3583,0.8042) (0.3725,0.8089) (0.3801,0.8205) (0.3867,0.8228) (0.3915,0.8298) (0.4038,0.8392) (0.4104,0.8462) (0.4152,0.8485) (0.4275,0.8485) (0.4531,0.8601) (0.4626,0.8625) (0.4891,0.8765) (0.4910,0.8788) (0.4967,0.8788) (0.5118,0.8811) (0.5147,0.8811) (0.5213,0.8811) (0.5384,0.8858) (0.5431,0.8858) (0.5526,0.8904) (0.5972,0.9138) (0.6464,0.9254) (0.6711,0.9301) (0.6749,0.9324) (0.6938,0.9441) (0.7166,0.9464) (0.7308,0.9510) (0.7393,0.9557) (0.7526,0.9557) (0.7545,0.9627) (1.0000,1.0000)};
-\addlegendentry{RHSBoost (0.791)}
-\addplot[violet, thick] coordinates {(0.0000,0.0000) (0.0057,0.0233) (0.0133,0.0746) (0.0180,0.0909) (0.0218,0.1049) (0.0246,0.1259) (0.0275,0.1585) (0.0313,0.1772) (0.0360,0.1841) (0.0398,0.1935) (0.0427,0.2261) (0.0483,0.2354) (0.0540,0.2541) (0.0569,0.2774) (0.0645,0.2960) (0.0682,0.3100) (0.0796,0.3170) (0.0815,0.3310) (0.0882,0.3427) (0.0976,0.3590) (0.1033,0.3753) (0.1062,0.3823) (0.1128,0.3893) (0.1185,0.4009) (0.1261,0.4172) (0.1336,0.4336) (0.1403,0.4429) (0.1479,0.4569) (0.1659,0.4685) (0.1735,0.4802) (0.1763,0.4895) (0.1867,0.5105) (0.1924,0.5221) (0.2000,0.5408) (0.2066,0.5571) (0.2142,0.5641) (0.2256,0.5711) (0.2313,0.5851) (0.2427,0.5967) (0.2493,0.6154) (0.2550,0.6224) (0.2711,0.6364) (0.2758,0.6434) (0.2872,0.6573) (0.3024,0.6667) (0.3137,0.6807) (0.3242,0.6876) (0.3327,0.6993) (0.3517,0.7086) (0.3573,0.7179) (0.3763,0.7249) (0.3820,0.7319) (0.3896,0.7622) (0.4009,0.7739) (0.4209,0.7855) (0.4360,0.7972) (0.4502,0.8042) (0.4578,0.8112) (0.4692,0.8205) (0.4853,0.8298) (0.4995,0.8368) (0.5185,0.8438) (0.5346,0.8625) (0.5507,0.8695) (0.5649,0.8788) (0.5725,0.8858) (0.5791,0.8951) (0.5924,0.9044) (0.6351,0.9114) (0.6398,0.9231) (0.6578,0.9301) (0.6739,0.9394) (0.6995,0.9464) (0.7308,0.9510) (0.7469,0.9604) (0.7592,0.9697) (0.8000,0.9720) (0.8521,0.9814) (0.8900,0.9930) (1.0000,1.0000)};
-\addlegendentry{SUBoost (0.754)}
-\end{axis}
+    % --- yeast4 ---
+    \begin{axis}[
+      roc style,
+      title={yeast4},
+      at={(0,-7.5cm)},
+      name=ax3
+    ]
+      \addplot[black, dashed, thick, forget plot] coordinates {(0,0)(1,1)};
+      \addplot[blue, thick] coordinates {(0.0000,0.0000) (0.0196,0.1176) (0.0321,0.4902) (0.0502,0.5882) (0.0712,0.6863) (0.0893,0.7647) (0.5373,1.0000) (1.0000,1.0000)};
+      \addlegendentry{StandardAdaBoost (AUC=0.928)}
+      \addplot[orange!90!black, thick] coordinates {(0.0000,0.0000) (0.0272,0.4118) (0.0482,0.5294) (0.0872,0.7255) (0.1291,0.8235) (0.1661,0.8824) (0.4368,0.9804) (1.0000,1.0000)};
+      \addlegendentry{SMOTEBoost (AUC=0.909)}
+      \addplot[green!60!black, thick] coordinates {(0.0000,0.0000) (0.1082,0.7255) (0.1242,0.7843) (0.1465,0.8431) (0.2324,0.9216) (0.2617,0.9412) (1.0000,1.0000)};
+      \addlegendentry{RUSBoost (AUC=0.887)}
+      \addplot[red, thick] coordinates {(0.0000,0.0000) (0.1012,0.7255) (0.1375,0.7843) (0.1675,0.8431) (1.0000,1.0000)};
+      \addlegendentry{RHSBoost (AUC=0.883)}
+      \addplot[violet, thick] coordinates {(0.0000,0.0000) (0.0167,0.2549) (0.0405,0.5098) (0.0858,0.6275) (0.2373,0.7059) (0.6176,0.9412) (0.8339,0.9608) (1.0000,1.0000)};
+      \addlegendentry{SUBoost (AUC=0.820)}
+    \end{axis}
 
-% ── yeast3 ──
-\begin{axis}[
-  roc style,
-  title={yeast3},
-  at={(8.5cm, 0cm)},
-  anchor=north west,
-]
-\addplot[black, dashed, thick, forget plot] coordinates {(0,0)(1,1)};
-\addplot[blue, thick] coordinates {(0.0000,0.0000) (0.0000,0.0307) (0.0008,0.0429) (0.0015,0.1043) (0.0023,0.1166) (0.0030,0.2086) (0.0038,0.2331) (0.0061,0.2638) (0.0076,0.2822) (0.0083,0.3129) (0.0091,0.3313) (0.0098,0.3374) (0.0106,0.3620) (0.0114,0.3681) (0.0121,0.4233) (0.0129,0.4294) (0.0136,0.4417) (0.0144,0.4479) (0.0151,0.4969) (0.0159,0.5399) (0.0182,0.5460) (0.0189,0.5767) (0.0212,0.5828) (0.0220,0.5890) (0.0227,0.6074) (0.0235,0.6258) (0.0250,0.6626) (0.0257,0.6748) (0.0265,0.6810) (0.0273,0.6994) (0.0280,0.7055) (0.0295,0.7669) (0.0303,0.7914) (0.0333,0.7975) (0.0356,0.8037) (0.0371,0.8098) (0.0401,0.8160) (0.0439,0.8221) (0.0447,0.8282) (0.0454,0.8344) (0.0469,0.8466) (0.0568,0.8528) (0.0583,0.8589) (0.0613,0.8650) (0.0636,0.8712) (0.0696,0.8773) (0.0749,0.8834) (0.0931,0.8896) (0.0969,0.8957) (0.1022,0.9018) (0.1045,0.9080) (0.1105,0.9141) (0.1249,0.9202) (0.1272,0.9264) (0.1355,0.9325) (0.1393,0.9387) (0.1431,0.9448) (0.1499,0.9509) (0.2044,0.9509) (0.2051,0.9571) (0.2831,0.9571) (0.2854,0.9571) (0.2869,0.9632) (0.2952,0.9693) (0.3202,0.9693) (0.3338,0.9755) (0.3702,0.9816) (0.4943,0.9877) (0.5799,0.9939) (0.5973,0.9939) (0.6457,0.9939) (0.6858,0.9939) (0.7638,0.9939) (0.8486,1.0000) (0.8622,1.0000) (0.8819,1.0000) (0.8849,1.0000) (0.9258,1.0000) (0.9796,1.0000) (1.0000,1.0000)};
-\addlegendentry{AdaBoost\string(depth=5\string) (0.958)}
-\addplot[orange!90!black, thick] coordinates {(0.0000,0.0000) (0.0023,0.0798) (0.0030,0.1166) (0.0038,0.1595) (0.0045,0.1840) (0.0053,0.3681) (0.0053,0.3988) (0.0061,0.4049) (0.0076,0.4294) (0.0083,0.4356) (0.0091,0.4601) (0.0106,0.4601) (0.0114,0.4724) (0.0129,0.5031) (0.0151,0.5276) (0.0167,0.5337) (0.0167,0.5706) (0.0174,0.5951) (0.0182,0.6135) (0.0197,0.6258) (0.0204,0.6319) (0.0235,0.6564) (0.0250,0.6564) (0.0257,0.6748) (0.0273,0.6933) (0.0280,0.7239) (0.0288,0.7362) (0.0288,0.7423) (0.0303,0.7607) (0.0318,0.7730) (0.0326,0.7853) (0.0348,0.7975) (0.0379,0.7975) (0.0394,0.8037) (0.0401,0.8098) (0.0409,0.8160) (0.0447,0.8221) (0.0447,0.8282) (0.0477,0.8344) (0.0530,0.8405) (0.0537,0.8466) (0.0560,0.8528) (0.0568,0.8589) (0.0575,0.8589) (0.0727,0.8712) (0.0734,0.8773) (0.0749,0.8896) (0.0802,0.8957) (0.0802,0.9018) (0.0840,0.9141) (0.0908,0.9202) (0.0931,0.9264) (0.0946,0.9325) (0.1007,0.9325) (0.1400,0.9387) (0.1802,0.9448) (0.1847,0.9509) (0.1862,0.9571) (0.1862,0.9632) (0.2377,0.9632) (0.2816,0.9693) (0.2877,0.9693) (0.3588,0.9755) (0.3603,0.9877) (0.5026,0.9877) (0.5291,0.9877) (0.5882,0.9877) (0.5988,0.9877) (0.6177,0.9877) (0.6192,0.9877) (0.7055,0.9877) (0.7782,0.9939) (0.8213,0.9939) (0.8584,0.9939) (0.8698,0.9939) (0.8812,0.9939) (0.9243,0.9939) (0.9364,1.0000) (0.9917,1.0000) (1.0000,1.0000)};
-\addlegendentry{SMOTEBoost (0.959)}
-\addplot[green!60!black, thick] coordinates {(0.0000,0.0000) (0.0553,0.7301) (0.0560,0.7301) (0.0560,0.7546) (0.0568,0.7607) (0.0583,0.7607) (0.0598,0.7607) (0.0621,0.7669) (0.0628,0.7669) (0.0651,0.7730) (0.0651,0.7791) (0.0681,0.7853) (0.0689,0.7975) (0.0719,0.8037) (0.0719,0.8160) (0.0742,0.8405) (0.0810,0.8589) (0.0855,0.8896) (0.0878,0.9080) (0.0901,0.9080) (0.0977,0.9080) (0.0984,0.9141) (0.1022,0.9202) (0.1090,0.9202) (0.1173,0.9202) (0.1196,0.9202) (0.1204,0.9264) (0.1219,0.9264) (0.1257,0.9264) (0.1287,0.9264) (0.1385,0.9387) (0.1416,0.9387) (0.1522,0.9448) (0.1605,0.9448) (0.1787,0.9448) (0.1802,0.9448) (0.1840,0.9448) (0.1862,0.9509) (0.1968,0.9509) (0.2036,0.9509) (0.2036,0.9571) (0.2044,0.9571) (0.2082,0.9571) (0.2097,0.9571) (0.2120,0.9571) (0.2180,0.9571) (0.2210,0.9571) (1.0000,1.0000)};
-\addlegendentry{RUSBoost (0.934)}
-\addplot[red, thick] coordinates {(0.0000,0.0000) (0.0341,0.7546) (0.0356,0.7546) (0.0356,0.7607) (0.0363,0.7669) (0.0386,0.7669) (0.0401,0.7669) (0.0424,0.7853) (0.0469,0.7914) (0.0530,0.8037) (0.0553,0.8160) (0.0560,0.8160) (0.0606,0.8344) (0.0643,0.8344) (0.0643,0.8405) (0.0643,0.8528) (0.0659,0.8528) (0.0681,0.8712) (0.0719,0.8773) (0.0727,0.8773) (0.0765,0.9018) (0.0772,0.9018) (0.0787,0.9018) (0.0818,0.9018) (0.0924,0.9202) (0.0946,0.9264) (0.0977,0.9387) (0.0999,0.9448) (0.1007,0.9448) (0.1083,0.9448) (0.1113,0.9448) (0.1173,0.9448) (0.1325,0.9448) (0.1332,0.9448) (0.1544,0.9571) (0.1552,0.9571) (0.1718,0.9632) (0.1726,0.9632) (0.1756,0.9632) (0.1771,0.9632) (0.1824,0.9632) (0.1832,0.9632) (0.1870,0.9632) (0.1923,0.9693) (0.1953,0.9693) (0.1968,0.9693) (0.1998,0.9755) (0.2029,0.9755) (0.2067,0.9755) (1.0000,1.0000)};
-\addlegendentry{RHSBoost (0.955)}
-\addplot[violet, thick] coordinates {(0.0000,0.0000) (0.0008,0.0123) (0.0015,0.0184) (0.0023,0.0245) (0.0030,0.0920) (0.0045,0.0982) (0.0053,0.1043) (0.0061,0.2209) (0.0068,0.2331) (0.0083,0.2822) (0.0091,0.3006) (0.0098,0.3436) (0.0106,0.3558) (0.0121,0.3620) (0.0136,0.3804) (0.0144,0.3865) (0.0151,0.4417) (0.0159,0.4908) (0.0174,0.5399) (0.0182,0.5583) (0.0189,0.5706) (0.0204,0.6258) (0.0250,0.6319) (0.0295,0.6810) (0.0326,0.6871) (0.0333,0.6933) (0.0401,0.7055) (0.0469,0.7362) (0.0500,0.7423) (0.0515,0.7485) (0.0530,0.7607) (0.0613,0.7607) (0.0787,0.7607) (0.0795,0.7669) (0.0863,0.7669) (0.0886,0.7730) (0.0916,0.7853) (0.0946,0.7914) (0.0961,0.8098) (0.1007,0.8160) (0.1067,0.8221) (0.1090,0.8282) (0.1113,0.8344) (0.1181,0.8405) (0.1257,0.8650) (0.1287,0.8712) (0.1294,0.8773) (0.1310,0.8834) (0.1347,0.8896) (0.1506,0.8957) (0.1575,0.9080) (0.1665,0.9141) (0.1787,0.9202) (0.1817,0.9325) (0.1855,0.9387) (0.1893,0.9448) (0.2369,0.9571) (0.2400,0.9632) (0.2445,0.9693) (0.2551,0.9693) (0.2801,0.9755) (0.3089,0.9816) (0.3301,0.9877) (0.3520,0.9877) (0.4572,0.9877) (0.4671,0.9877) (0.6563,0.9877) (0.7025,0.9877) (0.7237,0.9877) (0.7615,0.9877) (0.7812,0.9877) (0.7971,0.9877) (0.8002,0.9877) (0.8153,0.9877) (0.8319,0.9877) (0.8577,0.9939) (0.8615,0.9939) (0.8849,0.9939) (0.8872,0.9939) (1.0000,1.0000)};
-\addlegendentry{SUBoost (0.943)}
-\end{axis}
-
-% ── yeast4 ──
-\begin{axis}[
-  roc style,
-  title={yeast4},
-  at={(0cm, -7.5cm)},
-  anchor=north west,
-]
-\addplot[black, dashed, thick, forget plot] coordinates {(0,0)(1,1)};
-\addplot[blue, thick] coordinates {(0.0000,0.0000) (0.0000,0.0196) (0.0007,0.0196) (0.0014,0.0588) (0.0014,0.1176) (0.0021,0.1373) (0.0028,0.1373) (0.0070,0.1569) (0.0070,0.1961) (0.0098,0.2157) (0.0105,0.2157) (0.0112,0.2549) (0.0112,0.2745) (0.0119,0.2941) (0.0133,0.2941) (0.0161,0.3137) (0.0161,0.3529) (0.0188,0.3529) (0.0195,0.3725) (0.0195,0.3922) (0.0202,0.4118) (0.0258,0.4118) (0.0279,0.4314) (0.0286,0.4510) (0.0321,0.4706) (0.0321,0.4902) (0.0412,0.5098) (0.0440,0.5098) (0.0495,0.5294) (0.0495,0.5686) (0.0502,0.5882) (0.0537,0.5882) (0.0537,0.6078) (0.0572,0.6275) (0.0579,0.6275) (0.0677,0.6471) (0.0677,0.6667) (0.0712,0.6863) (0.0782,0.6863) (0.0830,0.7059) (0.0844,0.7059) (0.0893,0.7451) (0.0893,0.7647) (0.0970,0.7843) (0.1221,0.7843) (0.1284,0.8039) (0.1284,0.8235) (0.1326,0.8431) (0.1375,0.8431) (0.1375,0.8627) (0.1417,0.8824) (0.1465,0.8824) (0.1493,0.9020) (0.1493,0.9216) (0.1766,0.9216) (0.1933,0.9216) (0.2401,0.9412) (0.2415,0.9412) (0.2736,0.9608) (0.4829,0.9608) (0.4850,0.9608) (0.4850,0.9804) (0.4913,1.0000) (0.5359,1.0000) (0.5373,1.0000) (0.5527,1.0000) (0.6120,1.0000) (0.6288,1.0000) (0.6301,1.0000) (0.6992,1.0000) (0.7027,1.0000) (0.7202,1.0000) (0.7216,1.0000) (0.7983,1.0000) (0.8702,1.0000) (0.9400,1.0000) (0.9414,1.0000) (0.9707,1.0000) (0.9721,1.0000) (1.0000,1.0000)};
-\addlegendentry{AdaBoost\string(depth=5\string) (0.928)}
-\addplot[orange!90!black, thick] coordinates {(0.0000,0.0000) (0.0007,0.0000) (0.0007,0.0196) (0.0014,0.0196) (0.0021,0.0588) (0.0021,0.0980) (0.0028,0.0980) (0.0028,0.1176) (0.0035,0.2157) (0.0056,0.2157) (0.0056,0.2549) (0.0063,0.2941) (0.0077,0.2941) (0.0077,0.3137) (0.0119,0.3137) (0.0140,0.3333) (0.0140,0.3529) (0.0195,0.3529) (0.0265,0.3725) (0.0265,0.3922) (0.0272,0.3922) (0.0272,0.4118) (0.0328,0.4314) (0.0433,0.4314) (0.0433,0.4510) (0.0475,0.4510) (0.0482,0.4706) (0.0482,0.5294) (0.0488,0.5294) (0.0565,0.5490) (0.0565,0.5686) (0.0670,0.5686) (0.0670,0.5882) (0.0719,0.6078) (0.0789,0.6078) (0.0789,0.6471) (0.0816,0.6667) (0.0823,0.6667) (0.0823,0.6863) (0.0858,0.6863) (0.0872,0.7059) (0.0872,0.7255) (0.1026,0.7255) (0.1026,0.7451) (0.1124,0.7647) (0.1137,0.7647) (0.1137,0.7843) (0.1291,0.8235) (0.1340,0.8235) (0.1340,0.8431) (0.1445,0.8431) (0.1661,0.8627) (0.1661,0.8824) (0.1842,0.8824) (0.2275,0.9020) (0.2275,0.9216) (0.3733,0.9216) (0.3733,0.9412) (0.4159,0.9608) (0.4368,0.9608) (0.4368,0.9804) (0.5827,0.9804) (0.6036,0.9804) (0.6050,0.9804) (0.6567,0.9804) (0.6588,0.9804) (0.6602,0.9804) (0.7111,0.9804) (0.7125,0.9804) (0.7893,1.0000) (0.7900,1.0000) (0.7913,1.0000) (0.8618,1.0000) (0.8632,1.0000) (0.8646,1.0000) (0.9630,1.0000) (0.9798,1.0000) (0.9812,1.0000) (0.9819,1.0000) (1.0000,1.0000)};
-\addlegendentry{SMOTEBoost (0.909)}
-\addplot[green!60!black, thick] coordinates {(0.0000,0.0000) (0.1082,0.7255) (0.1096,0.7255) (0.1110,0.7451) (0.1117,0.7647) (0.1144,0.7647) (0.1186,0.7647) (0.1242,0.7647) (0.1242,0.7843) (0.1291,0.8039) (0.1298,0.8039) (0.1354,0.8235) (0.1452,0.8235) (0.1465,0.8431) (0.1528,0.8431) (0.1598,0.8431) (0.1626,0.8431) (0.1752,0.8431) (0.1779,0.8431) (0.1849,0.8431) (0.1982,0.8431) (0.2219,0.8824) (0.2233,0.8824) (0.2240,0.9020) (0.2261,0.9020) (0.2324,0.9216) (0.2373,0.9216) (0.2456,0.9216) (0.2589,0.9216) (0.2596,0.9216) (0.2610,0.9412) (0.2617,0.9412) (1.0000,1.0000)};
-\addlegendentry{RUSBoost (0.887)}
-\addplot[red, thick] coordinates {(0.0000,0.0000) (0.1012,0.7255) (0.1019,0.7255) (0.1047,0.7255) (0.1082,0.7255) (0.1144,0.7451) (0.1172,0.7451) (0.1186,0.7451) (0.1249,0.7647) (0.1256,0.7647) (0.1270,0.7647) (0.1312,0.7647) (0.1333,0.7647) (0.1361,0.7647) (0.1375,0.7843) (0.1396,0.7843) (0.1528,0.7843) (0.1542,0.7843) (0.1549,0.7843) (0.1591,0.8039) (0.1598,0.8039) (0.1619,0.8039) (0.1633,0.8039) (0.1640,0.8235) (0.1654,0.8235) (0.1675,0.8431) (0.1703,0.8431) (0.1877,0.8824) (0.1975,0.8824) (0.1982,0.8824) (0.2100,0.8824) (0.2100,0.9020) (0.2128,0.9020) (0.2240,0.9216) (0.2296,0.9216) (0.2303,0.9216) (1.0000,1.0000)};
-\addlegendentry{RHSBoost (0.883)}
-\addplot[violet, thick] coordinates {(0.0000,0.0000) (0.0007,0.0196) (0.0014,0.0588) (0.0028,0.0784) (0.0112,0.1569) (0.0140,0.2157) (0.0167,0.2549) (0.0174,0.2941) (0.0216,0.3137) (0.0237,0.3333) (0.0258,0.3725) (0.0314,0.3922) (0.0342,0.4314) (0.0377,0.4510) (0.0391,0.4902) (0.0405,0.5098) (0.0454,0.5294) (0.0502,0.5490) (0.0614,0.5686) (0.0635,0.5686) (0.0782,0.5882) (0.0858,0.6275) (0.0907,0.6275) (0.1005,0.6275) (0.1151,0.6471) (0.1291,0.6471) (0.1347,0.6471) (0.1368,0.6471) (0.1424,0.6471) (0.1465,0.6471) (0.1549,0.6471) (0.1633,0.6471) (0.1668,0.6471) (0.1710,0.6471) (0.1766,0.6471) (0.1898,0.6667) (0.2100,0.6667) (0.2142,0.6863) (0.2212,0.6863) (0.2282,0.6863) (0.2352,0.6863) (0.2373,0.7059) (0.2533,0.7255) (0.2610,0.7255) (0.2666,0.7255) (0.2694,0.7255) (0.2826,0.7255) (0.2959,0.7255) (0.3001,0.7255) (0.3070,0.7255) (0.3098,0.7255) (0.3161,0.7255) (0.3266,0.7255) (0.3308,0.7255) (0.3343,0.7255) (0.3503,0.7451) (0.3629,0.7647) (0.4040,0.7843) (0.4313,0.8039) (0.4382,0.8431) (0.4389,0.8627) (0.4410,0.8824) (0.5213,0.9020) (0.5227,0.9216) (0.6176,0.9412) (0.7041,0.9412) (0.7327,0.9412) (0.7565,0.9412) (0.7844,0.9412) (0.7976,0.9412) (0.8325,0.9412) (0.8339,0.9608) (0.8500,0.9804) (0.9114,0.9804) (0.9546,1.0000) (0.9574,1.0000) (0.9658,1.0000) (0.9833,1.0000) (0.9867,1.0000) (1.0000,1.0000)};
-\addlegendentry{SUBoost (0.820)}
-\end{axis}
-
-% ── yeast6 ──
-\begin{axis}[
-  roc style,
-  title={yeast6},
-  at={(8.5cm, -7.5cm)},
-  anchor=north west,
-]
-\addplot[black, dashed, thick, forget plot] coordinates {(0,0)(1,1)};
-\addplot[blue, thick] coordinates {(0.0000,0.0000) (0.0000,0.0286) (0.0014,0.1143) (0.0021,0.1429) (0.0021,0.2571) (0.0028,0.2857) (0.0035,0.3143) (0.0041,0.3143) (0.0062,0.3429) (0.0083,0.3714) (0.0097,0.4000) (0.0097,0.4286) (0.0104,0.4857) (0.0110,0.5429) (0.0124,0.5429) (0.0138,0.5714) (0.0297,0.6000) (0.0524,0.6286) (0.0524,0.6571) (0.0594,0.6857) (0.0635,0.7143) (0.0987,0.7143) (0.1718,0.7429) (0.1946,0.7714) (0.2112,0.7714) (0.2126,0.7714) (0.2181,0.8000) (0.2346,0.8286) (0.2429,0.8286) (0.2740,0.8571) (0.2947,0.8571) (0.2947,0.8857) (0.3202,0.8857) (0.3464,0.8857) (0.3789,0.8857) (0.3844,0.8857) (0.4493,0.9143) (0.4610,0.9429) (0.4624,0.9429) (0.4748,0.9429) (0.5204,0.9429) (0.5266,0.9429) (0.5293,0.9429) (0.5424,0.9429) (0.5887,0.9429) (0.5901,0.9429) (0.5977,0.9429) (0.6197,0.9429) (0.6577,0.9429) (0.6625,0.9429) (0.6687,0.9429) (0.6756,0.9429) (0.6770,0.9429) (0.6977,0.9429) (0.7012,0.9429) (0.7129,0.9429) (0.7191,0.9714) (0.7329,0.9714) (0.7474,0.9714) (0.7495,0.9714) (0.7591,0.9714) (0.7847,0.9714) (0.8406,0.9714) (0.8447,0.9714) (0.8758,0.9714) (0.8820,0.9714) (0.8834,0.9714) (0.8882,0.9714) (0.9055,0.9714) (0.9275,0.9714) (0.9455,0.9714) (0.9510,0.9714) (0.9614,0.9714) (0.9614,1.0000) (0.9683,1.0000) (0.9745,1.0000) (0.9765,1.0000) (0.9807,1.0000) (0.9855,1.0000) (1.0000,1.0000)};
-\addlegendentry{AdaBoost\string(depth=5\string) (0.883)}
-\addplot[orange!90!black, thick] coordinates {(0.0000,0.0000) (0.0000,0.0286) (0.0000,0.1143) (0.0007,0.1143) (0.0014,0.1429) (0.0014,0.2286) (0.0021,0.2286) (0.0028,0.2571) (0.0028,0.3429) (0.0035,0.3429) (0.0041,0.4000) (0.0041,0.4571) (0.0062,0.4571) (0.0062,0.4857) (0.0083,0.5429) (0.0104,0.5429) (0.0104,0.5714) (0.0110,0.6000) (0.0131,0.6000) (0.0131,0.6286) (0.0166,0.6571) (0.0173,0.6571) (0.0173,0.6857) (0.0483,0.6857) (0.0663,0.7143) (0.0663,0.7429) (0.0718,0.7429) (0.0807,0.7714) (0.0814,0.8000) (0.0904,0.8000) (0.1070,0.8000) (0.1084,0.8000) (0.1111,0.8000) (0.1159,0.8000) (0.1173,0.8000) (0.2174,0.8000) (0.2174,0.8286) (0.2250,0.8571) (0.3354,0.8571) (0.3354,0.8857) (0.3589,0.9143) (0.4596,0.9143) (0.4610,0.9143) (0.5169,0.9143) (0.5562,0.9143) (0.5576,0.9143) (0.5638,0.9143) (0.5687,0.9143) (0.5687,0.9429) (0.5735,0.9429) (0.6142,0.9429) (0.6156,0.9429) (0.6253,0.9429) (0.6329,0.9429) (0.6329,0.9714) (0.6743,0.9714) (0.6846,0.9714) (0.6860,0.9714) (0.7191,0.9714) (0.7205,0.9714) (0.7474,1.0000) (0.7488,1.0000) (0.7502,1.0000) (0.7854,1.0000) (0.8068,1.0000) (0.8081,1.0000) (0.8233,1.0000) (0.8737,1.0000) (0.8751,1.0000) (0.8896,1.0000) (0.9199,1.0000) (0.9213,1.0000) (0.9600,1.0000) (0.9634,1.0000) (0.9648,1.0000) (0.9710,1.0000) (0.9869,1.0000) (0.9883,1.0000) (0.9959,1.0000) (1.0000,1.0000)};
-\addlegendentry{SMOTEBoost (0.901)}
-\addplot[green!60!black, thick] coordinates {(0.0000,0.0000) (0.1663,0.8286) (0.1670,0.8286) (0.1691,0.8286) (0.1753,0.8286) (0.1760,0.8286) (0.1774,0.8286) (0.1822,0.8286) (0.1836,0.8286) (0.1925,0.8286) (0.2367,0.8286) (0.2381,0.8286) (0.2478,0.8286) (0.2491,0.8286) (0.2622,0.8286) (0.2692,0.8286) (0.2767,0.8286) (1.0000,1.0000)};
-\addlegendentry{RUSBoost (0.822)}
-\addplot[red, thick] coordinates {(0.0000,0.0000) (0.1201,0.8571) (0.1249,0.8571) (0.1256,0.8571) (0.1297,0.8571) (0.1339,0.8571) (0.1484,0.8571) (0.1518,0.8571) (0.1587,0.8571) (0.1643,0.8571) (0.1663,0.8571) (1.0000,1.0000)};
-\addlegendentry{RHSBoost (0.865)}
-\addplot[violet, thick] coordinates {(0.0000,0.0000) (0.0007,0.0857) (0.0041,0.1714) (0.0048,0.2857) (0.0076,0.4286) (0.0131,0.4286) (0.0207,0.4571) (0.0269,0.4857) (0.0290,0.5429) (0.0366,0.5429) (0.0386,0.5714) (0.0442,0.6000) (0.0511,0.6000) (0.0566,0.6000) (0.0752,0.6000) (0.0780,0.6286) (0.0856,0.6286) (0.0883,0.6571) (0.0966,0.6571) (0.1077,0.6571) (0.1215,0.6571) (0.1387,0.6571) (0.1422,0.6857) (0.1484,0.6857) (0.1684,0.6857) (0.2050,0.6857) (0.2208,0.7429) (0.2395,0.7714) (0.2664,0.8000) (0.3237,0.8286) (0.3368,0.8571) (0.3596,0.8571) (0.3747,0.8571) (0.3782,0.8571) (0.3823,0.8571) (0.4141,0.8571) (0.4203,0.8571) (0.4362,0.8571) (0.4541,0.8571) (0.4638,0.8571) (0.4769,0.8571) (0.4941,0.8571) (0.5031,0.8571) (0.5266,0.8571) (0.5314,0.8571) (0.5411,0.8571) (0.5542,0.8571) (0.5700,0.8571) (0.5756,0.8571) (0.6108,0.8571) (0.6149,0.8571) (0.6190,0.8571) (0.6294,0.8857) (0.6377,0.8857) (0.6439,0.9143) (0.6501,0.9429) (0.6563,0.9429) (0.6639,0.9429) (0.6950,0.9429) (0.7095,0.9429) (0.7164,0.9429) (0.7219,0.9429) (0.7302,0.9429) (0.7329,0.9429) (0.7495,0.9429) (0.7536,0.9714) (0.7667,0.9714) (0.7716,0.9714) (0.7785,0.9714) (0.7950,0.9714) (0.8585,0.9714) (0.8620,0.9714) (0.8703,0.9714) (0.8772,0.9714) (0.9061,1.0000) (0.9158,1.0000) (0.9814,1.0000) (0.9862,1.0000) (0.9896,1.0000) (1.0000,1.0000)};
-\addlegendentry{SUBoost (0.840)}
-\end{axis}
-
-\end{tikzpicture}
-  \caption{[Hybrid Method] ROC Curve comparison across yeast1, yeast3, yeast4, and yeast6.}
+    % --- yeast6 ---
+    \begin{axis}[
+      roc style,
+      title={yeast6},
+      at={(0.52\textwidth,-7.5cm)},
+      name=ax4
+    ]
+      \addplot[black, dashed, thick, forget plot] coordinates {(0,0)(1,1)};
+      \addplot[blue, thick] coordinates {(0.0000,0.0000) (0.0110,0.5429) (0.0635,0.7143) (0.2346,0.8286) (0.2740,0.8571) (0.4610,0.9429) (0.7191,0.9714) (1.0000,1.0000)};
+      \addlegendentry{StandardAdaBoost (AUC=0.883)}
+      \addplot[orange!90!black, thick] coordinates {(0.0000,0.0000) (0.0110,0.6000) (0.0814,0.8000) (0.2250,0.8571) (0.3589,0.9143) (0.7474,1.0000) (1.0000,1.0000)};
+      \addlegendentry{SMOTEBoost (AUC=0.901)}
+      \addplot[green!60!black, thick] coordinates {(0.0000,0.0000) (0.1663,0.8286) (1.0000,1.0000)};
+      \addlegendentry{RUSBoost (AUC=0.822)}
+      \addplot[red, thick] coordinates {(0.0000,0.0000) (0.1201,0.8571) (1.0000,1.0000)};
+      \addlegendentry{RHSBoost (AUC=0.865)}
+      \addplot[violet, thick] coordinates {(0.0000,0.0000) (0.0076,0.4286) (0.0386,0.5714) (0.1422,0.6857) (0.2208,0.7429) (0.3368,0.8571) (0.6501,0.9429) (1.0000,1.0000)};
+      \addlegendentry{SUBoost (AUC=0.840)}
+    \end{axis}
+  \end{tikzpicture}
+  \caption{ROC Curves Comparison for Each Dataset.}
   \label{fig:roc_curves}
 \end{figure*}
 
 \subsection{Summary Statement}
 The experimental results demonstrate that while data-level methods provide a foundational improvement, algorithm-level and hybrid approaches offer superior stability and performance across extreme imbalance ratios.
+
 
 \bibliographystyle{ACM-Reference-Format}
 \bibliography{sample-base}

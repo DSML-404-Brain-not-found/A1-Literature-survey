@@ -8,90 +8,125 @@
 \@writefile{toc}{\contentsline {subsection}{\numberline {1.2}Challenges and the Pitfalls of Evaluation Metrics}{1}{subsection.1.2}\protected@file@percent }
 \@writefile{toc}{\contentsline {subsection}{\numberline {1.3}Taxonomy of Imbalanced Learning Techniques}{1}{subsection.1.3}\protected@file@percent }
 \@writefile{toc}{\contentsline {subsection}{\numberline {1.4}Research Gap and Objectives}{1}{subsection.1.4}\protected@file@percent }
-\citation{alcala2011keel}
-\citation{he2009learning}
-\citation{he2009learning}
-\citation{he2009learning}
-\citation{luque2019impact}
-\citation{sokolova2009systematic}
-\citation{goutte2005probabilistic}
-\citation{fawcett2006roc}
-\citation{saito2015precision}
 \@writefile{toc}{\contentsline {section}{\numberline {2}Method}{2}{section.2}\protected@file@percent }
 \newlabel{sec:method}{{2}{2}{Method}{section.2}{}}
 \@writefile{toc}{\contentsline {subsection}{\numberline {2.1}Data-level Methods}{2}{subsection.2.1}\protected@file@percent }
 \@writefile{toc}{\contentsline {subsubsection}{\numberline {2.1.1}Non-synthetic method}{2}{subsubsection.2.1.1}\protected@file@percent }
 \@writefile{toc}{\contentsline {paragraph}{(i) Random sampling:}{2}{section*.4}\protected@file@percent }
 \@writefile{toc}{\contentsline {paragraph}{(ii) Hybrid sampling:}{2}{section*.5}\protected@file@percent }
-\@writefile{toc}{\contentsline {section}{\numberline {3}EXPERIMENTAL SETUP}{2}{section.3}\protected@file@percent }
-\@writefile{toc}{\contentsline {subsection}{\numberline {3.1}Datasets}{2}{subsection.3.1}\protected@file@percent }
-\newlabel{eq:IR}{{1}{2}{Datasets}{equation.1}{}}
-\@writefile{toc}{\contentsline {subsection}{\numberline {3.2}Evaluation Metrics}{2}{subsection.3.2}\protected@file@percent }
-\@writefile{toc}{\contentsline {paragraph}{Precision and Recall.}{2}{section*.7}\protected@file@percent }
-\newlabel{eq:precision}{{2}{2}{Precision and Recall}{equation.2}{}}
-\newlabel{eq:recall}{{3}{2}{Precision and Recall}{equation.3}{}}
-\@writefile{toc}{\contentsline {paragraph}{F1-Score.}{2}{section*.8}\protected@file@percent }
-\newlabel{eq:f1}{{4}{2}{F1-Score}{equation.4}{}}
-\@writefile{toc}{\contentsline {paragraph}{AUC-ROC.}{2}{section*.9}\protected@file@percent }
-\newlabel{eq:fpr_tpr}{{5}{2}{AUC-ROC}{equation.5}{}}
-\newlabel{eq:aucroc}{{6}{2}{AUC-ROC}{equation.6}{}}
-\citation{kubat1997addressing}
-\citation{he2009learning,luque2019impact,saito2015precision}
-\@writefile{lot}{\contentsline {table}{\numberline {1}{\ignorespaces Summary of Benchmark Datasets.}}{3}{table.caption.6}\protected@file@percent }
+\@writefile{toc}{\contentsline {subsubsection}{\numberline {2.1.2}Synthetic method}{2}{subsubsection.2.1.2}\protected@file@percent }
+\@writefile{toc}{\contentsline {paragraph}{(i) SMOTE}{2}{section*.6}\protected@file@percent }
+\@writefile{toc}{\contentsline {paragraph}{(ii) Borderline-SMOTE}{2}{section*.7}\protected@file@percent }
+\@writefile{toc}{\contentsline {paragraph}{(iii) SMOTE+Tomek and SMOTE+ENN}{2}{section*.8}\protected@file@percent }
+\@writefile{toc}{\contentsline {subsection}{\numberline {2.2}Algorithm-level Methods}{3}{subsection.2.2}\protected@file@percent }
+\@writefile{toc}{\contentsline {subsubsection}{\numberline {2.2.1}Cost-Sensitive learning}{3}{subsubsection.2.2.1}\protected@file@percent }
+\@writefile{toc}{\contentsline {subsubsection}{\numberline {2.2.2}Ensemble method}{3}{subsubsection.2.2.2}\protected@file@percent }
+\@writefile{toc}{\contentsline {paragraph}{(i) Random Forest (Bagging Framework)}{3}{section*.9}\protected@file@percent }
+\@writefile{toc}{\contentsline {paragraph}{(ii) XGBoost (Boosting Framework)}{3}{section*.10}\protected@file@percent }
+\@writefile{toc}{\contentsline {paragraph}{(iii) Adaboost (Boosting Framework)}{3}{section*.11}\protected@file@percent }
+\@writefile{toc}{\contentsline {subsection}{\numberline {2.3}Hybrid Methods}{3}{subsection.2.3}\protected@file@percent }
+\@writefile{toc}{\contentsline {subsubsection}{\numberline {2.3.1}Boosting-based Hybrid Methods}{3}{subsubsection.2.3.1}\protected@file@percent }
+\@writefile{toc}{\contentsline {paragraph}{(i) SMOTEBoost}{3}{section*.12}\protected@file@percent }
+\@writefile{toc}{\contentsline {paragraph}{(ii) RUSBoost}{3}{section*.13}\protected@file@percent }
+\@writefile{toc}{\contentsline {paragraph}{(iii) EUSBoost and RHSBoost}{4}{section*.14}\protected@file@percent }
+\@writefile{toc}{\contentsline {paragraph}{(iv) WHMBoost}{4}{section*.15}\protected@file@percent }
+\@writefile{toc}{\contentsline {paragraph}{(v) SUBoost}{4}{section*.16}\protected@file@percent }
+\@writefile{toc}{\contentsline {subsubsection}{\numberline {2.3.2}Other Hybrid Approaches }{4}{subsubsection.2.3.2}\protected@file@percent }
+\@writefile{toc}{\contentsline {paragraph}{(i) S-CSL }{4}{section*.17}\protected@file@percent }
+\@writefile{toc}{\contentsline {paragraph}{(ii) CTGAN-MOS}{4}{section*.18}\protected@file@percent }
+\@writefile{toc}{\contentsline {section}{\numberline {3}EXPERIMENTS}{4}{section.3}\protected@file@percent }
+\@writefile{toc}{\contentsline {subsection}{\numberline {3.1}Datasets}{4}{subsection.3.1}\protected@file@percent }
+\newlabel{eq:IR}{{1}{5}{Datasets}{equation.1}{}}
+\@writefile{toc}{\contentsline {subsection}{\numberline {3.2}Experimental Setup}{5}{subsection.3.2}\protected@file@percent }
+\@writefile{toc}{\contentsline {subsubsection}{\numberline {3.2.1}Data Level}{5}{subsubsection.3.2.1}\protected@file@percent }
+\@writefile{toc}{\contentsline {subsubsection}{\numberline {3.2.2}Algorithm Level}{5}{subsubsection.3.2.2}\protected@file@percent }
+\@writefile{toc}{\contentsline {paragraph}{(i) Weighted Random Forest}{5}{section*.20}\protected@file@percent }
+\@writefile{toc}{\contentsline {paragraph}{(ii) Cost-Sensitive XGBoost}{5}{section*.21}\protected@file@percent }
+\@writefile{toc}{\contentsline {paragraph}{(iii) Cost-Sensitive AdaBoost}{5}{section*.22}\protected@file@percent }
+\@writefile{toc}{\contentsline {subsubsection}{\numberline {3.2.3}Hybrid Methods}{5}{subsubsection.3.2.3}\protected@file@percent }
+\@writefile{toc}{\contentsline {paragraph}{(i) Experimental Objectives}{5}{section*.23}\protected@file@percent }
+\@writefile{toc}{\contentsline {subparagraph}{(1) Experiment 1: Data-level methods under a Boosting framework}{5}{section*.24}\protected@file@percent }
+\@writefile{toc}{\contentsline {subparagraph}{(2) Experiment 2: Algorithm-level mechanisms combined with SMOTE}{5}{section*.25}\protected@file@percent }
+\@writefile{lot}{\contentsline {table}{\numberline {1}{\ignorespaces Summary of Benchmark Datasets.}}{6}{table.caption.19}\protected@file@percent }
 \providecommand*\caption@xref[2]{\@setref\relax\@undefined{#1}}
-\newlabel{tab:datasets}{{1}{3}{Summary of Benchmark Datasets}{table.caption.6}{}}
-\@writefile{toc}{\contentsline {paragraph}{G-Mean.}{3}{section*.10}\protected@file@percent }
-\newlabel{eq:specificity}{{7}{3}{G-Mean}{equation.7}{}}
-\newlabel{eq:gmean}{{8}{3}{G-Mean}{equation.8}{}}
-\@writefile{toc}{\contentsline {paragraph}{Metric Selection Rationale.}{3}{section*.11}\protected@file@percent }
-\@writefile{toc}{\contentsline {section}{\numberline {4}Experimental Results Summary}{3}{section.4}\protected@file@percent }
-\@writefile{toc}{\contentsline {section}{\numberline {5}Detailed Experimental Analysis}{3}{section.5}\protected@file@percent }
-\newlabel{sec:experimental_analysis}{{5}{3}{Detailed Experimental Analysis}{section.5}{}}
-\@writefile{toc}{\contentsline {subsection}{\numberline {5.1}Data Level Methods}{3}{subsection.5.1}\protected@file@percent }
-\@writefile{toc}{\contentsline {subsubsection}{\numberline {5.1.1}Experimental Tables: Data-Level Results}{3}{table.caption.16}\protected@file@percent }
-\@writefile{toc}{\contentsline {subsubsection}{\numberline {5.1.2}Visual Analysis of Data-Level Methods}{3}{subsubsection.5.1.2}\protected@file@percent }
-\@writefile{lof}{\contentsline {figure}{\numberline {1}{\ignorespaces [Data Level] G-Mean performance comparison on Yeast1 dataset.}}{3}{figure.caption.17}\protected@file@percent }
-\newlabel{fig:yeast1_gmean}{{1}{3}{[Data Level] G-Mean performance comparison on Yeast1 dataset}{figure.caption.17}{}}
-\@writefile{lof}{\contentsline {figure}{\numberline {2}{\ignorespaces [Data Level] G-Mean performance comparison on Yeast3 dataset.}}{3}{figure.caption.18}\protected@file@percent }
-\newlabel{fig:yeast3_gmean}{{2}{3}{[Data Level] G-Mean performance comparison on Yeast3 dataset}{figure.caption.18}{}}
-\@writefile{toc}{\contentsline {subsection}{\numberline {5.2}Algorithm Level Methods}{3}{subsection.5.2}\protected@file@percent }
-\@writefile{lof}{\contentsline {figure}{\numberline {3}{\ignorespaces [Data Level] G-Mean performance comparison on Yeast4 dataset.}}{4}{figure.caption.19}\protected@file@percent }
-\newlabel{fig:yeast4_gmean}{{3}{4}{[Data Level] G-Mean performance comparison on Yeast4 dataset}{figure.caption.19}{}}
-\@writefile{lof}{\contentsline {figure}{\numberline {4}{\ignorespaces [Data Level] G-Mean performance comparison on Yeast6 dataset.}}{4}{figure.caption.20}\protected@file@percent }
-\newlabel{fig:yeast6_gmean}{{4}{4}{[Data Level] G-Mean performance comparison on Yeast6 dataset}{figure.caption.20}{}}
-\@writefile{toc}{\contentsline {subsubsection}{\numberline {5.2.1}Visual Analysis of Algorithm-Level Methods}{4}{subsubsection.5.2.1}\protected@file@percent }
-\@writefile{lof}{\contentsline {figure}{\numberline {5}{\ignorespaces [Algorithm Level] Recall comparison of standard and weighted Random Forest.}}{4}{figure.caption.21}\protected@file@percent }
-\newlabel{fig:algorithm_recall}{{5}{4}{[Algorithm Level] Recall comparison of standard and weighted Random Forest}{figure.caption.21}{}}
-\@writefile{lof}{\contentsline {figure}{\numberline {6}{\ignorespaces [Algorithm Level] Dual-metric line chart illustrating the trade-off in AdaBoost.}}{4}{figure.caption.22}\protected@file@percent }
-\newlabel{fig:adaboost_tradeoff}{{6}{4}{[Algorithm Level] Dual-metric line chart illustrating the trade-off in AdaBoost}{figure.caption.22}{}}
-\@writefile{toc}{\contentsline {subsection}{\numberline {5.3}Hybrid Methods}{4}{subsection.5.3}\protected@file@percent }
-\@writefile{toc}{\contentsline {subsubsection}{\numberline {5.3.1}Visual Analysis of Hybrid Methods}{4}{subsubsection.5.3.1}\protected@file@percent }
-\@writefile{toc}{\contentsline {subsubsection}{\numberline {5.3.2}Impact of SMOTE Variants in Hybrid Frameworks}{4}{subsubsection.5.3.2}\protected@file@percent }
+\newlabel{tab:datasets}{{1}{6}{Summary of Benchmark Datasets}{table.caption.19}{}}
+\@writefile{toc}{\contentsline {paragraph}{(ii) Experimental Framework}{6}{section*.26}\protected@file@percent }
+\@writefile{toc}{\contentsline {paragraph}{(iii) Control Variables}{6}{section*.27}\protected@file@percent }
+\@writefile{toc}{\contentsline {subparagraph}{(1) Base estimator alignment}{6}{section*.28}\protected@file@percent }
+\@writefile{toc}{\contentsline {subparagraph}{(2) Unified AdaBoost engine}{6}{section*.29}\protected@file@percent }
+\@writefile{toc}{\contentsline {paragraph}{(iv) Literature-aligned Implementation Adjustments}{6}{section*.30}\protected@file@percent }
+\@writefile{toc}{\contentsline {subparagraph}{(1) Weight Isolation Mechanism}{6}{section*.31}\protected@file@percent }
+\@writefile{toc}{\contentsline {subparagraph}{(2) Decoupled Sampling Strategy in RHSBoost}{6}{section*.32}\protected@file@percent }
+\@writefile{toc}{\contentsline {subparagraph}{(3) Cost Matrix Anchoring in SMOTECSL:}{6}{section*.33}\protected@file@percent }
+\@writefile{toc}{\contentsline {subsection}{\numberline {3.3}Evaluation Metrics}{6}{subsection.3.3}\protected@file@percent }
+\@writefile{toc}{\contentsline {paragraph}{Precision and Recall.}{6}{section*.34}\protected@file@percent }
+\newlabel{eq:precision}{{2}{6}{Precision and Recall}{equation.2}{}}
+\newlabel{eq:recall}{{3}{6}{Precision and Recall}{equation.3}{}}
+\@writefile{toc}{\contentsline {paragraph}{F1-Score.}{6}{section*.35}\protected@file@percent }
+\newlabel{eq:f1}{{4}{6}{F1-Score}{equation.4}{}}
+\@writefile{toc}{\contentsline {paragraph}{AUC-ROC.}{6}{section*.36}\protected@file@percent }
+\newlabel{eq:fpr_tpr}{{5}{7}{AUC-ROC}{equation.5}{}}
+\newlabel{eq:aucroc}{{6}{7}{AUC-ROC}{equation.6}{}}
+\@writefile{toc}{\contentsline {paragraph}{G-Mean.}{7}{section*.37}\protected@file@percent }
+\newlabel{eq:specificity}{{7}{7}{G-Mean}{equation.7}{}}
+\newlabel{eq:gmean}{{8}{7}{G-Mean}{equation.8}{}}
+\@writefile{toc}{\contentsline {paragraph}{Metric Selection Rationale.}{7}{section*.38}\protected@file@percent }
+\@writefile{toc}{\contentsline {section}{\numberline {4}Results}{7}{section.4}\protected@file@percent }
+\@writefile{toc}{\contentsline {subsection}{\numberline {4.1}Data Level}{7}{subsection.4.1}\protected@file@percent }
+\@writefile{lof}{\contentsline {figure}{\numberline {1}{\ignorespaces G-Mean between different techniques for Yeast1 dataset}}{7}{figure.caption.43}\protected@file@percent }
+\newlabel{fig:yeast1_gmean}{{1}{7}{G-Mean between different techniques for Yeast1 dataset}{figure.caption.43}{}}
+\@writefile{lof}{\contentsline {figure}{\numberline {2}{\ignorespaces G-Mean between different techniques for Yeast3 dataset}}{7}{figure.caption.44}\protected@file@percent }
+\newlabel{fig:yeast3_gmean}{{2}{7}{G-Mean between different techniques for Yeast3 dataset}{figure.caption.44}{}}
+\@writefile{toc}{\contentsline {subsection}{\numberline {4.2}Algorithm Level}{7}{subsection.4.2}\protected@file@percent }
+\@writefile{toc}{\contentsline {subsection}{\numberline {4.3}Hybrid Method}{7}{subsection.4.3}\protected@file@percent }
+\@writefile{toc}{\contentsline {section}{\numberline {5}Experimental Results Summary}{7}{section.5}\protected@file@percent }
+\@writefile{toc}{\contentsline {section}{\numberline {6}Detailed Experimental Analysis}{7}{section.6}\protected@file@percent }
+\newlabel{sec:experimental_analysis}{{6}{7}{Detailed Experimental Analysis}{section.6}{}}
+\@writefile{lot}{\contentsline {table}{\numberline {2}{\ignorespaces Summary table}}{8}{table.caption.39}\protected@file@percent }
+\newlabel{tab:full_summary}{{2}{8}{Summary table}{table.caption.39}{}}
+\@writefile{lot}{\contentsline {table}{\numberline {3}{\ignorespaces Classification outcomes (G-Mean) for kNN algorithm}}{9}{table.caption.40}\protected@file@percent }
+\newlabel{tab:knn_gmean}{{3}{9}{Classification outcomes (G-Mean) for kNN algorithm}{table.caption.40}{}}
+\@writefile{lot}{\contentsline {table}{\numberline {4}{\ignorespaces Classification outcomes (G-Mean) for random forest algorithm}}{9}{table.caption.41}\protected@file@percent }
+\newlabel{tab:rf_gmean}{{4}{9}{Classification outcomes (G-Mean) for random forest algorithm}{table.caption.41}{}}
+\@writefile{lot}{\contentsline {table}{\numberline {5}{\ignorespaces Classification outcomes (G-Mean) for SVM algorithm}}{9}{table.caption.42}\protected@file@percent }
+\newlabel{tab:svm_gmean}{{5}{9}{Classification outcomes (G-Mean) for SVM algorithm}{table.caption.42}{}}
+\@writefile{lof}{\contentsline {figure}{\numberline {3}{\ignorespaces G-Mean between different techniques for Yeast4 dataset}}{9}{figure.caption.45}\protected@file@percent }
+\newlabel{fig:yeast4_gmean}{{3}{9}{G-Mean between different techniques for Yeast4 dataset}{figure.caption.45}{}}
+\@writefile{toc}{\contentsline {subsection}{\numberline {6.1}Data Level Methods}{9}{subsection.6.1}\protected@file@percent }
+\@writefile{lof}{\contentsline {figure}{\numberline {4}{\ignorespaces G-Mean between different techniques for Yeast6 dataset}}{9}{figure.caption.46}\protected@file@percent }
+\newlabel{fig:yeast6_gmean}{{4}{9}{G-Mean between different techniques for Yeast6 dataset}{figure.caption.46}{}}
+\@writefile{toc}{\contentsline {subsection}{\numberline {6.2}Algorithm Level Methods}{9}{subsection.6.2}\protected@file@percent }
+\@writefile{toc}{\contentsline {subsubsection}{\numberline {6.2.1}Visual Analysis of Algorithm-Level Methods}{9}{subsubsection.6.2.1}\protected@file@percent }
+\@writefile{lot}{\contentsline {table}{\numberline {6}{\ignorespaces Summary of Experimental Results (Data-Level Methods)}}{10}{table.caption.47}\protected@file@percent }
+\newlabel{tab:datalevel_summary}{{6}{10}{Summary of Experimental Results (Data-Level Methods)}{table.caption.47}{}}
+\@writefile{toc}{\contentsline {subsection}{\numberline {6.3}Hybrid Methods}{10}{subsection.6.3}\protected@file@percent }
+\@writefile{toc}{\contentsline {subsubsection}{\numberline {6.3.1}Visual Analysis of Hybrid Methods}{10}{subsubsection.6.3.1}\protected@file@percent }
+\@writefile{toc}{\contentsline {subsubsection}{\numberline {6.3.2}Impact of SMOTE Variants in Hybrid Frameworks}{10}{subsubsection.6.3.2}\protected@file@percent }
+\@writefile{toc}{\contentsline {subsubsection}{\numberline {6.3.3}ROC Curve Analysis for Hybrid Frameworks}{10}{subsubsection.6.3.3}\protected@file@percent }
 \bibstyle{ACM-Reference-Format}
 \bibdata{sample-base}
 \newlabel{tocindent-1}{0pt}
 \newlabel{tocindent0}{0pt}
-\newlabel{tocindent1}{8.37pt}
-\newlabel{tocindent2}{14.53499pt}
-\newlabel{tocindent3}{20.07898pt}
+\newlabel{tocindent1}{4.185pt}
+\newlabel{tocindent2}{10.34999pt}
+\newlabel{tocindent3}{18.198pt}
 \newlabel{tocindent4}{18.198pt}
 \newlabel{tocindent5}{0pt}
-\@writefile{lof}{\contentsline {figure}{\numberline {7}{\ignorespaces [Algorithm Level] Radar Chart comparing Average XGBoost vs. CS-XGBoost.}}{5}{figure.caption.23}\protected@file@percent }
-\newlabel{fig:xgboost_radar}{{7}{5}{[Algorithm Level] Radar Chart comparing Average XGBoost vs. CS-XGBoost}{figure.caption.23}{}}
-\@writefile{lof}{\contentsline {figure}{\numberline {8}{\ignorespaces [Hybrid Method] Performance comparison of various hybrid boosting methods (based on exp\_1.csv).}}{5}{figure.caption.25}\protected@file@percent }
-\newlabel{fig:hybrid_boosting}{{8}{5}{[Hybrid Method] Performance comparison of various hybrid boosting methods (based on exp\_1.csv)}{figure.caption.25}{}}
-\@writefile{toc}{\contentsline {subsubsection}{\numberline {5.3.3}ROC Curve Analysis for Hybrid Frameworks}{5}{subsubsection.5.3.3}\protected@file@percent }
-\@writefile{toc}{\contentsline {subsection}{\numberline {5.4}Summary Statement}{5}{subsection.5.4}\protected@file@percent }
-\@writefile{lof}{\contentsline {figure}{\numberline {9}{\ignorespaces [Hybrid Method] Impact of SMOTE variants on model performance (based on exp\_2.csv).}}{5}{figure.caption.26}\protected@file@percent }
-\newlabel{fig:smote_variants}{{9}{5}{[Hybrid Method] Impact of SMOTE variants on model performance (based on exp\_2.csv)}{figure.caption.26}{}}
-\@writefile{toc}{\contentsline {section}{References}{5}{section*.29}\protected@file@percent }
-\@writefile{lof}{\contentsline {figure}{\numberline {10}{\ignorespaces [Hybrid Method] ROC Curve comparison across yeast1, yeast3, yeast4, and yeast6.}}{6}{figure.caption.27}\protected@file@percent }
-\newlabel{fig:roc_curves}{{10}{6}{[Hybrid Method] ROC Curve comparison across yeast1, yeast3, yeast4, and yeast6}{figure.caption.27}{}}
-\@writefile{lot}{\contentsline {table}{\numberline {2}{\ignorespaces Comprehensive Experimental Results Summary across all methodology levels.}}{7}{table.caption.12}\protected@file@percent }
-\newlabel{tab:comprehensive_summary}{{2}{7}{Comprehensive Experimental Results Summary across all methodology levels}{table.caption.12}{}}
-\@writefile{lot}{\contentsline {table}{\numberline {3}{\ignorespaces [Data Level] Summary of Experimental Results (Data-Level Methods)}}{8}{table.caption.13}\protected@file@percent }
-\newlabel{tab:datalevel_summary}{{3}{8}{[Data Level] Summary of Experimental Results (Data-Level Methods)}{table.caption.13}{}}
-\@writefile{lot}{\contentsline {table}{\numberline {7}{\ignorespaces [Hybrid Method] Summary of Experimental Results (Boosting-based Methods)}}{9}{table.caption.24}\protected@file@percent }
-\newlabel{tab:hybrid_summary}{{7}{9}{[Hybrid Method] Summary of Experimental Results (Boosting-based Methods)}{table.caption.24}{}}
-\newlabel{TotPages}{{9}{9}{}{page.9}{}}
-\gdef \@abspage@last{9}
+\@writefile{lot}{\contentsline {table}{\numberline {7}{\ignorespaces The complete experiment result of hybrid methods.}}{11}{table.caption.51}\protected@file@percent }
+\newlabel{tab:hybrid_summary}{{7}{11}{The complete experiment result of hybrid methods}{table.caption.51}{}}
+\@writefile{lof}{\contentsline {figure}{\numberline {5}{\ignorespaces Comparison of Recall Performance between Baseline RF and Cost-Sensitive RF Across Datasets }}{11}{figure.caption.48}\protected@file@percent }
+\newlabel{fig:algorithm_recall}{{5}{11}{Comparison of Recall Performance between Baseline RF and Cost-Sensitive RF Across Datasets }{figure.caption.48}{}}
+\@writefile{lof}{\contentsline {figure}{\numberline {6}{\ignorespaces The extreme precision-recall trade-off in AdaBoost after applying the cost-sensitive mechanism. }}{11}{figure.caption.49}\protected@file@percent }
+\newlabel{fig:adaboost_tradeoff}{{6}{11}{The extreme precision-recall trade-off in AdaBoost after applying the cost-sensitive mechanism. }{figure.caption.49}{}}
+\@writefile{lof}{\contentsline {figure}{\numberline {9}{\ignorespaces Experiment 2 F1-score Comparison Across Datasets.}}{12}{figure.caption.53}\protected@file@percent }
+\newlabel{fig:smote_variants}{{9}{12}{Experiment 2 F1-score Comparison Across Datasets}{figure.caption.53}{}}
+\@writefile{lof}{\contentsline {figure}{\numberline {7}{\ignorespaces Radar Chart comparing the average performance of Baseline XGBoost and Cost-Sensitive XGBoost across all datasets.}}{12}{figure.caption.50}\protected@file@percent }
+\newlabel{fig:xgboost_radar}{{7}{12}{Radar Chart comparing the average performance of Baseline XGBoost and Cost-Sensitive XGBoost across all datasets}{figure.caption.50}{}}
+\@writefile{lof}{\contentsline {figure}{\numberline {8}{\ignorespaces Experiment 1 F1-score Comparison Across Datasets.}}{12}{figure.caption.52}\protected@file@percent }
+\newlabel{fig:hybrid_boosting}{{8}{12}{Experiment 1 F1-score Comparison Across Datasets}{figure.caption.52}{}}
+\@writefile{toc}{\contentsline {subsection}{\numberline {6.4}Summary Statement}{12}{subsection.6.4}\protected@file@percent }
+\@writefile{toc}{\contentsline {section}{References}{12}{section*.56}\protected@file@percent }
+\@writefile{lof}{\contentsline {figure}{\numberline {10}{\ignorespaces ROC Curves Comparison for Each Dataset.}}{13}{figure.caption.54}\protected@file@percent }
+\newlabel{fig:roc_curves}{{10}{13}{ROC Curves Comparison for Each Dataset}{figure.caption.54}{}}
+\newlabel{TotPages}{{13}{13}{}{page.13}{}}
+\gdef \@abspage@last{13}

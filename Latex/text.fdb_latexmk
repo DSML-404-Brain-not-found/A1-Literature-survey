@@ -1,13 +1,13 @@
 # Fdb version 4
-["bibtex text"] 1773575348.11988 "text.aux" "text.bbl" "text" 1773575351.0654 0
+["bibtex text"] 1773588223.30235 "text.aux" "text.bbl" "text" 1773588226.16573 0
   "./ACM-Reference-Format.bst" 1773491849 96784 12e0ced1522ea2bfa9b2fb12855c7e9e ""
   "./sample-base.bib" 1773491849 50853 df98e6764e8a8591af3f06cf54d52d06 ""
-  "text.aux" 1773575350 9898 36d6853e1bb7a0fae993699bf79c0662 "pdflatex"
+  "text.aux" 1773588225 14791 8ca097f4ab4d3cffc1cd07ae102c1eb4 "pdflatex"
   (generated)
   "text.bbl"
   "text.blg"
   (rewritten before read)
-["pdflatex"] 1773575348.32113 "c:/Users/peng1/Desktop/Lucy/中央大學/碩一下/資科/A1-Literature-survey/Latex/text.tex" "text.pdf" "text" 1773575351.06588 0
+["pdflatex"] 1773588223.48287 "c:/Users/peng1/Desktop/Lucy/中央大學/碩一下/資科/A1-Literature-survey/Latex/text.tex" "text.pdf" "text" 1773588226.16625 0
   "C:/Users/peng1/AppData/Local/MiKTeX/fonts/map/pdftex/pdftex.map" 1773572672 186066 c797610d3c7aadc509276bf4bcd8a24b ""
   "C:/Users/peng1/AppData/Local/MiKTeX/miktex/data/le/pdftex/pdflatex.fmt" 1773390987 13333849 021872d29036dc28b9a78cd20a6821b0 ""
   "C:/Users/peng1/AppData/Local/Programs/MiKTeX/fonts/enc/dvips/libertine/lbtn_25tcsq.enc" 1497089888 2921 8ca0eb0831f9bc5da080d3697cfe67bf ""
@@ -293,6 +293,7 @@
   "C:/Users/peng1/AppData/Local/Programs/MiKTeX/tex/latex/preprint/balance.sty" 1369148871 3453 d938ad2440edc1ea1c9042843580ec42 ""
   "C:/Users/peng1/AppData/Local/Programs/MiKTeX/tex/latex/refcount/refcount.sty" 1576433952 9878 9e94e8fa600d95f9c7731bb21dfb67a4 ""
   "C:/Users/peng1/AppData/Local/Programs/MiKTeX/tex/latex/rerunfilecheck/rerunfilecheck.sty" 1751104012 9684 a33a14b82ce60d6e77cb9be689d79ee6 ""
+  "C:/Users/peng1/AppData/Local/Programs/MiKTeX/tex/latex/tools/indentfirst.sty" 1761901070 1618 30b01152766afcef2ed8f904cfdd3cc6 ""
   "C:/Users/peng1/AppData/Local/Programs/MiKTeX/tex/latex/totpages/totpages.sty" 1127566646 7911 b07e668265cf485332abe582e7ed306e ""
   "C:/Users/peng1/AppData/Local/Programs/MiKTeX/tex/latex/trimspaces/trimspaces.sty" 1253169183 1380 971a51b00a14503ddf754cab24c3f209 ""
   "C:/Users/peng1/AppData/Local/Programs/MiKTeX/tex/latex/upquote/upquote.sty" 1335534756 1088 517e01cde97c1c0baf72e69d43aa5a2e ""
@@ -301,11 +302,11 @@
   "C:/Users/peng1/AppData/Local/Programs/MiKTeX/tex/latex/xkeyval/xkeyval.sty" 1656236919 4937 4ce600ce9bd4ec84d0250eb6892fcf4f ""
   "C:/Users/peng1/AppData/Local/Programs/MiKTeX/tex/latex/xstring/xstring.sty" 1693735632 123 a302f2c651a95033260db60e51527ae8 ""
   "acmart.cls" 1773491849 126055 54cc4edcc7b9cb1bf0a23c528626957c ""
-  "c:/Users/peng1/Desktop/Lucy/中央大學/碩一下/資科/A1-Literature-survey/Latex/text.tex" 1773575188 76463 dd72356ecd5ac6686e40272c5d42f260 ""
-  "text.aux" 1773575350 9898 36d6853e1bb7a0fae993699bf79c0662 "pdflatex"
-  "text.bbl" 1773575348 1751 4d28b6ea748d03d80535fe94a7371ddb "bibtex text"
-  "text.out" 1773575350 3240 c07a115149605aead99b67c22460387d "pdflatex"
-  "text.tex" 1773575188 76463 dd72356ecd5ac6686e40272c5d42f260 ""
+  "c:/Users/peng1/Desktop/Lucy/中央大學/碩一下/資科/A1-Literature-survey/Latex/text.tex" 1773588176 89832 a3ce63d9da2c801be1993cc44926c0aa ""
+  "text.aux" 1773588225 14791 8ca097f4ab4d3cffc1cd07ae102c1eb4 "pdflatex"
+  "text.bbl" 1773588223 1751 4d28b6ea748d03d80535fe94a7371ddb "bibtex text"
+  "text.out" 1773588225 4263 8753e1947156f8fca86ca32f2861839d "pdflatex"
+  "text.tex" 1773588176 89832 a3ce63d9da2c801be1993cc44926c0aa ""
   (generated)
   "text.aux"
   "text.log"
