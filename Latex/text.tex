@@ -51,13 +51,15 @@
   \providecommand\BibTeX{{%
     Bib\TeX}}}
 \usepackage{multirow}
+\usepackage{pgfplots}
+\pgfplotsset{compat=1.18}
 
 %% Rights management information.  This information is sent to you
 %% when you complete the rights form.  These commands have SAMPLE
 %% values in them; it is your responsibility as an author to replace
 %% the commands and values with those provided to you when you
 %% complete the rights form.
-\settopmatter{printacmref=false} % 移除 ACM Reference Format
+\settopmatter{printacmref=false, authorsperrow=4} % 移除 ACM Reference Format 並強制每排 4 位作者
 \setcopyright{none}           % 移除版權宣告與分隔線
 \renewcommand\footnotetextcopyrightpermission[1]{} % 強制隱藏底部許可文字
 
@@ -110,41 +112,21 @@
 %% Of note is the shared affiliation of the first two authors, and the
 %% "authornote" and "authornotemark" commands
 %% used to denote shared contribution to the research.
-%% 第一位作者 (Author 1)
+%% --- 四位作者並排排版 ---
 \author{Chi-Wei, PENG}
-\affiliation{%
-  \institution{National Central University} %% 學校名稱
-  \department{Student ID: 114423004}       %% 學號資訊
-  \city{Zhongli}
-  \country{Taiwan}
-}
+\affiliation{\institution{114423004} \country{}}
 \email{114423004@cc.ncu.edu.tw}
-%% 第二位作者 (Author 2)
+
 \author{Ting-Chun, Lin}
-\affiliation{%
-  \institution{National Central University}
-  \department{Student ID: 114423009}
-  \city{Zhongli}
-  \country{Taiwan}
-}
+\affiliation{\institution{114423009} \country{}}
 \email{Tinalin@g.ncu.edu.tw}
-%% 第三位作者 (Author 3)
+
 \author{Chiu-Hsiang, Lin}
-\affiliation{%
-  \institution{National Central University}
-  \department{Student ID: 114423049}
-  \city{Zhongli}
-  \country{Taiwan}
-}
+\affiliation{\institution{114423049} \country{}}
 \email{114423049@cc.ncu.edu.tw}
-%% 第四位作者 (Author 4)
+
 \author{Chia-Chen, Lee}
-\affiliation{%
-  \institution{National Central University}
-  \department{Student ID: 114423050}
-  \city{Zhongli}
-  \country{Taiwan}
-}
+\affiliation{\institution{114423050} \country{}}
 \email{cclee@g.ncu.edu.tw}
 
 %%
@@ -748,14 +730,7 @@ The ``\verb|figure|'' environment should be used for figures. One or
 more images can be placed within a figure. If your figure contains
 third-party material, you must clearly identify it as such, as shown
 in the example below.
-\begin{figure}[h]
-  \centering
-  \includegraphics[width=\linewidth]{sample-franklin}
-  \caption{1907 Franklin Model D roadster. Photograph by Harris \&
-    Ewing, Inc. [Public domain], via Wikimedia
-    Commons. (\url{https://goo.gl/VLCRBB}).}
-  \Description{A woman and a girl in white dresses sit in an open car.}
-\end{figure}
+% Figure removed as requested.
 
 Your figures should contain a caption which describes the figure to
 the reader.
@@ -982,17 +957,22 @@ massa et mattis lacinia.
 
 This section provides a comprehensive summary of the experimental results across all evaluated methods and datasets.
 
+\section{Detailed Experimental Analysis}
+\label{sec:experimental_analysis}
+
+In this section, we provide a detailed analysis of the experimental results, categorized by the level of intervention: data-level, algorithm-level, and hybrid strategies.
+
 \begin{table*}[t]
   \centering
-  \caption{Experimental Results Summary across all methods and datasets.}
-  \label{tab:experimental_summary}
+  \caption{Comprehensive Experimental Results Summary across all methodology levels.}
+  \label{tab:comprehensive_summary}
   \footnotesize
   \setlength{\tabcolsep}{3.5pt}
   \begin{tabular}{llcccccccccc}
     \toprule
     \textbf{Type} & \textbf{Method} & \textbf{Dataset} & \textbf{Acc.} & \textbf{Prec.} & \textbf{Rec.} & \textbf{F1} & \textbf{AUC} & \textbf{PR-AUC} & \textbf{G-Mean} & \textbf{BAcc.} \\
     \midrule
-    \multirow{16}{*}{data level} & \multirow{4}{*}{Baseline} 
+    \multirow{16}{*}{Data Level} & \multirow{4}{*}{Baseline} 
     & yeast1 & 0.7581 & 0.6410 & 0.4025 & 0.4850 & 0.7881 & 0.5887 & 0.5976 & 0.6526 \\
     & & yeast3 & 0.9477 & 0.8106 & 0.6848 & 0.7412 & 0.9570 & 0.7924 & 0.8184 & 0.8325 \\
     & & yeast4 & 0.9661 & 0.3556 & 0.0970 & 0.1403 & 0.8561 & 0.3739 & 0.2219 & 0.5470 \\
@@ -1016,13 +996,13 @@ This section provides a comprehensive summary of the experimental results across
     & & yeast4 & 0.8821 & 0.1900 & 0.6921 & 0.2928 & 0.8881 & 0.3371 & 0.7769 & 0.7905 \\
     & & yeast6 & 0.9306 & 0.2587 & 0.7810 & 0.3724 & 0.9324 & 0.4875 & 0.8468 & 0.8576 \\
     \midrule
-    \multirow{24}{*}{algorithm level} & \multirow{4}{*}{RandomForest} 
+    \multirow{24}{*}{Algorithm Level} & \multirow{4}{*}{RandomForest} 
     & yeast1 & 0.7783 & 0.6650 & 0.4803 & 0.5553 & 0.8133 & 0.6435 & 0.6561 & 0.6899 \\
     & & yeast3 & 0.9447 & 0.7870 & 0.6805 & 0.7275 & 0.9706 & 0.8316 & 0.8134 & 0.8289 \\
     & & yeast4 & 0.9677 & 0.6000 & 0.1364 & 0.2062 & 0.9206 & 0.4073 & 0.3206 & 0.5668 \\
     & & yeast6 & 0.9831 & 0.7667 & 0.4000 & 0.5054 & 0.8997 & 0.5629 & 0.6088 & 0.6986 \\
     \cmidrule{2-11}
-    & \multirow{4}{*}{\begin{tabular}[c]{@{}l@{}}Cost-Sensitive+\\RandomForest\end{tabular}} 
+    & \multirow{4}{*}{\begin{tabular}[c]{@{}l@{}}CS-\\RandomForest\end{tabular}} 
     & yeast1 & 0.7891 & 0.6979 & 0.4825 & 0.5688 & 0.8114 & 0.6420 & 0.6632 & 0.6981 \\
     & & yeast3 & 0.9461 & 0.7896 & 0.6992 & 0.7396 & 0.9726 & 0.8479 & 0.8254 & 0.8379 \\
     & & yeast4 & 0.9650 & 0.3333 & 0.1164 & 0.1655 & 0.9269 & 0.4298 & 0.2572 & 0.5557 \\
@@ -1034,25 +1014,25 @@ This section provides a comprehensive summary of the experimental results across
     & & yeast4 & 0.9629 & 0.4503 & 0.2764 & 0.3241 & 0.9165 & 0.3767 & 0.5024 & 0.6319 \\
     & & yeast6 & 0.9771 & 0.5267 & 0.4857 & 0.4992 & 0.9246 & 0.5340 & 0.6875 & 0.7373 \\
     \cmidrule{2-11}
-    & \multirow{4}{*}{\begin{tabular}[c]{@{}l@{}}Cost-Sensitive+\\XGBoost\end{tabular}} 
+    & \multirow{4}{*}{\begin{tabular}[c]{@{}l@{}}CS-\\XGBoost\end{tabular}} 
     & yeast1 & 0.7561 & 0.5765 & 0.5989 & 0.5861 & 0.7859 & 0.6012 & 0.6998 & 0.7094 \\
     & & yeast3 & 0.9468 & 0.7482 & 0.7852 & 0.7649 & 0.9615 & 0.7895 & 0.8709 & 0.8760 \\
     & & yeast4 & 0.9582 & 0.4230 & 0.3945 & 0.3932 & 0.9107 & 0.4053 & 0.6066 & 0.6865 \\
     & & yeast6 & 0.9764 & 0.4984 & 0.5714 & 0.5294 & 0.9242 & 0.5515 & 0.7399 & 0.7788 \\
     \cmidrule{2-11}
-    & \multirow{4}{*}{AdaBoost (depth=1)} 
+    & \multirow{4}{*}{AdaBoost (d=1)} 
     & yeast1 & 0.7601 & 0.6293 & 0.4219 & 0.5045 & 0.7878 & 0.5760 & 0.6152 & 0.6598 \\
     & & yeast3 & 0.9508 & 0.7891 & 0.7725 & 0.7770 & 0.9721 & 0.7808 & 0.8664 & 0.8726 \\
     & & yeast4 & 0.9623 & 0.3500 & 0.1945 & 0.2439 & 0.9217 & 0.3758 & 0.3814 & 0.5920 \\
     & & yeast6 & 0.9831 & 0.7000 & 0.4857 & 0.5655 & 0.9380 & 0.5549 & 0.6836 & 0.7404 \\
     \cmidrule{2-11}
-    & \multirow{4}{*}{\begin{tabular}[c]{@{}l@{}}Cost-Sensitive+\\AdaBoost\end{tabular}} 
+    & \multirow{4}{*}{\begin{tabular}[c]{@{}l@{}}CS-\\AdaBoost\end{tabular}} 
     & yeast1 & 0.6658 & 0.4496 & 0.6922 & 0.5449 & 0.6736 & 0.4009 & 0.6729 & 0.6736 \\
     & & yeast3 & 0.8956 & 0.5169 & 0.9203 & 0.6610 & 0.9470 & 0.7058 & 0.9061 & 0.9064 \\
     & & yeast4 & 0.8922 & 0.2093 & 0.7436 & 0.3251 & 0.9190 & 0.2352 & 0.8154 & 0.8205 \\
     & & yeast6 & 0.8956 & 0.1608 & 0.8000 & 0.2655 & 0.8972 & 0.2441 & 0.8374 & 0.8489 \\
     \midrule
-    \multirow{24}{*}{Hybrid Method} & \multirow{4}{*}{AdaBoost (depth=5)} 
+    \multirow{24}{*}{Hybrid Method} & \multirow{4}{*}{AdaBoost (d=5)} 
     & yeast1 & 0.7540 & 0.5853 & 0.5196 & 0.5470 & 0.7821 & 0.5880 & 0.6612 & 0.6845 \\
     & & yeast3 & 0.9421 & 0.7577 & 0.6928 & 0.7231 & 0.9591 & 0.7695 & 0.8199 & 0.8328 \\
     & & yeast4 & 0.9650 & 0.5500 & 0.1964 & 0.2727 & 0.9312 & 0.4115 & 0.3923 & 0.5943 \\
@@ -1091,6 +1071,197 @@ This section provides a comprehensive summary of the experimental results across
   \end{tabular}
 \end{table*}
 
+\subsection{Data Level Methods}
+Data-level methods focus on reslicing the training set to achieve a more balanced distribution. As shown in the summary table, SMOTE and its variants (SMOTE-ENN) generally improve recall for the minority class at the expense of precision in mild to moderate imbalance cases.
+
+% Data level separate table removed.
+
+\subsection{Algorithm Level Methods}
+Algorithm-level methods, such as Cost-Sensitive learning combined with ensemble classifiers (Random Forest, XGBoost, AdaBoost), show higher robustness across varying imbalance ratios by directly internalizing the cost of misclassifying minority instances.
+
+\subsubsection{Visual Analysis of Algorithm-Level Methods}
+In this subcategory, we examine the performance shifts in ensemble methods when cost-sensitive mechanisms are applied.
+
+Figure~\ref{fig:algorithm_recall} presents a comparison of Recall scores between standard Random Forest and Weighted (Cost-Sensitive) Random Forest across the Yeast datasets.
+
+\begin{figure}[h]
+  \centering
+  \Description{Grouped bar chart showing Recall of Random Forest and Weighted Random Forest across four datasets (yeast1, yeast3, yeast4, yeast6).}
+  \begin{tikzpicture}
+    \begin{axis}[
+        ybar,
+        height=7cm,
+        width=0.48\textwidth,
+        bar width=8pt,
+        ylabel={Recall},
+        symbolic x coords={yeast1,yeast3,yeast4,yeast6},
+        xtick=data,
+        ymin=0, ymax=1.0,
+        legend style={at={(0.5,-0.2)}, anchor=north, legend columns=-1, font=\tiny},
+        ymajorgrids=true,
+        grid style={dashed,gray!30},
+        nodes near coords,
+        nodes near coords style={font=\tiny, /pgf/number format/fixed, /pgf/number format/precision=2},
+        title={Recall Performance: RF vs. Weighted RF},
+      ]
+      \addplot+ [fill=blue!30] coordinates {(yeast1,0.480) (yeast3,0.681) (yeast4,0.136) (yeast6,0.400)};
+      \addplot+ [fill=orange!30] coordinates {(yeast1,0.483) (yeast3,0.699) (yeast4,0.116) (yeast6,0.429)};
+      \legend{Random Forest, Weighted Random Forest}
+    \end{axis}
+  \end{tikzpicture}
+  \caption{Recall comparison of standard and weighted Random Forest.}
+  \label{fig:algorithm_recall}
+\end{figure}
+
+Furthermore, Table~\ref{tab:comprehensive_summary} and Figure~\ref{fig:adaboost_tradeoff} highlight the "death cross" effect in AdaBoost. After applying cost-sensitive weights, Recall improves significantly, but at a severe cost to Precision.
+
+\begin{figure}[h]
+    \centering
+    \begin{tikzpicture}
+        \begin{axis}[
+            width=0.48\textwidth,
+            height=6cm,
+            ymin=0.2, ymax=0.9,
+            ytick={0.2, 0.4, 0.6, 0.8},
+            ylabel={\textbf{Score}},
+            symbolic x coords={Baseline AdaBoost, Cost-Sensitive AdaBoost},
+            xtick=data,
+            enlarge x limits=0.35,
+            ymajorgrids=true,
+            grid style=dashed,
+            legend style={at={(0.5,-0.15)}, anchor=north, legend columns=2, font=\tiny, draw=none},
+            nodes near coords,
+            every node near coord/.append style={font=\tiny\bfseries, /pgf/number format/fixed, /pgf/number format/precision=3}
+        ]
+        \addplot[color=blue!80, mark=*, mark options={scale=1.2}, very thick, nodes near coords align={above}] coordinates {
+            (Baseline AdaBoost, 0.469)
+            (Cost-Sensitive AdaBoost, 0.789)
+        };
+        \addlegendentry{Recall}
+        \addplot[color=red!80, mark=square*, mark options={scale=1.2}, very thick, nodes near coords align={below}] coordinates {
+            (Baseline AdaBoost, 0.617)
+            (Cost-Sensitive AdaBoost, 0.334)
+        };
+        \addlegendentry{Precision}
+        \end{axis}
+    \end{tikzpicture}
+    \caption{Dual-metric line chart illustrating the trade-off in AdaBoost.}
+    \label{fig:adaboost_tradeoff}
+\end{figure}
+
+Finally, the radar chart in Figure~\ref{fig:xgboost_radar} illustrates the balanced improvement across multiple metrics (Recall, Precision, F1-Score, and G-Mean) for XGBoost when cost-sensitive learning is integrated.
+
+\begin{figure}[h]
+    \centering
+    \begin{tikzpicture}[scale=2.8]
+        \foreach \r in {0.2, 0.4, 0.6, 0.8} {
+            \draw[gray!30, loosely dashed] (0,0) circle (\r);
+            \node[gray!60, anchor=south west, inner sep=1pt, font=\tiny] at (45:\r) {\r};
+        }
+        \foreach \angle/\label in {90/Rec, 0/Prec, 270/F1, 180/GM} {
+            \draw[gray!70, ->] (0,0) -- (\angle:0.9);
+            \node[font=\tiny\bfseries] at (\angle:1.05) {\label};
+        }
+        \coordinate (B_Recall)    at (90:0.499);
+        \coordinate (B_Precision) at (0:0.586);
+        \coordinate (B_F1)        at (270:0.529);
+        \coordinate (B_GMean)     at (180:0.672);
+        \coordinate (C_Recall)    at (90:0.588);
+        \coordinate (C_Precision) at (0:0.562);
+        \coordinate (C_F1)        at (270:0.568);
+        \coordinate (C_GMean)     at (180:0.729);
+        \draw[thick, blue!80, fill=blue!20, fill opacity=0.4] (B_Recall) -- (B_Precision) -- (B_F1) -- (B_GMean) -- cycle;
+        \foreach \p in {B_Recall, B_Precision, B_F1, B_GMean} { \fill[blue!80] (\p) circle (0.5pt); }
+        \draw[thick, red!80, fill=red!20, fill opacity=0.4] (C_Recall) -- (C_Precision) -- (C_F1) -- (C_GMean) -- cycle;
+        \foreach \p in {C_Recall, C_Precision, C_F1, C_GMean} { \fill[red!80] (\p) circle (0.5pt); }
+        \begin{scope}[xshift=1.3cm, yshift=0.8cm]
+            \draw[thick, blue!80, fill=blue!20, fill opacity=0.6] (0,0) rectangle (0.1, 0.07);
+            \node[right, font=\tiny] at (0.12, 0.035) {Base};
+            \draw[thick, red!80, fill=red!20, fill opacity=0.6] (0,-0.12) rectangle (0.1, -0.05);
+            \node[right, font=\tiny] at (0.12, -0.085) {CS};
+        \end{scope}
+    \end{tikzpicture}
+    \caption{Radar Chart comparing Average XGBoost vs. CS-XGBoost.}
+    \label{fig:xgboost_radar}
+\end{figure}
+
+\subsection{Hybrid Methods}
+Hybrid methods integrate data resampling with algorithmic enhancements. This subsection evaluates the efficacy of boosting-based hybrid approaches.
+
+\subsubsection{Visual Analysis of Hybrid Methods}
+The hybrid framework combines data-level resampling with algorithm-level boosting. Figure~\ref{fig:hybrid_boosting} and Figure~\ref{fig:smote_variants} provide insight into these combined effects.
+
+Figure~\ref{fig:hybrid_boosting} illustrates the F1-score performance of various hybrid boosting methods across four Yeast datasets.
+
+\begin{figure}[h]
+  \centering
+  \Description{Grouped bar chart showing F1-scores of hybrid boosting methods (StandardAdaBoost, SMOTEBoost, RUSBoost, RHSBoost, SUBoost) across four datasets (yeast1, yeast3, yeast4, yeast6).}
+  \begin{tikzpicture}
+    \begin{axis}[
+        ybar,
+        height=7cm,
+        width=0.48\textwidth,
+        bar width=4pt,
+        ylabel={F1-score},
+        symbolic x coords={yeast1,yeast3,yeast4,yeast6},
+        xtick=data,
+        ymin=0, ymax=1.0,
+        legend style={at={(0.5,-0.2)}, anchor=north, legend columns=2, font=\tiny},
+        ymajorgrids=true,
+        grid style={dashed,gray!30},
+        nodes near coords,
+        nodes near coords style={font=\tiny, rotate=90, anchor=west},
+        title={F1-score of Hybrid Boosting Methods},
+      ]
+      \addplot+ [fill=blue!50] coordinates {(yeast1,0.547) (yeast3,0.723) (yeast4,0.273) (yeast6,0.439)};
+      \addplot+ [fill=red!50] coordinates {(yeast1,0.590) (yeast3,0.761) (yeast4,0.373) (yeast6,0.554)};
+      \addplot+ [fill=green!50] coordinates {(yeast1,0.550) (yeast3,0.673) (yeast4,0.250) (yeast6,0.155)};
+      \addplot+ [fill=orange!50] coordinates {(yeast1,0.599) (yeast3,0.712) (yeast4,0.258) (yeast6,0.234)};
+      \addplot+ [fill=purple!50] coordinates {(yeast1,0.528) (yeast3,0.688) (yeast4,0.315) (yeast6,0.446)};
+      \legend{StandardAdaBoost, SMOTEBoost, RUSBoost, RHSBoost, SUBoost}
+    \end{axis}
+  \end{tikzpicture}
+  \caption{Performance comparison of various hybrid boosting methods (based on exp\_1.csv).}
+  \label{fig:hybrid_boosting}
+\end{figure}
+
+\subsubsection{Impact of SMOTE Variants in Hybrid Frameworks}
+Figure~\ref{fig:smote_variants} shows the comparative performance of SMOTE-based hybrid strategies. SMOTEBoost demonstrates superior F1-scores compared to the pure data-level SMOTE and the cost-sensitive variant SMOTECSL, particularly as the imbalance ratio increases in Yeast-4 and Yeast-6.
+
+\begin{figure}[h]
+  \centering
+  \Description{Grouped bar chart showing F1-scores of SMOTE-based variants (SMOTE, SMOTEBoost, SMOTECSL) across four datasets.}
+  \begin{tikzpicture}
+    \begin{axis}[
+        ybar,
+        height=7cm,
+        width=0.48\textwidth,
+        bar width=8pt,
+        ylabel={F1-score},
+        symbolic x coords={yeast1,yeast3,yeast4,yeast6},
+        xtick=data,
+        ymin=0, ymax=1.0,
+        legend style={at={(0.5,-0.2)}, anchor=north, legend columns=-1, font=\tiny},
+        ymajorgrids=true,
+        grid style={dashed,gray!30},
+        nodes near coords,
+        nodes near coords style={font=\tiny, /pgf/number format/fixed, /pgf/number format/precision=2},
+        title={F1-score of SMOTE-based Variants},
+      ]
+      \addplot+ [fill=teal!50] coordinates {(yeast1,0.583) (yeast3,0.739) (yeast4,0.331) (yeast6,0.416)};
+      \addplot+ [fill=red!50] coordinates {(yeast1,0.590) (yeast3,0.761) (yeast4,0.373) (yeast6,0.554)};
+      \addplot+ [fill=gray!50] coordinates {(yeast1,0.547) (yeast3,0.588) (yeast4,0.159) (yeast6,0.157)};
+      \legend{SMOTE, SMOTEBoost, SMOTECSL}
+    \end{axis}
+  \end{tikzpicture}
+  \caption{Impact of SMOTE variants on model performance (based on exp\_2.csv).}
+  \label{fig:smote_variants}
+\end{figure}
+
+\subsection{Summary Statement}
+The experimental results demonstrate that while data-level methods provide a foundational improvement, algorithm-level and hybrid approaches offer superior stability and performance across extreme imbalance ratios.
+
+\clearpage
 \end{document}
 \endinput
 %%
