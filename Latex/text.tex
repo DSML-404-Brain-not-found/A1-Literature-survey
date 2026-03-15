@@ -50,27 +50,16 @@
 \AtBeginDocument{%
   \providecommand\BibTeX{{%
     Bib\TeX}}}
+\usepackage{multirow}
 
 %% Rights management information.  This information is sent to you
 %% when you complete the rights form.  These commands have SAMPLE
 %% values in them; it is your responsibility as an author to replace
 %% the commands and values with those provided to you when you
 %% complete the rights form.
-\setcopyright{acmlicensed}
-\copyrightyear{2018}
-\acmYear{2018}
-\acmDOI{XXXXXXX.XXXXXXX}
-%% These commands are for a PROCEEDINGS abstract or paper.
-\acmConference[Conference acronym 'XX]{Make sure to enter the correct
-  conference title from your rights confirmation email}{June 03--05,
-  2018}{Woodstock, NY}
-%%
-%%  Uncomment \acmBooktitle if the title of the proceedings is different
-%%  from ``Proceedings of ...''!
-%%
-%%\acmBooktitle{Woodstock '18: ACM Symposium on Neural Gaze Detection,
-%%  June 03--05, 2018, Woodstock, NY}
-\acmISBN{978-1-4503-XXXX-X/2018/06}
+\settopmatter{printacmref=false} % 移除 ACM Reference Format
+\setcopyright{none}           % 移除版權宣告與分隔線
+\renewcommand\footnotetextcopyrightpermission[1]{} % 強制隱藏底部許可文字
 
 
 %%
@@ -366,22 +355,15 @@ Table~\ref{tab:datasets}.
   \caption{Summary of Benchmark Datasets.}
   \label{tab:datasets}
   \small
-  \setlength{\tabcolsep}{10pt} % 增加欄位間距讓排版更寬鬆美觀
-  \begin{tabular}{llrrrrrl}
+  \setlength{\tabcolsep}{12pt} 
+  \begin{tabular}{lrrrrrl}
     \toprule
-    \textbf{Dataset}        & \textbf{Domain}       &
-    \textbf{\#Inst.}        & \textbf{\#Feat.}      &
-    \textbf{Min.}           & \textbf{Maj.}         &
-    \textbf{IR}             & \textbf{Severity}     \\
+    \textbf{Dataset} & \textbf{Instances} & \textbf{Features} & \textbf{Minority} & \textbf{Majority} & \textbf{Imbalance Ratio} & \textbf{Severity} \\
     \midrule
-    Phoneme                 & Speech recognition    & 5{,}404 & 5 & 1{,}586 & 3{,}818 &  2.41 & Mild     \\
-    Yeast-1                 & Bioinformatics        & 1{,}484 & 8 &   429   & 1{,}055 &  2.46 & Mild     \\
-    Yeast-3                 & Bioinformatics        & 1{,}484 & 8 &   163   & 1{,}321 &  8.10 & Moderate \\
-    Shuttle-c0-vs-c4        & Aerospace             & 1{,}829 & 9 &   123   & 1{,}706 & 13.87 & Moderate \\
-    Glass5                  & Material science      &   214   & 9 &     9   &   205   & 22.78 & Severe   \\
-    Yeast-4                 & Bioinformatics        & 1{,}484 & 8 &    51   & 1{,}433 & 28.10 & Severe   \\
-    Ecoli                   & Microbiology          &   281   & 7 &     7   &   274   & 39.14 & Extreme  \\
-    Yeast-6                 & Bioinformatics        & 1{,}484 & 8 &    35   & 1{,}449 & 41.40 & Extreme  \\
+    Yeast-1 & 1{,}484 & 8 & 429 & 1{,}055 & 2.46 & Mild     \\
+    Yeast-3 & 1{,}484 & 8 & 163 & 1{,}321 & 8.10 & Moderate \\
+    Yeast-4 & 1{,}484 & 8 &  51 & 1{,}433 & 28.10 & Severe   \\
+    Yeast-6 & 1{,}484 & 8 &  35 & 1{,}449 & 41.40 & Extreme  \\
     \bottomrule
   \end{tabular}
 \end{table*}
@@ -995,6 +977,119 @@ dui. Etiam sagittis eleifend elementum.
 Nam interdum magna at lectus dignissim, ac dignissim lorem
 rhoncus. Maecenas eu arcu ac neque placerat aliquam. Nunc pulvinar
 massa et mattis lacinia.
+
+\section{Experimental Results Summary}
+
+This section provides a comprehensive summary of the experimental results across all evaluated methods and datasets.
+
+\begin{table*}[t]
+  \centering
+  \caption{Experimental Results Summary across all methods and datasets.}
+  \label{tab:experimental_summary}
+  \footnotesize
+  \setlength{\tabcolsep}{3.5pt}
+  \begin{tabular}{llcccccccccc}
+    \toprule
+    \textbf{Type} & \textbf{Method} & \textbf{Dataset} & \textbf{Acc.} & \textbf{Prec.} & \textbf{Rec.} & \textbf{F1} & \textbf{AUC} & \textbf{PR-AUC} & \textbf{G-Mean} & \textbf{BAcc.} \\
+    \midrule
+    \multirow{16}{*}{data level} & \multirow{4}{*}{Baseline} 
+    & yeast1 & 0.7581 & 0.6410 & 0.4025 & 0.4850 & 0.7881 & 0.5887 & 0.5976 & 0.6526 \\
+    & & yeast3 & 0.9477 & 0.8106 & 0.6848 & 0.7412 & 0.9570 & 0.7924 & 0.8184 & 0.8325 \\
+    & & yeast4 & 0.9661 & 0.3556 & 0.0970 & 0.1403 & 0.8561 & 0.3739 & 0.2219 & 0.5470 \\
+    & & yeast6 & 0.9798 & 0.4556 & 0.2952 & 0.3445 & 0.8999 & 0.5656 & 0.4296 & 0.6458 \\
+    \cmidrule{2-11}
+    & \multirow{4}{*}{oversampling} 
+    & yeast1 & 0.7280 & 0.5356 & 0.6596 & 0.5841 & 0.7835 & 0.5737 & 0.7021 & 0.7077 \\
+    & & yeast3 & 0.9292 & 0.6479 & 0.8488 & 0.7290 & 0.9509 & 0.7530 & 0.8920 & 0.8940 \\
+    & & yeast4 & 0.9261 & 0.3308 & 0.4897 & 0.3022 & 0.8732 & 0.3626 & 0.6272 & 0.7157 \\
+    & & yeast6 & 0.9537 & 0.3796 & 0.6857 & 0.4355 & 0.9080 & 0.4895 & 0.7952 & 0.8230 \\
+    \cmidrule{2-11}
+    & \multirow{4}{*}{SMOTE} 
+    & yeast1 & 0.7201 & 0.5209 & 0.6760 & 0.5831 & 0.7834 & 0.5747 & 0.7029 & 0.7070 \\
+    & & yeast3 & 0.9328 & 0.6561 & 0.8551 & 0.7391 & 0.9571 & 0.7664 & 0.8971 & 0.8988 \\
+    & & yeast4 & 0.9115 & 0.2465 & 0.6152 & 0.3315 & 0.8801 & 0.3527 & 0.7406 & 0.7686 \\
+    & & yeast6 & 0.9452 & 0.3202 & 0.7333 & 0.4155 & 0.9240 & 0.4788 & 0.8248 & 0.8418 \\
+    \cmidrule{2-11}
+    & \multirow{4}{*}{SMOTE-ENN} 
+    & yeast1 & 0.6734 & 0.4657 & 0.7948 & 0.5846 & 0.7803 & 0.5666 & 0.7011 & 0.7094 \\
+    & & yeast3 & 0.9216 & 0.6028 & 0.8938 & 0.7177 & 0.9533 & 0.7438 & 0.9089 & 0.9094 \\
+    & & yeast4 & 0.8821 & 0.1900 & 0.6921 & 0.2928 & 0.8881 & 0.3371 & 0.7769 & 0.7905 \\
+    & & yeast6 & 0.9306 & 0.2587 & 0.7810 & 0.3724 & 0.9324 & 0.4875 & 0.8468 & 0.8576 \\
+    \midrule
+    \multirow{24}{*}{algorithm level} & \multirow{4}{*}{RandomForest} 
+    & yeast1 & 0.7783 & 0.6650 & 0.4803 & 0.5553 & 0.8133 & 0.6435 & 0.6561 & 0.6899 \\
+    & & yeast3 & 0.9447 & 0.7870 & 0.6805 & 0.7275 & 0.9706 & 0.8316 & 0.8134 & 0.8289 \\
+    & & yeast4 & 0.9677 & 0.6000 & 0.1364 & 0.2062 & 0.9206 & 0.4073 & 0.3206 & 0.5668 \\
+    & & yeast6 & 0.9831 & 0.7667 & 0.4000 & 0.5054 & 0.8997 & 0.5629 & 0.6088 & 0.6986 \\
+    \cmidrule{2-11}
+    & \multirow{4}{*}{\begin{tabular}[c]{@{}l@{}}Cost-Sensitive+\\RandomForest\end{tabular}} 
+    & yeast1 & 0.7891 & 0.6979 & 0.4825 & 0.5688 & 0.8114 & 0.6420 & 0.6632 & 0.6981 \\
+    & & yeast3 & 0.9461 & 0.7896 & 0.6992 & 0.7396 & 0.9726 & 0.8479 & 0.8254 & 0.8379 \\
+    & & yeast4 & 0.9650 & 0.3333 & 0.1164 & 0.1655 & 0.9269 & 0.4298 & 0.2572 & 0.5557 \\
+    & & yeast6 & 0.9838 & 0.8667 & 0.4286 & 0.5305 & 0.8965 & 0.5907 & 0.6350 & 0.7129 \\
+    \cmidrule{2-11}
+    & \multirow{4}{*}{XGBoost} 
+    & yeast1 & 0.7648 & 0.6122 & 0.5151 & 0.5569 & 0.7847 & 0.6034 & 0.6662 & 0.6907 \\
+    & & yeast3 & 0.9434 & 0.7567 & 0.7176 & 0.7354 & 0.9612 & 0.7726 & 0.8338 & 0.8444 \\
+    & & yeast4 & 0.9629 & 0.4503 & 0.2764 & 0.3241 & 0.9165 & 0.3767 & 0.5024 & 0.6319 \\
+    & & yeast6 & 0.9771 & 0.5267 & 0.4857 & 0.4992 & 0.9246 & 0.5340 & 0.6875 & 0.7373 \\
+    \cmidrule{2-11}
+    & \multirow{4}{*}{\begin{tabular}[c]{@{}l@{}}Cost-Sensitive+\\XGBoost\end{tabular}} 
+    & yeast1 & 0.7561 & 0.5765 & 0.5989 & 0.5861 & 0.7859 & 0.6012 & 0.6998 & 0.7094 \\
+    & & yeast3 & 0.9468 & 0.7482 & 0.7852 & 0.7649 & 0.9615 & 0.7895 & 0.8709 & 0.8760 \\
+    & & yeast4 & 0.9582 & 0.4230 & 0.3945 & 0.3932 & 0.9107 & 0.4053 & 0.6066 & 0.6865 \\
+    & & yeast6 & 0.9764 & 0.4984 & 0.5714 & 0.5294 & 0.9242 & 0.5515 & 0.7399 & 0.7788 \\
+    \cmidrule{2-11}
+    & \multirow{4}{*}{AdaBoost (depth=1)} 
+    & yeast1 & 0.7601 & 0.6293 & 0.4219 & 0.5045 & 0.7878 & 0.5760 & 0.6152 & 0.6598 \\
+    & & yeast3 & 0.9508 & 0.7891 & 0.7725 & 0.7770 & 0.9721 & 0.7808 & 0.8664 & 0.8726 \\
+    & & yeast4 & 0.9623 & 0.3500 & 0.1945 & 0.2439 & 0.9217 & 0.3758 & 0.3814 & 0.5920 \\
+    & & yeast6 & 0.9831 & 0.7000 & 0.4857 & 0.5655 & 0.9380 & 0.5549 & 0.6836 & 0.7404 \\
+    \cmidrule{2-11}
+    & \multirow{4}{*}{\begin{tabular}[c]{@{}l@{}}Cost-Sensitive+\\AdaBoost\end{tabular}} 
+    & yeast1 & 0.6658 & 0.4496 & 0.6922 & 0.5449 & 0.6736 & 0.4009 & 0.6729 & 0.6736 \\
+    & & yeast3 & 0.8956 & 0.5169 & 0.9203 & 0.6610 & 0.9470 & 0.7058 & 0.9061 & 0.9064 \\
+    & & yeast4 & 0.8922 & 0.2093 & 0.7436 & 0.3251 & 0.9190 & 0.2352 & 0.8154 & 0.8205 \\
+    & & yeast6 & 0.8956 & 0.1608 & 0.8000 & 0.2655 & 0.8972 & 0.2441 & 0.8374 & 0.8489 \\
+    \midrule
+    \multirow{24}{*}{Hybrid Method} & \multirow{4}{*}{AdaBoost (depth=5)} 
+    & yeast1 & 0.7540 & 0.5853 & 0.5196 & 0.5470 & 0.7821 & 0.5880 & 0.6612 & 0.6845 \\
+    & & yeast3 & 0.9421 & 0.7577 & 0.6928 & 0.7231 & 0.9591 & 0.7695 & 0.8199 & 0.8328 \\
+    & & yeast4 & 0.9650 & 0.5500 & 0.1964 & 0.2727 & 0.9312 & 0.4115 & 0.3923 & 0.5943 \\
+    & & yeast6 & 0.9778 & 0.5500 & 0.3714 & 0.4392 & 0.8979 & 0.4859 & 0.6043 & 0.6819 \\
+    \cmidrule{2-11}
+    & \multirow{4}{*}{SMOTEBoost} 
+    & yeast1 & 0.7473 & 0.5560 & 0.6294 & 0.5903 & 0.7718 & 0.5543 & 0.7074 & 0.7123 \\
+    & & yeast3 & 0.9468 & 0.7530 & 0.7725 & 0.7611 & 0.9596 & 0.7989 & 0.8641 & 0.8704 \\
+    & & yeast4 & 0.9535 & 0.3799 & 0.3946 & 0.3730 & 0.9147 & 0.4122 & 0.6148 & 0.6840 \\
+    & & yeast6 & 0.9778 & 0.5101 & 0.6286 & 0.5539 & 0.9147 & 0.5500 & 0.7704 & 0.8074 \\
+    \cmidrule{2-11}
+    & \multirow{4}{*}{RUSBoost} 
+    & yeast1 & 0.7156 & 0.5171 & 0.6085 & 0.5498 & 0.7558 & 0.5147 & 0.6728 & 0.6839 \\
+    & & yeast3 & 0.9003 & 0.5325 & 0.9203 & 0.6731 & 0.9348 & 0.5969 & 0.9090 & 0.9090 \\
+    & & yeast4 & 0.8255 & 0.1469 & 0.8418 & 0.2499 & 0.8847 & 0.1846 & 0.8321 & 0.8333 \\
+    & & yeast6 & 0.7864 & 0.0856 & 0.8286 & 0.1548 & 0.8265 & 0.0983 & 0.8009 & 0.8070 \\
+    \cmidrule{2-11}
+    & \multirow{4}{*}{RHSBoost} 
+    & yeast1 & 0.7507 & 0.5613 & 0.6456 & 0.5993 & 0.7910 & 0.5896 & 0.7148 & 0.7195 \\
+    & & yeast3 & 0.9191 & 0.5901 & 0.9015 & 0.7115 & 0.9546 & 0.6852 & 0.9111 & 0.9114 \\
+    & & yeast4 & 0.8396 & 0.1545 & 0.8036 & 0.2584 & 0.8824 & 0.1807 & 0.8210 & 0.8223 \\
+    & & yeast6 & 0.8679 & 0.1359 & 0.8571 & 0.2340 & 0.8675 & 0.1328 & 0.8580 & 0.8627 \\
+    \cmidrule{2-11}
+    & \multirow{4}{*}{SUBoost} 
+    & yeast1 & 0.7224 & 0.5297 & 0.5408 & 0.5277 & 0.7571 & 0.5586 & 0.6512 & 0.6685 \\
+    & & yeast3 & 0.9394 & 0.7743 & 0.6267 & 0.6877 & 0.9548 & 0.7286 & 0.7778 & 0.8024 \\
+    & & yeast4 & 0.9589 & 0.4417 & 0.2746 & 0.3146 & 0.8879 & 0.3961 & 0.4581 & 0.6289 \\
+    & & yeast6 & 0.9771 & 0.5343 & 0.4286 & 0.4462 & 0.8706 & 0.4566 & 0.6227 & 0.7095 \\
+    \cmidrule{2-11}
+    & \multirow{4}{*}{SMOTECSL} 
+    & yeast1 & 0.5492 & 0.3855 & 0.9416 & 0.5470 & 0.7931 & 0.5956 & 0.6053 & 0.6656 \\
+    & & yeast3 & 0.8538 & 0.4260 & 0.9510 & 0.5883 & 0.9688 & 0.8093 & 0.8947 & 0.8964 \\
+    & & yeast4 & 0.6874 & 0.0877 & 0.8618 & 0.1591 & 0.8535 & 0.1488 & 0.7648 & 0.7715 \\
+    & & yeast6 & 0.7540 & 0.0865 & 0.9429 & 0.1573 & 0.9100 & 0.3574 & 0.8363 & 0.8462 \\
+    \bottomrule
+  \end{tabular}
+\end{table*}
 
 \end{document}
 \endinput
