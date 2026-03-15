@@ -1,13 +1,13 @@
 # Fdb version 4
-["bibtex text"] 1773553991.83518 "text.aux" "text.bbl" "text" 1773553994.34511 0
+["bibtex text"] 1773565789.93216 "text.aux" "text.bbl" "text" 1773565792.43028 0
   "./ACM-Reference-Format.bst" 1773491849 96784 12e0ced1522ea2bfa9b2fb12855c7e9e ""
   "./sample-base.bib" 1773491849 50853 df98e6764e8a8591af3f06cf54d52d06 ""
-  "text.aux" 1773553993 13409 91cfbbf9783e54f4a147963f58e9625b "pdflatex"
+  "text.aux" 1773565791 16311 aa1790beb97db52dd7bb5775ab9c9faf "pdflatex"
   (generated)
   "text.bbl"
   "text.blg"
   (rewritten before read)
-["pdflatex"] 1773553992.14974 "c:/Users/peng1/Desktop/Lucy/中央大學/碩一下/資科/A1-Literature-survey/Latex/text.tex" "text.pdf" "text" 1773553994.34561 0
+["pdflatex"] 1773565790.12896 "c:/Users/peng1/Desktop/Lucy/中央大學/碩一下/資科/A1-Literature-survey/Latex/text.tex" "text.pdf" "text" 1773565792.43077 0
   "C:/Users/peng1/AppData/Local/MiKTeX/fonts/map/pdftex/pdftex.map" 1773541703 186066 c797610d3c7aadc509276bf4bcd8a24b ""
   "C:/Users/peng1/AppData/Local/MiKTeX/miktex/data/le/pdftex/pdflatex.fmt" 1773390987 13333849 021872d29036dc28b9a78cd20a6821b0 ""
   "C:/Users/peng1/AppData/Local/Programs/MiKTeX/fonts/enc/dvips/inconsolata/i4-t1-4.enc" 1557958141 7693 0f2dce6d313c82989ec3a67fc24df2a0 ""
@@ -44,11 +44,9 @@
   "C:/Users/peng1/AppData/Local/Programs/MiKTeX/fonts/tfm/public/libertine/LinLibertineTI-tlf-t1--base.tfm" 1732620802 1932 54655639067fe21ae3b23b77173351a5 ""
   "C:/Users/peng1/AppData/Local/Programs/MiKTeX/fonts/tfm/public/libertine/LinLibertineTI-tlf-t1.tfm" 1732620802 19920 63bb3db95807ffe45b0900d104896325 ""
   "C:/Users/peng1/AppData/Local/Programs/MiKTeX/fonts/tfm/public/newtx/LibertineMathMI.tfm" 1736607165 1552 f91250a4f6e3f34d48dfc8f34aabc764 ""
-  "C:/Users/peng1/AppData/Local/Programs/MiKTeX/fonts/tfm/public/newtx/LibertineMathMI5.tfm" 1736607165 1604 830e0bb815cb4091c5b6632428e4b333 ""
   "C:/Users/peng1/AppData/Local/Programs/MiKTeX/fonts/tfm/public/newtx/LibertineMathMI7.tfm" 1736607166 1576 8b8bb19fb7739a0ce82c1377e0e950fe ""
   "C:/Users/peng1/AppData/Local/Programs/MiKTeX/fonts/tfm/public/newtx/LibertineMathRM.tfm" 1736607165 768 5d62e4cbf373f8d0d7ef7daa7a6f7a5d ""
   "C:/Users/peng1/AppData/Local/Programs/MiKTeX/fonts/tfm/public/newtx/NewTXMI.tfm" 1736607165 1408 ef71a9098da4d5a1a85b5920860b6731 ""
-  "C:/Users/peng1/AppData/Local/Programs/MiKTeX/fonts/tfm/public/newtx/NewTXMI5.tfm" 1736607165 1608 3b4f5db1bef3c1dab5d5687ad287108b ""
   "C:/Users/peng1/AppData/Local/Programs/MiKTeX/fonts/tfm/public/newtx/NewTXMI7.tfm" 1736607165 1556 4df22ac3e5cc03ff0898d83d8817c6cf ""
   "C:/Users/peng1/AppData/Local/Programs/MiKTeX/fonts/tfm/public/newtx/ntxexa.tfm" 1736607165 760 e8ec875a87aa119f1af7ea4be48da9e8 ""
   "C:/Users/peng1/AppData/Local/Programs/MiKTeX/fonts/tfm/public/newtx/ntxexx.tfm" 1736607165 1788 252bc928adbd02cba8c68f0fccd62f6c ""
@@ -76,7 +74,6 @@
   "C:/Users/peng1/AppData/Local/Programs/MiKTeX/fonts/type1/public/libertine/LinLibertineTB.pfb" 1497089889 538965 c5f7f11a7c6a7978c8500457bfcd2138 ""
   "C:/Users/peng1/AppData/Local/Programs/MiKTeX/fonts/type1/public/libertine/LinLibertineTI.pfb" 1497089889 490980 a252c644e887b4e2fc664c31f1402303 ""
   "C:/Users/peng1/AppData/Local/Programs/MiKTeX/fonts/type1/public/newtx/LibertineMathMI.pfb" 1736607166 35829 e5b81ebdef873b4e07e10dde7ac213f2 ""
-  "C:/Users/peng1/AppData/Local/Programs/MiKTeX/fonts/type1/public/newtx/LibertineMathMI5.pfb" 1736607166 36138 54cca9a189ecac91365757cd31373770 ""
   "C:/Users/peng1/AppData/Local/Programs/MiKTeX/fonts/type1/public/newtx/LibertineMathMI7.pfb" 1736607166 36894 5faa3d8244e2228f0a366635240ed4d4 ""
   "C:/Users/peng1/AppData/Local/Programs/MiKTeX/fonts/type1/public/newtx/LibertineMathRM.pfb" 1736607166 17941 ddba6afdead1586dc42d18763749eddd ""
   "C:/Users/peng1/AppData/Local/Programs/MiKTeX/fonts/type1/public/newtx/NewTXMI.pfb" 1736607166 32409 70669e52221234457749adcf327540bc ""
@@ -95,7 +92,6 @@
   "C:/Users/peng1/AppData/Local/Programs/MiKTeX/fonts/vf/public/newtx/ntxsy.vf" 1736607166 1792 7cf99effbd74f7851ca7683a6d12b685 ""
   "C:/Users/peng1/AppData/Local/Programs/MiKTeX/fonts/vf/public/newtx/ntxsy7.vf" 1736607166 1940 bf4bac1135a7513fb45cfd9280176019 ""
   "C:/Users/peng1/AppData/Local/Programs/MiKTeX/fonts/vf/public/newtx/nxlmi.vf" 1736607166 2744 3e5ba39e1559219ae379b7645e2f9524 ""
-  "C:/Users/peng1/AppData/Local/Programs/MiKTeX/fonts/vf/public/newtx/nxlmi5.vf" 1736607166 2740 c8b5f27ae076b0aa71375fdbd19167ca ""
   "C:/Users/peng1/AppData/Local/Programs/MiKTeX/fonts/vf/public/newtx/nxlmi7.vf" 1736607166 2740 2574d1692bc06933fa73eb18c93daedb ""
   "C:/Users/peng1/AppData/Local/Programs/MiKTeX/fonts/vf/public/newtx/nxlmia.vf" 1736607166 2252 bb868e02d533d88cf043058750d87c0b ""
   "C:/Users/peng1/AppData/Local/Programs/MiKTeX/tex/context/base/mkii/supp-pdf.mkii" 1580390158 71627 94eb9990bed73c364d7f53f960cc8c5b ""
@@ -317,12 +313,12 @@
   "C:/Users/peng1/AppData/Local/Programs/MiKTeX/tex/latex/xkeyval/xkeyval.sty" 1656236919 4937 4ce600ce9bd4ec84d0250eb6892fcf4f ""
   "C:/Users/peng1/AppData/Local/Programs/MiKTeX/tex/latex/xstring/xstring.sty" 1693735632 123 a302f2c651a95033260db60e51527ae8 ""
   "acmart.cls" 1773491849 126055 54cc4edcc7b9cb1bf0a23c528626957c ""
-  "c:/Users/peng1/Desktop/Lucy/中央大學/碩一下/資科/A1-Literature-survey/Latex/text.tex" 1773553828 60095 a8c875c524fff78dcfaa53f63d621e07 ""
-  "comment.cut" 1773553993 64 0754424945249fbfae64d8991d811e64 "pdflatex"
-  "text.aux" 1773553993 13409 91cfbbf9783e54f4a147963f58e9625b "pdflatex"
-  "text.bbl" 1773553992 21414 2808db0ca73a5f2cec1ca649c2a1eb15 "bibtex text"
-  "text.out" 1773553993 7003 61ffb3fb6d30c32fe5f0cd85210709f3 "pdflatex"
-  "text.tex" 1773553828 60095 a8c875c524fff78dcfaa53f63d621e07 ""
+  "c:/Users/peng1/Desktop/Lucy/中央大學/碩一下/資科/A1-Literature-survey/Latex/text.tex" 1773565727 72861 13d82ed80dfd16332fb7b32f504179e3 ""
+  "comment.cut" 1773565791 64 0754424945249fbfae64d8991d811e64 "pdflatex"
+  "text.aux" 1773565791 16311 aa1790beb97db52dd7bb5775ab9c9faf "pdflatex"
+  "text.bbl" 1773565790 21414 2808db0ca73a5f2cec1ca649c2a1eb15 "bibtex text"
+  "text.out" 1773565791 7003 61ffb3fb6d30c32fe5f0cd85210709f3 "pdflatex"
+  "text.tex" 1773565727 72861 13d82ed80dfd16332fb7b32f504179e3 ""
   (generated)
   "comment.cut"
   "text.aux"

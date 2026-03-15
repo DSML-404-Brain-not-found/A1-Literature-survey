@@ -1,0 +1,5 @@
+	yeast1	yeast3	yeast4	yeast6
+original	0.5246	0.8285	0	0
+oversampling	0.7266	0.9153	0.7965	0.887
+SMOTE	0.7173	0.9086	0.798	0.8606
+SMOTEENN	0.6891	0.9231	0.8029	0.8724

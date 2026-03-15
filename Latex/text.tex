@@ -53,6 +53,13 @@
 \usepackage{multirow}
 \usepackage{pgfplots}
 \pgfplotsset{compat=1.18}
+\definecolor{RoyalBlue}{RGB}{0, 70, 156}
+\definecolor{ScholarRed}{RGB}{160, 0, 0}
+\definecolor{ScholarGold}{RGB}{212, 160, 0}
+\definecolor{ScholarGreen}{RGB}{0, 105, 60}
+\definecolor{ScholarPurple}{RGB}{100, 45, 145}
+\definecolor{ScholarTeal}{RGB}{0, 120, 120}
+\definecolor{ScholarOrange}{RGB}{200, 90, 0}
 
 %% Rights management information.  This information is sent to you
 %% when you complete the rights form.  These commands have SAMPLE
@@ -1072,9 +1079,251 @@ In this section, we provide a detailed analysis of the experimental results, cat
 \end{table*}
 
 \subsection{Data Level Methods}
-Data-level methods focus on reslicing the training set to achieve a more balanced distribution. As shown in the summary table, SMOTE and its variants (SMOTE-ENN) generally improve recall for the minority class at the expense of precision in mild to moderate imbalance cases.
+Data-level methods focus on reslicing the training set to achieve a more balanced distribution. This section presenting the G-Mean performance for individual classifiers and visual analysis of the results.
 
-% Data level separate table removed.
+\begin{table*}[t]
+  \centering
+  \caption{[Data Level] Summary of Experimental Results (Data-Level Methods)}
+  \label{tab:datalevel_summary}
+  \scriptsize
+  \setlength{\tabcolsep}{3.5pt}
+  \begin{tabular}{llccccccccc}
+    \toprule
+    \textbf{Method} & \textbf{Dataset} & \textbf{Model} & \textbf{Acc.} & \textbf{Prec.} & \textbf{Rec.} & \textbf{F1} & \textbf{AUC} & \textbf{PR-AUC} & \textbf{G-Mean} & \textbf{BAcc} \\
+    \midrule
+    \multirow{12}{*}{Original} & \multirow{3}{*}{yeast1} & KNN & 0.7392 & 0.5623 & 0.4360 & 0.4904 & 0.7550 & 0.5083 & 0.6120 & 0.6492 \\
+    & & RF & 0.7783 & 0.6650 & 0.4800 & 0.5553 & 0.8133 & 0.6435 & 0.6561 & 0.6899 \\
+    & & SVM & 0.7568 & 0.6956 & 0.2910 & 0.4092 & 0.7961 & 0.6142 & 0.5246 & 0.6187 \\
+    \cmidrule{2-11}
+    & \multirow{3}{*}{yeast3} & KNN & 0.9468 & 0.8119 & 0.6750 & 0.7362 & 0.9249 & 0.7188 & 0.8133 & 0.8277 \\
+    & & RF & 0.9447 & 0.7870 & 0.6800 & 0.7275 & 0.9706 & 0.8316 & 0.8134 & 0.8289 \\
+    & & SVM & 0.9515 & 0.8330 & 0.6990 & 0.7598 & 0.9755 & 0.8268 & 0.8285 & 0.8408 \\
+    \cmidrule{2-11}
+    & \multirow{3}{*}{yeast4} & KNN & 0.9650 & 0.4667 & 0.1550 & 0.2147 & 0.7944 & 0.2928 & 0.3451 & 0.5741 \\
+    & & RF & 0.9677 & 0.6000 & 0.1360 & 0.2062 & 0.9206 & 0.4073 & 0.3206 & 0.5668 \\
+    & & SVM & 0.9656 & 0.0000 & 0.0000 & 0.0000 & 0.8532 & 0.4215 & 0.0000 & 0.5000 \\
+    \cmidrule{2-11}
+    & \multirow{3}{*}{yeast6} & KNN & 0.9798 & 0.6000 & 0.4860 & 0.5281 & 0.8997 & 0.5167 & 0.6801 & 0.7387 \\
+    & & RF & 0.9831 & 0.7667 & 0.4000 & 0.5054 & 0.8997 & 0.5629 & 0.6088 & 0.6986 \\
+    & & SVM & 0.9764 & 0.0000 & 0.0000 & 0.0000 & 0.9003 & 0.6173 & 0.0000 & 0.5000 \\
+    \midrule
+    \multirow{12}{*}{Oversampling} & \multirow{3}{*}{yeast1} & KNN & 0.6894 & 0.4727 & 0.6573 & 0.5498 & 0.7382 & 0.4774 & 0.6791 & 0.6799 \\
+    & & RF & 0.7763 & 0.6244 & 0.5734 & 0.5964 & 0.8120 & 0.6383 & 0.7007 & 0.7161 \\
+    & & SVM & 0.7183 & 0.5098 & 0.7481 & 0.6061 & 0.8003 & 0.6054 & 0.7266 & 0.7271 \\
+    \cmidrule{2-11}
+    & \multirow{3}{*}{yeast3} & KNN & 0.9131 & 0.5730 & 0.8525 & 0.6838 & 0.9151 & 0.6105 & 0.8855 & 0.8865 \\
+    & & RF & 0.9488 & 0.7556 & 0.7917 & 0.7729 & 0.9666 & 0.8332 & 0.8752 & 0.8799 \\
+    & & SVM & 0.9259 & 0.6151 & 0.9023 & 0.7303 & 0.9709 & 0.8153 & 0.9153 & 0.9156 \\
+    \cmidrule{2-11}
+    & \multirow{3}{*}{yeast4} & KNN & 0.9360 & 0.2700 & 0.5491 & 0.3585 & 0.7934 & 0.2407 & 0.7068 & 0.7494 \\
+    & & RF & 0.9663 & 0.5444 & 0.1964 & 0.2624 & 0.9276 & 0.4124 & 0.3781 & 0.5950 \\
+    & & SVM & 0.8760 & 0.1779 & 0.7236 & 0.2856 & 0.8987 & 0.4346 & 0.7965 & 0.8025 \\
+    \cmidrule{2-11}
+    & \multirow{3}{*}{yeast6} & KNN & 0.9589 & 0.3262 & 0.7143 & 0.4477 & 0.8954 & 0.3599 & 0.8233 & 0.8395 \\
+    & & RF & 0.9805 & 0.5993 & 0.4857 & 0.5177 & 0.8890 & 0.5812 & 0.6752 & 0.7391 \\
+    & & SVM & 0.9218 & 0.2134 & 0.8571 & 0.3411 & 0.9397 & 0.5274 & 0.8870 & 0.8903 \\
+    \midrule
+    \multirow{12}{*}{SMOTE} & \multirow{3}{*}{yeast1} & KNN & 0.6934 & 0.4783 & 0.6691 & 0.5575 & 0.7447 & 0.4872 & 0.6855 & 0.6862 \\
+    & & RF & 0.7642 & 0.5911 & 0.6013 & 0.5952 & 0.8043 & 0.6297 & 0.7059 & 0.7158 \\
+    & & SVM & 0.7028 & 0.4932 & 0.7575 & 0.5965 & 0.8011 & 0.6070 & 0.7173 & 0.7190 \\
+    \cmidrule{2-11}
+    & \multirow{3}{*}{yeast3} & KNN & 0.9164 & 0.5817 & 0.8648 & 0.6944 & 0.9330 & 0.6695 & 0.8929 & 0.8938 \\
+    & & RF & 0.9481 & 0.7363 & 0.8223 & 0.7766 & 0.9666 & 0.8186 & 0.8898 & 0.8930 \\
+    & & SVM & 0.9340 & 0.6502 & 0.8780 & 0.7463 & 0.9715 & 0.8111 & 0.9086 & 0.9095 \\
+    \cmidrule{2-11}
+    & \multirow{3}{*}{yeast4} & KNN & 0.9036 & 0.2039 & 0.6473 & 0.3077 & 0.8303 & 0.2104 & 0.7571 & 0.7800 \\
+    & & RF & 0.9522 & 0.3516 & 0.4745 & 0.3938 & 0.9107 & 0.3857 & 0.6667 & 0.7219 \\
+    & & SVM & 0.8787 & 0.1839 & 0.7236 & 0.2929 & 0.8993 & 0.4619 & 0.7980 & 0.8039 \\
+    \cmidrule{2-11}
+    & \multirow{3}{*}{yeast6} & KNN & 0.9265 & 0.2144 & 0.7714 & 0.3344 & 0.9093 & 0.3032 & 0.8434 & 0.8509 \\
+    & & RF & 0.9778 & 0.5167 & 0.6286 & 0.5573 & 0.9183 & 0.5391 & 0.7705 & 0.8074 \\
+    & & SVM & 0.9313 & 0.2293 & 0.8000 & 0.3549 & 0.9444 & 0.5942 & 0.8606 & 0.8672 \\
+    \midrule
+    \multirow{12}{*}{SMOTE+ENN} & \multirow{3}{*}{yeast1} & KNN & 0.6671 & 0.4570 & 0.8042 & 0.5828 & 0.7481 & 0.4748 & 0.7011 & 0.7078 \\
+    & & RF & 0.7109 & 0.5007 & 0.7224 & 0.5903 & 0.7973 & 0.6146 & 0.7130 & 0.7143 \\
+    & & SVM & 0.6422 & 0.4392 & 0.8577 & 0.5807 & 0.7954 & 0.6105 & 0.6891 & 0.7061 \\
+    \cmidrule{2-11}
+    & \multirow{3}{*}{yeast3} & KNN & 0.9003 & 0.5288 & 0.8771 & 0.6590 & 0.9222 & 0.6136 & 0.8897 & 0.8901 \\
+    & & RF & 0.9394 & 0.6726 & 0.8837 & 0.7628 & 0.9666 & 0.8096 & 0.9141 & 0.9150 \\
+    & & SVM & 0.9252 & 0.6070 & 0.9206 & 0.7312 & 0.9712 & 0.8083 & 0.9231 & 0.9232 \\
+    \cmidrule{2-11}
+    & \multirow{3}{*}{yeast4} & KNN & 0.8760 & 0.1826 & 0.7455 & 0.2929 & 0.8424 & 0.1908 & 0.8071 & 0.8131 \\
+    & & RF & 0.9205 & 0.2305 & 0.5691 & 0.3253 & 0.9268 & 0.3933 & 0.7208 & 0.7511 \\
+    & & SVM & 0.8497 & 0.1570 & 0.7618 & 0.2600 & 0.8951 & 0.4273 & 0.8029 & 0.8073 \\
+    \cmidrule{2-11}
+    & \multirow{3}{*}{yeast6} & KNN & 0.9036 & 0.1788 & 0.8286 & 0.2925 & 0.9077 & 0.2530 & 0.8624 & 0.8670 \\
+    & & RF & 0.9676 & 0.3899 & 0.6857 & 0.4941 & 0.9457 & 0.5976 & 0.8056 & 0.8301 \\
+    & & SVM & 0.9205 & 0.2073 & 0.8286 & 0.3305 & 0.9439 & 0.6119 & 0.8724 & 0.8756 \\
+    \bottomrule
+  \end{tabular}
+\end{table*}
+
+\subsubsection{Experimental Tables: Data-Level Results}
+\begin{table}[h]
+  \centering
+  \caption{[Data Level] G-Mean Performance Comparison for KNN Classifier}
+  \label{tab:knn_gmean}
+  \small
+  \begin{tabular}{lcccc}
+    \toprule
+    Method & Yeast1 & Yeast3 & Yeast4 & Yeast6 \\
+    \midrule
+    Original & 0.6120 & 0.8133 & 0.3451 & 0.6801 \\
+    Oversampling & 0.6791 & 0.8855 & 0.7068 & 0.8233 \\
+    SMOTE & 0.6855 & 0.8929 & 0.7571 & 0.8434 \\
+    SMOTE+ENN & 0.7011 & 0.8897 & 0.8071 & 0.8624 \\
+    \bottomrule
+  \end{tabular}
+\end{table}
+
+\begin{table}[h]
+  \centering
+  \caption{[Data Level] G-Mean Performance Comparison for Random Forest Classifier}
+  \label{tab:rf_gmean}
+  \small
+  \begin{tabular}{lcccc}
+    \toprule
+    Method & Yeast1 & Yeast3 & Yeast4 & Yeast6 \\
+    \midrule
+    Original & 0.6561 & 0.8134 & 0.3206 & 0.6088 \\
+    Oversampling & 0.7007 & 0.8752 & 0.3781 & 0.6752 \\
+    SMOTE & 0.7059 & 0.8898 & 0.6667 & 0.7705 \\
+    SMOTE+ENN & 0.7130 & 0.9141 & 0.7208 & 0.8056 \\
+    \bottomrule
+  \end{tabular}
+\end{table}
+
+\begin{table}[h]
+  \centering
+  \caption{[Data Level] G-Mean Performance Comparison for SVM Classifier}
+  \label{tab:svm_gmean}
+  \small
+  \begin{tabular}{lcccc}
+    \toprule
+    Method & Yeast1 & Yeast3 & Yeast4 & Yeast6 \\
+    \midrule
+    Original & 0.5246 & 0.8285 & 0.0000 & 0.0000 \\
+    Oversampling & 0.7266 & 0.9153 & 0.7965 & 0.8870 \\
+    SMOTE & 0.7173 & 0.9086 & 0.7980 & 0.8606 \\
+    SMOTE+ENN & 0.6891 & 0.9231 & 0.8029 & 0.8724 \\
+    \bottomrule
+  \end{tabular}
+\end{table}
+
+\subsubsection{Visual Analysis of Data-Level Methods}
+This subcategory compares the G-mean performance across multiple classifiers (KNN, Random Forest, SVM) using different data-resampling techniques. Figures~\ref{fig:yeast1_gmean} through \ref{fig:yeast6_gmean} illustrate the impact of oversampling, SMOTE, and SMOTE+ENN.
+
+\begin{figure}[h]
+  \centering
+  \begin{tikzpicture}
+    \begin{axis}[
+        ybar,
+        height=6cm,
+        width=0.48\textwidth,
+        bar width=6pt,
+        ylabel={G-Mean},
+        symbolic x coords={original,oversampling,SMOTE,SMOTE+ENN},
+        xtick=data,
+        ymin=0, ymax=1.0,
+        legend style={at={(0.5,-0.2)}, anchor=north, legend columns=-1, font=\tiny, draw=none, /tikz/every even column/.append style={column sep=5pt}},
+        legend image code/.code={\draw[#1] (0cm,-0.1cm) rectangle (0.15cm,0.1cm);},
+        ymajorgrids=true,
+        grid style={dashed,gray!30},
+        title={Data Level Performance: Yeast1},
+      ]
+      \addplot+ [fill=RoyalBlue] coordinates {(original,0.6120) (oversampling,0.6791) (SMOTE,0.6855) (SMOTE+ENN,0.7011)};
+      \addplot+ [fill=ScholarRed] coordinates {(original,0.6561) (oversampling,0.7007) (SMOTE,0.7059) (SMOTE+ENN,0.7130)};
+      \addplot+ [fill=ScholarGold] coordinates {(original,0.5246) (oversampling,0.7266) (SMOTE,0.7173) (SMOTE+ENN,0.6891)};
+      \legend{KNN, RandomForest, SVM}
+    \end{axis}
+  \end{tikzpicture}
+  \caption{[Data Level] G-Mean performance comparison on Yeast1 dataset.}
+  \label{fig:yeast1_gmean}
+\end{figure}
+
+\begin{figure}[h]
+  \centering
+  \begin{tikzpicture}
+    \begin{axis}[
+        ybar,
+        height=6cm,
+        width=0.48\textwidth,
+        bar width=6pt,
+        ylabel={G-Mean},
+        symbolic x coords={original,oversampling,SMOTE,SMOTE+ENN},
+        xtick=data,
+        ymin=0, ymax=1.0,
+        legend style={at={(0.5,-0.2)}, anchor=north, legend columns=-1, font=\tiny, draw=none, /tikz/every even column/.append style={column sep=5pt}},
+        legend image code/.code={\draw[#1] (0cm,-0.1cm) rectangle (0.15cm,0.1cm);},
+        ymajorgrids=true,
+        grid style={dashed,gray!30},
+        title={Data Level Performance: Yeast3},
+      ]
+      \addplot+ [fill=RoyalBlue] coordinates {(original,0.8133) (oversampling,0.8855) (SMOTE,0.8929) (SMOTE+ENN,0.8897)};
+      \addplot+ [fill=ScholarRed] coordinates {(original,0.8134) (oversampling,0.8752) (SMOTE,0.8898) (SMOTE+ENN,0.9141)};
+      \addplot+ [fill=ScholarGold] coordinates {(original,0.8285) (oversampling,0.9153) (SMOTE,0.9086) (SMOTE+ENN,0.9231)};
+      \legend{KNN, RandomForest, SVM}
+    \end{axis}
+  \end{tikzpicture}
+  \caption{[Data Level] G-Mean performance comparison on Yeast3 dataset.}
+  \label{fig:yeast3_gmean}
+\end{figure}
+
+\begin{figure}[h]
+  \centering
+  \begin{tikzpicture}
+    \begin{axis}[
+        ybar,
+        height=6cm,
+        width=0.48\textwidth,
+        bar width=6pt,
+        ylabel={G-Mean},
+        symbolic x coords={original,oversampling,SMOTE,SMOTE+ENN},
+        xtick=data,
+        ymin=0, ymax=1.0,
+        legend style={at={(0.5,-0.2)}, anchor=north, legend columns=-1, font=\tiny, draw=none, /tikz/every even column/.append style={column sep=5pt}},
+        legend image code/.code={\draw[#1] (0cm,-0.1cm) rectangle (0.15cm,0.1cm);},
+        ymajorgrids=true,
+        grid style={dashed,gray!30},
+        title={Data Level Performance: Yeast4},
+      ]
+      \addplot+ [fill=RoyalBlue] coordinates {(original,0.3451) (oversampling,0.7068) (SMOTE,0.7571) (SMOTE+ENN,0.8071)};
+      \addplot+ [fill=ScholarRed] coordinates {(original,0.3206) (oversampling,0.3781) (SMOTE,0.6667) (SMOTE+ENN,0.7208)};
+      \addplot+ [fill=ScholarGold] coordinates {(original,0.0000) (oversampling,0.7965) (SMOTE,0.7980) (SMOTE+ENN,0.8029)};
+      \legend{KNN, RandomForest, SVM}
+    \end{axis}
+  \end{tikzpicture}
+  \caption{[Data Level] G-Mean performance comparison on Yeast4 dataset.}
+  \label{fig:yeast4_gmean}
+\end{figure}
+
+\begin{figure}[h]
+  \centering
+  \begin{tikzpicture}
+    \begin{axis}[
+        ybar,
+        height=6cm,
+        width=0.48\textwidth,
+        bar width=6pt,
+        ylabel={G-Mean},
+        symbolic x coords={original,oversampling,SMOTE,SMOTE+ENN},
+        xtick=data,
+        ymin=0, ymax=1.0,
+        legend style={at={(0.5,-0.2)}, anchor=north, legend columns=-1, font=\tiny, draw=none, /tikz/every even column/.append style={column sep=5pt}},
+        legend image code/.code={\draw[#1] (0cm,-0.1cm) rectangle (0.15cm,0.1cm);},
+        ymajorgrids=true,
+        grid style={dashed,gray!30},
+        title={Data Level Performance: Yeast6},
+      ]
+      \addplot+ [fill=RoyalBlue] coordinates {(original,0.6801) (oversampling,0.8233) (SMOTE,0.8434) (SMOTE+ENN,0.8624)};
+      \addplot+ [fill=ScholarRed] coordinates {(original,0.6088) (oversampling,0.6752) (SMOTE,0.7705) (SMOTE+ENN,0.8056)};
+      \addplot+ [fill=ScholarGold] coordinates {(original,0.0000) (oversampling,0.8870) (SMOTE,0.8606) (SMOTE+ENN,0.8724)};
+      \legend{KNN, RandomForest, SVM}
+    \end{axis}
+  \end{tikzpicture}
+  \caption{[Data Level] G-Mean performance comparison on Yeast6 dataset.}
+  \label{fig:yeast6_gmean}
+\end{figure}
 
 \subsection{Algorithm Level Methods}
 Algorithm-level methods, such as Cost-Sensitive learning combined with ensemble classifiers (Random Forest, XGBoost, AdaBoost), show higher robustness across varying imbalance ratios by directly internalizing the cost of misclassifying minority instances.
@@ -1097,19 +1346,18 @@ Figure~\ref{fig:algorithm_recall} presents a comparison of Recall scores between
         symbolic x coords={yeast1,yeast3,yeast4,yeast6},
         xtick=data,
         ymin=0, ymax=1.0,
-        legend style={at={(0.5,-0.2)}, anchor=north, legend columns=-1, font=\tiny},
+        legend style={at={(0.5,-0.2)}, anchor=north, legend columns=-1, font=\tiny, draw=none, /tikz/every even column/.append style={column sep=5pt}},
+        legend image code/.code={\draw[#1] (0cm,-0.1cm) rectangle (0.15cm,0.1cm);},
         ymajorgrids=true,
         grid style={dashed,gray!30},
-        nodes near coords,
-        nodes near coords style={font=\tiny, /pgf/number format/fixed, /pgf/number format/precision=2},
         title={Recall Performance: RF vs. Weighted RF},
       ]
-      \addplot+ [fill=blue!30] coordinates {(yeast1,0.480) (yeast3,0.681) (yeast4,0.136) (yeast6,0.400)};
-      \addplot+ [fill=orange!30] coordinates {(yeast1,0.483) (yeast3,0.699) (yeast4,0.116) (yeast6,0.429)};
+      \addplot+ [fill=RoyalBlue] coordinates {(yeast1,0.480) (yeast3,0.681) (yeast4,0.136) (yeast6,0.400)};
+      \addplot+ [fill=ScholarOrange] coordinates {(yeast1,0.483) (yeast3,0.699) (yeast4,0.116) (yeast6,0.429)};
       \legend{Random Forest, Weighted Random Forest}
     \end{axis}
   \end{tikzpicture}
-  \caption{Recall comparison of standard and weighted Random Forest.}
+  \caption{[Algorithm Level] Recall comparison of standard and weighted Random Forest.}
   \label{fig:algorithm_recall}
 \end{figure}
 
@@ -1129,23 +1377,22 @@ Furthermore, Table~\ref{tab:comprehensive_summary} and Figure~\ref{fig:adaboost_
             enlarge x limits=0.35,
             ymajorgrids=true,
             grid style=dashed,
-            legend style={at={(0.5,-0.15)}, anchor=north, legend columns=2, font=\tiny, draw=none},
-            nodes near coords,
-            every node near coord/.append style={font=\tiny\bfseries, /pgf/number format/fixed, /pgf/number format/precision=3}
+            legend style={at={(0.5,-0.15)}, anchor=north, legend columns=2, font=\tiny, draw=none, /tikz/every even column/.append style={column sep=5pt}},
+            legend image code/.code={\draw[#1] (0cm,0.1cm) -- (0.5cm,0.1cm); \fill[#1] (0.25cm,0.1cm) circle (2pt);},
         ]
-        \addplot[color=blue!80, mark=*, mark options={scale=1.2}, very thick, nodes near coords align={above}] coordinates {
+        \addplot[color=RoyalBlue, mark=*, mark options={scale=1.2}, very thick] coordinates {
             (Baseline AdaBoost, 0.469)
             (Cost-Sensitive AdaBoost, 0.789)
         };
         \addlegendentry{Recall}
-        \addplot[color=red!80, mark=square*, mark options={scale=1.2}, very thick, nodes near coords align={below}] coordinates {
+        \addplot[color=ScholarRed, mark=square*, mark options={scale=1.2}, very thick] coordinates {
             (Baseline AdaBoost, 0.617)
             (Cost-Sensitive AdaBoost, 0.334)
         };
         \addlegendentry{Precision}
         \end{axis}
     \end{tikzpicture}
-    \caption{Dual-metric line chart illustrating the trade-off in AdaBoost.}
+    \caption{[Algorithm Level] Dual-metric line chart illustrating the trade-off in AdaBoost.}
     \label{fig:adaboost_tradeoff}
 \end{figure}
 
@@ -1170,18 +1417,18 @@ Finally, the radar chart in Figure~\ref{fig:xgboost_radar} illustrates the balan
         \coordinate (C_Precision) at (0:0.562);
         \coordinate (C_F1)        at (270:0.568);
         \coordinate (C_GMean)     at (180:0.729);
-        \draw[thick, blue!80, fill=blue!20, fill opacity=0.4] (B_Recall) -- (B_Precision) -- (B_F1) -- (B_GMean) -- cycle;
-        \foreach \p in {B_Recall, B_Precision, B_F1, B_GMean} { \fill[blue!80] (\p) circle (0.5pt); }
-        \draw[thick, red!80, fill=red!20, fill opacity=0.4] (C_Recall) -- (C_Precision) -- (C_F1) -- (C_GMean) -- cycle;
-        \foreach \p in {C_Recall, C_Precision, C_F1, C_GMean} { \fill[red!80] (\p) circle (0.5pt); }
+        \draw[thick, RoyalBlue, fill=RoyalBlue!20, fill opacity=0.4] (B_Recall) -- (B_Precision) -- (B_F1) -- (B_GMean) -- cycle;
+        \foreach \p in {B_Recall, B_Precision, B_F1, B_GMean} { \fill[RoyalBlue] (\p) circle (0.5pt); }
+        \draw[thick, ScholarRed, fill=ScholarRed!20, fill opacity=0.4] (C_Recall) -- (C_Precision) -- (C_F1) -- (C_GMean) -- cycle;
+        \foreach \p in {C_Recall, C_Precision, C_F1, C_GMean} { \fill[ScholarRed] (\p) circle (0.5pt); }
         \begin{scope}[xshift=1.3cm, yshift=0.8cm]
-            \draw[thick, blue!80, fill=blue!20, fill opacity=0.6] (0,0) rectangle (0.1, 0.07);
+            \draw[thick, RoyalBlue, fill=RoyalBlue!20, fill opacity=0.6] (0,0) rectangle (0.1, 0.07);
             \node[right, font=\tiny] at (0.12, 0.035) {Base};
-            \draw[thick, red!80, fill=red!20, fill opacity=0.6] (0,-0.12) rectangle (0.1, -0.05);
+            \draw[thick, ScholarRed, fill=ScholarRed!20, fill opacity=0.6] (0,-0.12) rectangle (0.1, -0.05);
             \node[right, font=\tiny] at (0.12, -0.085) {CS};
         \end{scope}
     \end{tikzpicture}
-    \caption{Radar Chart comparing Average XGBoost vs. CS-XGBoost.}
+    \caption{[Algorithm Level] Radar Chart comparing Average XGBoost vs. CS-XGBoost.}
     \label{fig:xgboost_radar}
 \end{figure}
 
@@ -1206,22 +1453,21 @@ Figure~\ref{fig:hybrid_boosting} illustrates the F1-score performance of various
         symbolic x coords={yeast1,yeast3,yeast4,yeast6},
         xtick=data,
         ymin=0, ymax=1.0,
-        legend style={at={(0.5,-0.2)}, anchor=north, legend columns=2, font=\tiny},
+        legend style={at={(0.5,-0.2)}, anchor=north, legend columns=2, font=\tiny, draw=none, /tikz/every even column/.append style={column sep=5pt}},
+        legend image code/.code={\draw[#1] (0cm,-0.1cm) rectangle (0.15cm,0.1cm);},
         ymajorgrids=true,
         grid style={dashed,gray!30},
-        nodes near coords,
-        nodes near coords style={font=\tiny, rotate=90, anchor=west},
         title={F1-score of Hybrid Boosting Methods},
       ]
-      \addplot+ [fill=blue!50] coordinates {(yeast1,0.547) (yeast3,0.723) (yeast4,0.273) (yeast6,0.439)};
-      \addplot+ [fill=red!50] coordinates {(yeast1,0.590) (yeast3,0.761) (yeast4,0.373) (yeast6,0.554)};
-      \addplot+ [fill=green!50] coordinates {(yeast1,0.550) (yeast3,0.673) (yeast4,0.250) (yeast6,0.155)};
-      \addplot+ [fill=orange!50] coordinates {(yeast1,0.599) (yeast3,0.712) (yeast4,0.258) (yeast6,0.234)};
-      \addplot+ [fill=purple!50] coordinates {(yeast1,0.528) (yeast3,0.688) (yeast4,0.315) (yeast6,0.446)};
+      \addplot+ [fill=RoyalBlue] coordinates {(yeast1,0.547) (yeast3,0.723) (yeast4,0.273) (yeast6,0.439)};
+      \addplot+ [fill=ScholarRed] coordinates {(yeast1,0.590) (yeast3,0.761) (yeast4,0.373) (yeast6,0.554)};
+      \addplot+ [fill=ScholarGreen] coordinates {(yeast1,0.550) (yeast3,0.673) (yeast4,0.250) (yeast6,0.155)};
+      \addplot+ [fill=ScholarOrange] coordinates {(yeast1,0.599) (yeast3,0.712) (yeast4,0.258) (yeast6,0.234)};
+      \addplot+ [fill=ScholarPurple] coordinates {(yeast1,0.528) (yeast3,0.688) (yeast4,0.315) (yeast6,0.446)};
       \legend{StandardAdaBoost, SMOTEBoost, RUSBoost, RHSBoost, SUBoost}
     \end{axis}
   \end{tikzpicture}
-  \caption{Performance comparison of various hybrid boosting methods (based on exp\_1.csv).}
+  \caption{[Hybrid Method] Performance comparison of various hybrid boosting methods (based on exp\_1.csv).}
   \label{fig:hybrid_boosting}
 \end{figure}
 
@@ -1241,20 +1487,19 @@ Figure~\ref{fig:smote_variants} shows the comparative performance of SMOTE-based
         symbolic x coords={yeast1,yeast3,yeast4,yeast6},
         xtick=data,
         ymin=0, ymax=1.0,
-        legend style={at={(0.5,-0.2)}, anchor=north, legend columns=-1, font=\tiny},
+        legend style={at={(0.5,-0.2)}, anchor=north, legend columns=-1, font=\tiny, draw=none, /tikz/every even column/.append style={column sep=5pt}},
+        legend image code/.code={\draw[#1] (0cm,-0.1cm) rectangle (0.15cm,0.1cm);},
         ymajorgrids=true,
         grid style={dashed,gray!30},
-        nodes near coords,
-        nodes near coords style={font=\tiny, /pgf/number format/fixed, /pgf/number format/precision=2},
         title={F1-score of SMOTE-based Variants},
       ]
-      \addplot+ [fill=teal!50] coordinates {(yeast1,0.583) (yeast3,0.739) (yeast4,0.331) (yeast6,0.416)};
-      \addplot+ [fill=red!50] coordinates {(yeast1,0.590) (yeast3,0.761) (yeast4,0.373) (yeast6,0.554)};
-      \addplot+ [fill=gray!50] coordinates {(yeast1,0.547) (yeast3,0.588) (yeast4,0.159) (yeast6,0.157)};
+      \addplot+ [fill=ScholarTeal] coordinates {(yeast1,0.583) (yeast3,0.739) (yeast4,0.331) (yeast6,0.416)};
+      \addplot+ [fill=ScholarRed] coordinates {(yeast1,0.590) (yeast3,0.761) (yeast4,0.373) (yeast6,0.554)};
+      \addplot+ [fill=gray!40] coordinates {(yeast1,0.547) (yeast3,0.588) (yeast4,0.159) (yeast6,0.157)};
       \legend{SMOTE, SMOTEBoost, SMOTECSL}
     \end{axis}
   \end{tikzpicture}
-  \caption{Impact of SMOTE variants on model performance (based on exp\_2.csv).}
+  \caption{[Hybrid Method] Impact of SMOTE variants on model performance (based on exp\_2.csv).}
   \label{fig:smote_variants}
 \end{figure}
 
