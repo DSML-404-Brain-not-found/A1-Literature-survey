@@ -76,7 +76,7 @@
 \acmISBN{}
 \acmPrice{}
 \settopmatter{printccs=false, printacmref=false}
-\pagestyle{empty}
+
 
 
 %%
@@ -101,12 +101,12 @@
 
 %%
 %% The majority of ACM publications use numbered citations and
-%% references.  The command \citestyle{authoryear} switches to the
+%%   The command \citestyle{authoryear} switches to the
 %% "author year" style.
 %%
 %% If you are preparing content for an event
 %% sponsored by ACM SIGGRAPH, you must use the "author year" style of
-%% citations and references.
+%% 
 %% Uncommenting
 %% the next command will enable that style.
 %%\citestyle{acmauthoryear}
@@ -176,7 +176,7 @@
 %% This command processes the author and affiliation and title
 %% information and builds the first part of the formatted document.
 \maketitle
-\thispagestyle{empty}
+
 
 \section{Introduction}
 
@@ -555,6 +555,8 @@ primary comparisons, in accordance with the limitations identified in prior lite
 
 \section{Results}
 
+
+\clearpage
 \begin{table*}[htbp]
   \centering
   \caption{Summary table}
@@ -669,6 +671,7 @@ primary comparisons, in accordance with the limitations identified in prior lite
     \bottomrule
   \end{tabular}
 \end{table*}
+\clearpage
 
 \subsection{Data Level}
 
@@ -680,6 +683,8 @@ To facilitate an in-depth analysis utilizing the G-Mean as the core evaluation m
 
 \textbf{Visualizations by Dataset:} The comparative performance of the different data-level approaches across the three classifiers is graphically depicted by dataset in Figure~\ref{fig:yeast1_gmean} (yeast1), Figure~\ref{fig:yeast3_gmean} (yeast3), Figure~\ref{fig:yeast4_gmean} (yeast4), and Figure~\ref{fig:yeast6_gmean} (yeast6).
 
+
+\clearpage
 \begin{table*}[h]
   \centering
   \caption{Classification outcomes (G-Mean) for kNN algorithm}
@@ -843,6 +848,7 @@ To facilitate an in-depth analysis utilizing the G-Mean as the core evaluation m
   \caption{G-Mean between different techniques for Yeast6 dataset}
   \label{fig:yeast6_gmean}
 \end{figure}
+\clearpage
 
 \subsubsection{Baseline vs. ROS}
 When processing imbalanced data, baseline models exhibit a pronounced ``majority class bias.'' Driven by the objective to maximize overall accuracy, their decision boundaries systematically skew toward the majority class. This phenomenon is distinctly evident in the G-Mean metric: in the highly imbalanced yeast4 and extremely imbalanced yeast6 datasets, the G-Mean of the SVM classifier plummets to 0. This indicates a complete failure of the SVM to recognize the minority class. Similarly, the Random Forest classifier achieves a meager G-Mean of only 0.3206 on the yeast4 dataset. 
@@ -989,11 +995,6 @@ Summarizing the above experimental results, it is evident that the effectiveness
 
 To systematically evaluate the effectiveness of different hybrid learning strategies, two core experiments were conducted in this section.  
 
-Experiment 1 investigates the influence of different data-level sampling techniques within a boosting framework, while Experiment 2 explores algorithm-level mechanisms when SMOTE is adopted as the core sampling strategy. The complete experiment result with applying several base classifiers is demonstrated as Table 6. 
-
-\section{Experimental Results Summary}
-
-This section provides a comprehensive summary of the experimental results across all evaluated methods and datasets.
 
 \subsubsection{Experiment 1: Data-level methods under a Boosting framework}
 
