@@ -1,13 +1,13 @@
 # Fdb version 4
-["bibtex text"] 1773589767.54614 "text.aux" "text.bbl" "text" 1773589770.27064 0
+["bibtex text"] 1773589835.19668 "text.aux" "text.bbl" "text" 1773589837.96548 0
   "./ACM-Reference-Format.bst" 1773491849 96784 12e0ced1522ea2bfa9b2fb12855c7e9e ""
   "./sample-base.bib" 1773491849 50853 df98e6764e8a8591af3f06cf54d52d06 ""
-  "text.aux" 1773589769 17152 2b37d3c6124446099185d37e6be0adba "pdflatex"
+  "text.aux" 1773589837 17065 659342b628db1f50ea175d7e9627ecde "pdflatex"
   (generated)
   "text.bbl"
   "text.blg"
   (rewritten before read)
-["pdflatex"] 1773589767.71903 "c:/Users/peng1/Desktop/Lucy/中央大學/碩一下/資科/A1-Literature-survey/Latex/text.tex" "text.pdf" "text" 1773589770.27115 0
+["pdflatex"] 1773589835.37935 "c:/Users/peng1/Desktop/Lucy/中央大學/碩一下/資科/A1-Literature-survey/Latex/text.tex" "text.pdf" "text" 1773589837.96592 0
   "C:/Users/peng1/AppData/Local/MiKTeX/fonts/map/pdftex/pdftex.map" 1773572672 186066 c797610d3c7aadc509276bf4bcd8a24b ""
   "C:/Users/peng1/AppData/Local/MiKTeX/miktex/data/le/pdftex/pdflatex.fmt" 1773390987 13333849 021872d29036dc28b9a78cd20a6821b0 ""
   "C:/Users/peng1/AppData/Local/Programs/MiKTeX/fonts/enc/dvips/libertine/lbtn_25tcsq.enc" 1497089888 2921 8ca0eb0831f9bc5da080d3697cfe67bf ""
@@ -306,11 +306,11 @@
   "C:/Users/peng1/AppData/Local/Programs/MiKTeX/tex/latex/xkeyval/xkeyval.sty" 1656236919 4937 4ce600ce9bd4ec84d0250eb6892fcf4f ""
   "C:/Users/peng1/AppData/Local/Programs/MiKTeX/tex/latex/xstring/xstring.sty" 1693735632 123 a302f2c651a95033260db60e51527ae8 ""
   "acmart.cls" 1773491849 126055 54cc4edcc7b9cb1bf0a23c528626957c ""
-  "c:/Users/peng1/Desktop/Lucy/中央大學/碩一下/資科/A1-Literature-survey/Latex/text.tex" 1773589764 105377 a568dda8dd696a9291531a7f4c736f4b ""
-  "text.aux" 1773589769 17152 2b37d3c6124446099185d37e6be0adba "pdflatex"
-  "text.bbl" 1773589767 1751 4d28b6ea748d03d80535fe94a7371ddb "bibtex text"
-  "text.out" 1773589769 4673 5c2e46f0d70aee02668bd92a64cddc3f "pdflatex"
-  "text.tex" 1773589764 105377 a568dda8dd696a9291531a7f4c736f4b ""
+  "c:/Users/peng1/Desktop/Lucy/中央大學/碩一下/資科/A1-Literature-survey/Latex/text.tex" 1773589832 105793 cabf938b1c75a500b526e7ecc7f33244 ""
+  "text.aux" 1773589837 17065 659342b628db1f50ea175d7e9627ecde "pdflatex"
+  "text.bbl" 1773589835 1751 4d28b6ea748d03d80535fe94a7371ddb "bibtex text"
+  "text.out" 1773589837 4673 5c2e46f0d70aee02668bd92a64cddc3f "pdflatex"
+  "text.tex" 1773589832 105793 cabf938b1c75a500b526e7ecc7f33244 ""
   (generated)
   "text.aux"
   "text.log"
